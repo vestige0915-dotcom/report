@@ -309,11 +309,14 @@
             border: 1px solid #e5e7eb;
         }
         .psd-right img {
-            max-width: 100%;
-            height: auto;
+            width: 100%;              /* 宽度填满右侧容器 */
+            aspect-ratio: 4 / 3;      /* 强制比例为 4:3 (也可改为 1/1 正方形 或 16/9) */
+            object-fit: cover;        /* 关键属性：保持图片比例，裁剪多余部分，防止变形 */
+            object-position: center;  /* 图片居中显示 */
             border-radius: 12px;
             box-shadow: var(--card-shadow);
             transition: transform 0.3s ease;
+            display: block;           /* 消除图片底部的微小空隙 */
         }
         .psd-right img:hover {
             transform: scale(1.05);
