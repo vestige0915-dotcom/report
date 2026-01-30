@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>202X年度人力资源工作汇报 - 破局焕新版</title>
+    <style>
+        :root {
+            /* 核心配色：参考海报风格 */
+            --sidebar-bg-start: #b71c1c; /* 深红 */
+            --sidebar-bg-end: #8a0e0b;   /* 暗红 */
+            
+            /* 字体颜色 */
+            --text-primary: #3e2723;     /* 深褐色 */
+            --text-secondary: #8d6e63;   /* 浅褐灰 */
+            
+            /* 强调色 */
+            --accent-red: #d32f2f;       /* 亮红 */
+            --accent-gold: #ffb300;      /* 流光金 */
+            --accent-gold-dark: #f57f17; /* 深金 */
+            
+            /* 图表颜色 */
+            --chart-main: #c62828;       /* 红 */
+            --chart-sub: #ffca28;        /* 金 */
+            --chart-green: #388e3c;      /* 绿 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
+
+        body {
+            display: flex;
+            height: 100vh;
+            /* 整体背景设为淡粉色，防止边缘出现白边 */
+            background-color: #fff0f2;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
+
+        /* --- 左侧导航栏（保持深红渐变不变） --- */
+        .sidebar {
+            width: 240px;
+            background: linear-gradient(180deg, var(--sidebar-bg-start) 0%, var(--sidebar-bg-end) 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0;
+            box-shadow: 4px 0 15px rgba(183, 28, 28, 0.15); /* 阴影调淡一点点以适应新背景 */
+            z-index: 10;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .avatar-circle {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            border: 2px solid #fff;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #8a0e0b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-menu { list-style: none; }
+
+        .nav-item {
+            padding: 18px 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            border-left: 4px solid transparent;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .nav-item:hover { 
+            background-color: rgba(255,255,255,0.1); 
+            color: #fff;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(255, 179, 0, 0.2) 0%, rgba(255,0,0,0) 100%);
+            border-left-color: var(--accent-gold);
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .nav-icon { margin-right: 15px; width: 20px; text-align: center; }
+
+        /* --- 右侧内容区（重点修改背景） --- */
+        .main-container {
+            flex: 1;
+            position: relative;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            
+            /* 修改部分：使用径向渐变模拟图片的柔光效果 */
+            /* 中心是纯白，向四周扩散为极淡的粉色 */
+            background: radial-gradient(ellipse at 60% 40%, #ffffff 20%, #fff0f2 100%);
+        }
+
+        /* 页面切换动画 */
+        .slide-page {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide-page.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 标题栏设计 */
+        .page-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(183, 28, 28, 0.1); /* 边框线也调淡一点 */
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        /* 标题采用红金风格 */
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--sidebar-bg-start), #ff6f00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--sidebar-bg-start);
+            background: rgba(255,255,255,0.8); /* 增加一点透明度 */
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(183, 28, 28, 0.2);
+            font-weight: bold;
+        }
+
+        /* 卡片设计 */
+        .card {
+            background: rgba(255, 255, 255, 0.85); /* 卡片微透明，透出一点背景的粉色 */
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(183, 28, 28, 0.05); /* 阴影改为极淡的红色调 */
+            margin-bottom: 20px;
+            flex: 1;
+            border-top: 3px solid transparent;
+            transition: transform 0.3s;
+            backdrop-filter: blur(5px); /* 磨砂玻璃效果 */
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            border-top-color: var(--accent-gold);
+            background: #fff; /* 悬停时变实心白 */
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; height: 100%; }
+        .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; height: 100%; }
+
+        /* 底部按钮 */
+        .footer-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-control {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, var(--sidebar-bg-start), var(--sidebar-bg-end));
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(183, 28, 28, 0.3);
+            font-weight: bold;
+        }
+        .btn-control:hover { 
+            transform: scale(1.05);
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+        }
+
+        /* --------- 图表组件样式 --------- */
+
+        /* P1: 核心数字 */
+        .kpi-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .kpi-box {
+            background: rgba(255,255,255,0.9);
+            flex: 1;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(183, 28, 28, 0.05);
+            border-top: 5px solid var(--sidebar-bg-start);
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-box::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0;
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, transparent 50%, rgba(183, 28, 28, 0.03) 50%);
+        }
+
+        .kpi-val { font-size: 48px; font-weight: 800; color: var(--text-primary); margin: 15px 0; }
+        .kpi-val.gold { color: var(--accent-gold-dark); }
+        .kpi-val.green { color: var(--chart-green); }
+        .kpi-val.red { color: var(--accent-red); }
+        
+        .kpi-name { font-size: 16px; color: var(--text-secondary); font-weight: bold; }
+        .kpi-desc { font-size: 13px; color: #9e9e9e; margin-top: 10px; }
+
+        /* P2: 条形图 */
+        .bar-chart-row { margin-bottom: 25px; }
+        .bar-label-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .bar-track { background: #fff3e0; height: 30px; border-radius: 5px; overflow: hidden; }
+        .bar-fill { height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: 15px; color: white; font-size: 13px; font-weight: bold; }
+        
+        .bg-red { background: linear-gradient(90deg, #ef5350, #c62828); }
+        .bg-gold { background: linear-gradient(90deg, #ffca28, #f57f17); }
+        
+        /* P3: 饼图 */
+        .pie-container { display: flex; align-items: center; justify-content: center; height: 100%; gap: 40px; }
+        .pie-circle {
+            width: 250px; height: 250px; border-radius: 50%;
+            background: conic-gradient(
+                var(--accent-gold) 0% 53.4%, 
+                var(--chart-main) 53.4% 72.4%, 
+                #eeeeee 72.4% 100%
+            );
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .pie-inner {
+            position: absolute; width: 150px; height: 150px; background: #fff; border-radius: 50%;
+            top: 50px; left: 50px; display: flex; align-items: center; justify-content: center;
+            flex-direction: column;
+        }
+        .color-dot { width: 12px; height: 12px; margin-right: 10px; border-radius: 3px; }
+
+        /* P4: 柱状图 */
+        .col-chart { display: flex; align-items: flex-end; height: 250px; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #e0e0e0; }
+        .col-bar { flex: 1; background: #bdbdbd; border-radius: 4px 4px 0 0; position: relative; transition: height 1s; }
+        
+        .col-bar.high { background: var(--accent-gold); }
+        .col-bar.low { background: #cfd8dc; }
+        .col-bar:not(.high):not(.low) { background: var(--chart-main); opacity: 0.7; }
+
+        .col-bar:hover::after {
+            content: attr(data-tooltip);
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+            background: var(--sidebar-bg-start); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 12px; white-space: nowrap;
+        }
+        .month-text { flex: 1; text-align: center; font-size: 12px; color: var(--text-secondary); }
+
+        /* 表格 */
+        .plan-table { width: 100%; border-collapse: collapse; }
+        .plan-table td { padding: 20px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .plan-table td:first-child { width: 120px; font-weight: bold; color: var(--accent-gold-dark); font-size: 18px; }
+        .plan-table td:last-child { color: var(--text-primary); line-height: 1.6; }
+
+    </style>
+</head>
+<body>
+
+    <!-- 左侧菜单 -->
+    <nav class="sidebar">
+        <div class="profile">
+            <div class="avatar-circle">HR</div>
+            <div style="font-weight: bold; margin-bottom: 5px;">人事主管</div>
+            <div style="font-size: 12px; opacity: 0.8;">破局焕新 · 同创共赢</div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active" onclick="showPage(1)">
+                <span class="nav-icon">📊</span> 核心成绩总览
+            </li>
+            <li class="nav-item" onclick="showPage(2)">
+                <span class="nav-icon">💰</span> 招聘与降本
+            </li>
+            <li class="nav-item" onclick="showPage(3)">
+                <span class="nav-icon">👥</span> 人才结构稳健性
+            </li>
+            <li class="nav-item" onclick="showPage(4)">
+                <span class="nav-icon">⚡</span> 绩效与风控
+            </li>
+            <li class="nav-item" onclick="showPage(5)">
+                <span class="nav-icon">🚀</span> 202X规划
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-container">
+        
+        <!-- Page 1: 封面/总览 -->
+        <div id="page-1" class="slide-page active">
+            <div class="page-header" style="border:none; margin-top: 40px;">
+                <div>
+                    <h1 style="font-size: 48px; margin-bottom: 10px; background: linear-gradient(to right, #b71c1c, #f57f17); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">破局焕新 · 同创共赢</h1>
+                    <p style="font-size: 20px; color: var(--text-secondary);">202X年度人力资源工作总结汇报</p>
+                </div>
+            </div>
+
+            <div class="kpi-row">
+                <div class="kpi-box">
+                    <div class="kpi-name">招聘成本降幅</div>
+                    <div class="kpi-val green">10.8%</div>
+                    <div class="kpi-desc">节省费用 ¥6,497<br>渠道成本优化</div>
+                </div>
+                <div class="kpi-box" style="border-top-color: var(--accent-gold);">
+                    <div class="kpi-name">核心销售占比</div>
+                    <div class="kpi-val gold">72.4%</div>
+                    <div class="kpi-desc">1年以上老兵42人<br>打造高留存铁军</div>
+                </div>
+                <div class="kpi-box" style="border-top-color: var(--accent-red);">
+                    <div class="kpi-name">薪酬风控</div>
+                    <div class="kpi-val">0差错</div>
+                    <div class="kpi-desc">全年1044人次发薪<br>0劳动仲裁赔偿</div>
+                </div>
+                <div class="kpi-box" style="border-top-color: var(--chart-main);">
+                    <div class="kpi-name">年度绩效均分</div>
+                    <div class="kpi-val red">97分</div>
+                    <div class="kpi-desc">旺季达成率超 110%<br>后台支持高产出</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 80px; text-align: center; color: var(--text-secondary); opacity: 0.6;">
+                <p>汇报人：[您的姓名] &nbsp;|&nbsp; 服务团队：87人 &nbsp;|&nbsp; 覆盖门店：18家</p>
+            </div>
+        </div>
+
+        <!-- Page 2: 招聘与降本 -->
+        <div id="page-2" class="slide-page">
+            <div class="page-header">
+                <div class="page-title">第一篇章：精准引才，降本提质</div>
+                <div class="page-subtitle">开源节流</div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3 style="margin-bottom: 20px; color: var(--sidebar-bg-start);">💰 渠道成本效益分析</h3>
+                    <div style="background: #fff8e1; padding: 20px; border-radius: 8px; margin-bottom: 20px; display:flex; justify-content:space-between; border: 1px solid #ffecb3;">
+                        <div>
+                            <div style="font-size:12px; color:#8d6e63">2024年总花费</div>
+                            <div style="font-size:24px; font-weight:bold;">¥60,168</div>
+                        </div>
+                        <div style="text-align:right">
+                            <div style="font-size:12px; color:#388e3c">2025年总花费 (↓10.8%)</div>
+                            <div style="font-size:24px; font-weight:bold; color:#388e3c;">¥53,671</div>
+                        </div>
+                    </div>
+                    <p style="color:#5d4037; font-size:14px; line-height:1.6">
+                        <strong>策略：</strong> 削减低效渠道预算，重注高产出渠道（Boss直聘）。<br>
+                        <strong>结果：</strong> Boss直聘预算占比58%，贡献了 <strong>75%</strong> 的入职量（含2名业绩优秀新人）。
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 20px; color: var(--sidebar-bg-start);">🎯 招聘交付漏斗</h3>
+                    <div class="bar-chart-row">
+                        <div class="bar-label-row"><span>年度计划</span><span>82人</span></div>
+                        <div class="bar-track"><div class="bar-fill bg-red" style="width: 100%;">100%</div></div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label-row"><span>实际入职</span><span>74人</span></div>
+                        <div class="bar-track"><div class="bar-fill bg-gold" style="width: 91%;">91% 达成</div></div>
+                    </div>
+                    <div style="margin-top: 30px; padding: 15px; border-left: 4px solid var(--accent-gold); background: #fffde7; font-size:13px; color:#f57f17;">
+                        在3-5月及9-10月销售旺季，单月招聘达成率突破 <strong>113%</strong>，确保18家门店在黄金周期间“满编作战”。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: 团队结构 -->
+        <div id="page-3" class="slide-page">
+            <div class="page-header">
+                <div class="page-title">第二篇章：人才供应链 —— 稳住基本盘</div>
+                <div class="page-subtitle">稳健经营</div>
+            </div>
+
+            <div class="card" style="display:flex; flex-direction: column;">
+                <h3 style="margin-bottom: 10px; color: var(--sidebar-bg-start);">销售团队司龄结构分析 (N=58)</h3>
+                <p style="font-size:14px; color:#8d6e63; margin-bottom: 30px;">在家具零售高流动性背景下，核心团队稳定性远超行业平均水平</p>
+                
+                <div class="pie-container">
+                    <div class="pie-circle">
+                        <div class="pie-inner">
+                            <span style="font-size: 32px; font-weight: bold; color: var(--accent-gold-dark);">72%</span>
+                            <span style="font-size: 12px; color: #8d6e63;">1年以上老兵</span>
+                        </div>
+                    </div>
+                    <div class="legend-box">
+                        <div class="pie-legend-item">
+                            <div class="color-dot" style="background: var(--accent-gold);"></div>
+                            <div>
+                                <div style="font-weight:bold">资深专家 (3年以上)</div>
+                                <div style="font-size:12px; color:#8d6e63">31人 | 占比 53.4% (基石)</div>
+                            </div>
+                        </div>
+                        <div class="pie-legend-item">
+                            <div class="color-dot" style="background: var(--chart-main);"></div>
+                            <div>
+                                <div style="font-weight:bold">成熟骨干 (1-3年)</div>
+                                <div style="font-size:12px; color:#8d6e63">11人 | 占比 19.0% (中坚)</div>
+                            </div>
+                        </div>
+                        <div class="pie-legend-item">
+                            <div class="color-dot" style="background: #e0e0e0;"></div>
+                            <div>
+                                <div style="font-weight:bold">潜力新人 (1年以内)</div>
+                                <div style="font-size:12px; color:#8d6e63">16人 | 占比 27.6% (血液)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: 绩效与风控 -->
+        <div id="page-4" class="slide-page">
+            <div class="page-header">
+                <div class="page-title">第三篇章：效能升级与风险控制</div>
+                <div class="page-subtitle">极致交付</div>
+            </div>
+
+            <div class="grid-2-1">
+                <div class="card">
+                    <h3 style="color: var(--sidebar-bg-start);">⚡ 个人绩效趋势：同频业务，蓄力爆发</h3>
+                    <div style="margin-top: 30px;">
+                        <div class="col-chart">
+                            <div class="col-bar" style="height: 83%;" data-tooltip="1月:100%"></div>
+                            <div class="col-bar" style="height: 83%;" data-tooltip="2月:100%"></div>
+                            <div class="col-bar" style="height: 80%;" data-tooltip="3月:97%"></div>
+                            <div class="col-bar" style="height: 83%;" data-tooltip="4月:100%"></div>
+                            <div class="col-bar high" style="height: 100%;" data-tooltip="5月:120% (旺季)"></div>
+                            <div class="col-bar low" style="height: 64%;" data-tooltip="6月:77% (研发期)"></div>
+                            <div class="col-bar" style="height: 75%;" data-tooltip="7月:90%"></div>
+                            <div class="col-bar" style="height: 75%;" data-tooltip="8月:90%"></div>
+                            <div class="col-bar" style="height: 83%;" data-tooltip="9月:100%"></div>
+                            <div class="col-bar high" style="height: 94%;" data-tooltip="10月:113% (旺季)"></div>
+                            <div class="col-bar" style="height: 80%;" data-tooltip="11月:97%"></div>
+                            <div class="col-bar low" style="height: 64%;" data-tooltip="12月:77%"></div>
+                        </div>
+                        <div class="month-row">
+                            <div class="month-text">1月</div><div class="month-text">2月</div><div class="month-text">3月</div>
+                            <div class="month-text">4月</div><div class="month-text">5月</div><div class="month-text">6月</div>
+                            <div class="month-text">7月</div><div class="month-text">8月</div><div class="month-text">9月</div>
+                            <div class="month-text">10月</div><div class="month-text">11月</div><div class="month-text">12月</div>
+                        </div>
+                    </div>
+                    <p style="margin-top:15px; font-size:12px; color:#8d6e63;">
+                        注：6月/12月绩效波谷为战略投入期，用于开发个税自动计算表，成功将算薪耗时缩短50%。
+                    </p>
+                </div>
+
+                <div class="card" style="display:flex; flex-direction:column; justify-content:center;">
+                    <h3 style="margin-bottom:20px; color: var(--sidebar-bg-start);">🛡️ 风控成绩单</h3>
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size:32px; font-weight:bold; color:var(--text-primary);">0 <span style="font-size:14px; color:#8d6e63">赔偿</span></div>
+                        <div style="font-size:13px; color:#5d4037;">全年处理离职签核，无劳动仲裁</div>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <div style="font-size:32px; font-weight:bold; color:var(--text-primary);">0 <span style="font-size:14px; color:#8d6e63">差错</span></div>
+                        <div style="font-size:13px; color:#5d4037;">全年1044人次发薪零失误</div>
+                    </div>
+                    <div>
+                        <div style="font-size:32px; font-weight:bold; color:var(--accent-gold-dark);">1.5 <span style="font-size:14px; color:#8d6e63">天</span></div>
+                        <div style="font-size:13px; color:#5d4037;">薪酬核算周期缩短50%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: 展望 -->
+        <div id="page-5" class="slide-page">
+            <div class="page-header">
+                <div class="page-title">展望：202X工作规划</div>
+                <div class="page-subtitle">持续进化</div>
+            </div>
+
+            <div class="card">
+                <table class="plan-table">
+                    <tr>
+                        <td>人才留存</td>
+                        <td>
+                            <strong>实施“新员工护航计划”</strong><br>
+                            针对目前新人试用期存活率（46%）的问题，建立入职前3个月的强制带教机制，目标将存活率提升至60%以上。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>经验萃取</td>
+                        <td>
+                            <strong>复制“销冠”基因</strong><br>
+                            对2名业绩优秀新人（Boss直聘来源）进行深度访谈与画像，优化招聘JD关键词，提高后续招聘精准度。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>流程再造</td>
+                        <td>
+                            <strong>深化后台自动化</strong><br>
+                            继续优化考勤与薪酬表格，释放事务性工作时间，转型为“业务合作伙伴（BP）”，更多参与门店人才盘点。
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div style="margin-top: 40px; text-align: center;">
+                <h2 style="color: var(--sidebar-bg-start);">感谢聆听</h2>
+                <p style="color: var(--text-secondary); margin-top: 10px;">请多指教</p>
+            </div>
+        </div>
+
+        <!-- 底部翻页按钮 -->
+        <div class="footer-controls">
+            <button class="btn-control" onclick="changePage(-1)">上一页</button>
+            <button class="btn-control" onclick="changePage(1)">下一页</button>
+        </div>
+
+    </main>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 5;
+
+        function showPage(pageId) {
+            document.querySelectorAll('.slide-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById('page-' + pageId).classList.add('active');
+            document.querySelectorAll('.nav-item')[pageId - 1].classList.add('active');
+            currentPage = pageId;
+        }
+
+        function changePage(direction) {
+            let newPage = currentPage + direction;
+            if (newPage >= 1 && newPage <= totalPages) {
+                showPage(newPage);
+            }
+        }
+    </script>
+</body>
+</html>
