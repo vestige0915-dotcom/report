@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邓广坚 - 转正述职汇报</title>
+    <style>
+        :root {
+            --primary-orange: #FF8000;
+            --accent-yellow: #E3C565;
+            --bg-gray: #f4f6f9; 
+            /* 变更：全局字体颜色 */
+            --text-main: rgb(74, 83, 102); 
+            --sidebar-width: 260px;
+            --footer-height: 40px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-main); /* 应用新颜色 */
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- 侧边栏样式 --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #fff;
+            border-right: 1px solid #e1e4e8;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.03);
+            flex-shrink: 0;
+        }
+
+        .profile-area {
+            padding: 40px 30px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .profile-area:hover { background-color: #fffaf5; }
+        .profile-area h1 { font-size: 26px; font-weight: 900; color: var(--text-main); line-height: 1.3; }
+        .profile-area span { display: block; font-size: 16px; color: var(--primary-orange); margin-top: 8px; font-weight: 500; }
+
+        .nav-menu { flex: 1; overflow-y: auto; padding: 10px 0; }
+        .nav-group { margin-bottom: 2px; }
+        
+        /* 侧边栏动画优化：速度放慢一倍 (1s)，增加opacity渐变 */
+        .sub-items {
+            background: #fff;
+            max-height: 600px; /* 稍微给大一点以防截断 */
+            overflow: hidden;
+            /* 时间改为 1.0s */
+            transition: max-height 1.0s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.0s ease-in-out;
+            opacity: 1;
+        }
+
+        .nav-header {
+            padding: 16px 30px;
+            font-weight: bold;
+            font-size: 15px;
+            color: var(--text-main);
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f5f5f5;
+            transition: background 0.2s;
+        }
+        .nav-header:hover { background: #f9f9f9; }
+        
+        .nav-header.has-arrow::after { content: '▼'; font-size: 10px; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); color: #bbb; }
+        
+        /* 折叠状态 */
+        .nav-group.collapsed .nav-header.has-arrow::after { transform: rotate(-90deg); }
+        .nav-group.collapsed .sub-items { max-height: 0; opacity: 0; }
+
+        .nav-header.active-header {
+            color: var(--primary-orange);
+            background-color: #fff4e6;
+            border-right: 4px solid var(--primary-orange);
+        }
+
+        .nav-sub-item {
+            padding: 12px 30px 12px 40px;
+            font-size: 14px;
+            color: var(--text-main); /* 确保子菜单颜色一致 */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+            opacity: 0.9;
+        }
+        .nav-sub-item i { margin-right: 10px; font-style: normal; font-size: 16px; width: 20px; text-align: center; }
+        .nav-sub-item:hover { color: var(--primary-orange); background-color: #fffaf5; }
+        .nav-sub-item.active { color: var(--primary-orange); background-color: #fff4e6; font-weight: bold; border-right: 4px solid var(--primary-orange); }
+
+        /* --- 视口与幻灯片布局 --- */
+        .viewport {
+            flex: 1;
+            height: 100vh;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background-color: var(--bg-gray);
+        }
+
+        .page-container {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            max-width: 1400px;
+            max-height: 100%;
+            background: #ffffff;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 50px 60px 20px 60px;
+            scroll-behavior: smooth;
+            display: flex; /* 让内容能撑开 */
+            flex-direction: column;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+            padding-bottom: 20px;
+            width: 100%;
+            height: 100%; /* 确保页面占满容器 */
+        }
+        .page-slide.active { display: flex; flex-direction: column; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 封面页样式 */
+        .cover-layout {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+        }
+        .cover-title { font-size: 64px; font-weight: 900; color: var(--text-main); margin-bottom: 30px; letter-spacing: 2px; }
+        .cover-info { font-size: 24px; color: var(--text-main); margin-top: 20px; padding-top: 30px; border-top: 2px solid var(--primary-orange); min-width: 300px; opacity: 0.8; }
+        .cover-info p { font-size: 20px; margin: 10px 0; color: var(--text-main); }
+
+        /* 底部栏 */
+        .slide-footer {
+            height: var(--footer-height);
+            background-color: var(--primary-orange);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 40px;
+            font-weight: 800;
+            font-style: italic;
+            font-size: 18px;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        /* 通用排版 */
+        .slide-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-orange);
+            margin-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        h3 { font-size: 20px; margin: 0 0 12px 0; color: var(--text-main); }
+        p { font-size: 16px; line-height: 1.6; margin-bottom: 12px; color: var(--text-main); opacity: 0.9; }
+        ul { list-style: none; margin-bottom: 0; }
+        li { position: relative; padding-left: 20px; margin-bottom: 10px; line-height: 1.6; font-size: 16px; color: var(--text-main); opacity: 0.9; }
+        li::before { content: '▶'; position: absolute; left: 0; color: var(--primary-orange); font-size: 10px; top: 5px; }
+
+        /* 表格排版 */
+        .kpi-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .kpi-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 16px; }
+        .kpi-table th { background: #fffbf5; color: var(--primary-orange); padding: 25px 15px; font-weight: bold; border: 1px solid #eee; }
+        .kpi-table td { 
+            padding: 25px 15px; 
+            text-align: center; 
+            border: 1px solid #eee; 
+            background: #fff;
+            color: var(--text-main);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+        }
+        .kpi-table td:hover {
+            transform: scale(1.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            z-index: 10;
+            position: relative;
+            border-color: transparent;
+            border-radius: 4px;
+        }
+        .score-high { font-weight: bold; color: #d35400; }
+        .score-low { font-weight: bold; color: #999; }
+
+        /* 布局控制类 */
+        
+        /* 核心留白布局：控制内容高度占 60-65%，剩余为下方留白 */
+        .content-compact {
+            height: 65%; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid-box { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; height: 100%; }
+        .grid-box-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; height: 100%; }
+        
+        /* 2x2 网格，用于第6页 */
+        .grid-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 25px;
+            height: 100%;
+        }
+
+        /* 核心卡片样式 */
+        .card-panel {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* 默认顶部对齐 */
+        }
+        /* 对于2x2网格，内容垂直居中更美观 */
+        .grid-2x2 .card-panel {
+            justify-content: center;
+        }
+        
+        .card-panel:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: rgba(255, 128, 0, 0.2);
+            z-index: 5;
+        }
+        .clickable-card { cursor: pointer; }
+
+        /* Page 1: 产品卡片 */
+        .product-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%; /* 撑满网格 */
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+            background-color: #333;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s;
+        }
+        .product-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: transform 0.6s ease; z-index: 0;
+        }
+        .product-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.85) 100%);
+            z-index: 1;
+        }
+        .product-content {
+            position: relative; z-index: 2; padding: 25px; color: white;
+            transform: translateY(0); transition: transform 0.4s ease;
+        }
+        .product-card h3 { color: #fff; font-size: 22px; font-weight: 800; margin-bottom: 12px; border-bottom: 3px solid var(--primary-orange); display: inline-block; padding-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .product-card p { color: rgba(255,255,255,0.95); font-size: 15px; margin: 0; line-height: 1.5; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .product-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 25px 50px rgba(0,0,0,0.25); z-index: 5; }
+        .product-card:hover .product-bg { transform: scale(1.1); }
+        
+        .strategy-box {
+            margin-top: 20px; padding: 15px 20px; background: #fffbf5;
+            border-left: 5px solid var(--primary-orange); border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+        .strategy-box:hover { transform: translateX(5px) scale(1.01); }
+
+        /* 模态框 */
+        .modal {
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); 
+            justify-content: center; align-items: center; animation: fadeIn 0.2s;
+        }
+        .modal-content { max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 4px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .close { position: absolute; top: 20px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .close:hover { color: var(--primary-orange); }
+
+    </style>
+</head>
+<body>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- 侧边栏 -->
+    <nav class="sidebar">
+        <div class="profile-area" onclick="navigateTo(0)">
+            <h1>邓广坚</h1>
+            <span>转正述职汇报</span>
+        </div>
+
+        <div class="nav-menu">
+            <div class="nav-group collapsed" id="group1">
+                <div class="nav-header has-arrow" onclick="toggleGroup('group1')">一、工作成果</div>
+                <div class="sub-items">
+                    <div class="nav-sub-item" id="nav-page-product" onclick="navigateTo(1)"><i>📦</i>核心产品布局</div>
+                    <div class="nav-sub-item" id="nav-page-kpi" onclick="navigateTo(2)"><i>📊</i>KPI数据达成</div>
+                </div>
+            </div>
+
+            <div class="nav-group collapsed" id="group2">
+                <div class="nav-header has-arrow" onclick="toggleGroup('group2')">二、总结及分析</div>
+                <div class="sub-items">
+                    <div class="nav-sub-item" id="nav-page-review" onclick="navigateTo(3)"><i>🔍</i>不足与复盘</div>
+                    <div class="nav-sub-item" id="nav-page-solve" onclick="navigateTo(4)"><i>💡</i>解决方案</div>
+                    <div class="nav-sub-item" id="nav-page-ai" onclick="navigateTo(5)"><i>🤖</i>主动沉淀(AI)</div>
+                    <div class="nav-sub-item" id="nav-page-growth" onclick="navigateTo(6)"><i>📈</i>收获与成长</div>
+                </div>
+            </div>
+
+            <div class="nav-group collapsed" id="group3">
+                <div class="nav-header has-arrow" onclick="toggleGroup('group3')">三、未来规划</div>
+                <div class="sub-items">
+                    <div class="nav-sub-item" id="nav-page-future-product" onclick="navigateTo(7)"><i>🧩</i>产品矩阵规划</div>
+                    <div class="nav-sub-item" id="nav-page-future-channel" onclick="navigateTo(8)"><i>📢</i>渠道营销规划</div>
+                    <div class="nav-sub-item" id="nav-page-future-team" onclick="navigateTo(9)"><i>👥</i>团队与个人成长</div>
+                </div>
+            </div>
+            
+            <div class="nav-group" id="group4">
+                <div class="nav-header" id="nav-header-thanks" onclick="navigateTo(10)">四、致谢</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 视口区 -->
+    <div class="viewport">
+        <div class="page-container">
+            
+            <div class="slide-scroll-area">
+                
+                <!-- 0. 封面页 -->
+                <section id="page-cover" class="page-slide active">
+                    <div class="cover-layout">
+                        <div class="cover-title">转正述职汇报</div>
+                        <div class="cover-info">
+                            <p>汇报人：邓广坚</p>
+                            <p>时间：2026年2月</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1. 核心产品布局 -->
+                <section id="page-product" class="page-slide">
+                    <h2 class="slide-title">核心产品线战略布局</h2>
+                    <div class="content-compact" style="height:auto; flex:1;"> <!-- 此页内容较多，不强制留白太多 -->
+                        <div class="grid-box-3" style="height: 320px; flex:none;">
+                            <div class="product-card">
+                                <div class="product-bg" style="background-image: url('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BE%8E%E7%94%B2%E9%9B%86%E5%B0%98%E5%99%A8.png');"></div>
+                                <div class="product-overlay"></div>
+                                <div class="product-content">
+                                    <h3>美甲集尘器</h3>
+                                    <p>解决噪音痛点（VOC反应），重新定义行业标准</p>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-bg" style="background-image: url('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%99%A4%E8%9E%A8%E5%90%B8%E5%B0%98%E5%99%A8.png');"></div>
+                                <div class="product-overlay"></div>
+                                <div class="product-content">
+                                    <h3>除螨吸尘器</h3>
+                                    <p>无线化、多合一结构创新，解决全屋清洁空间限制</p>
+                                </div>
+                            </div>
+                            <div class="product-card">
+                                <div class="product-bg" style="background-image: url('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%AB%98%E9%80%9F%E7%94%B5%E5%90%B9%E9%A3%8E.png');"></div>
+                                <div class="product-overlay"></div>
+                                <div class="product-content">
+                                    <h3>高速电吹风</h3>
+                                    <p>占据用户“吹护一体”的场景心智</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="strategy-box">
+                            <h3 style="color:var(--primary-orange); margin-bottom:10px;">系列化思路</h3>
+                            <p style="margin:0; font-weight:500;">
+                                2款以上高质价比 ODMA 承接主流流量（资金/数据支持） 
+                                <span style="color:#aaa; margin:0 10px;">➜</span> 
+                                1款 IRDA 建立核心竞争力和壁垒
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. KPI数据 -->
+                <section id="page-kpi" class="page-slide">
+                    <h2 class="slide-title">核心数据 (KPI达成情况)</h2>
+                    <div class="kpi-wrapper">
+                        <table class="kpi-table">
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>CDCP项目</th>
+                                    <th>PDCP项目</th>
+                                    <th>TR4A项目</th>
+                                    <th>ADCP项目</th>
+                                    <th>考核分数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>25年10月</td><td>164%</td><td>100%</td><td>100%</td><td>100%</td><td class="score-high">109.55</td></tr>
+                                <tr><td>25年11月</td><td>180%</td><td>0%</td><td>100%</td><td>100%</td><td class="score-low">85.00</td></tr>
+                                <tr><td>25年12月</td><td>235%</td><td>131%</td><td>131%</td><td>100%</td><td class="score-high">120.82</td></tr>
+                                <tr><td>26年01月</td><td>174.5%</td><td>98.2%</td><td>98.2%</td><td>0.0%</td><td class="score-high">99.27</td></tr>
+                                <tr><td>26年02月</td><td>196.4%</td><td>0</td><td>0</td><td>65.5%</td><td class="score-low">84.82</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3. 不足复盘 (留白调整) -->
+                <section id="page-review" class="page-slide">
+                    <h2 class="slide-title">不足与根因复盘</h2>
+                    <div class="content-compact">
+                        <div class="grid-box">
+                            <div class="card-panel">
+                                <h3>内因 (流程磨合)</h3>
+                                <ul>
+                                    <li>作为新加入者，前期处于对公司标准流程的校准期。</li>
+                                    <li>美甲集尘器项目导致执行节奏有延迟。</li>
+                                </ul>
+                            </div>
+                            <div class="card-panel">
+                                <h3>外因 (供应链黑盒)</h3>
+                                <ul>
+                                    <li>TR3准出评审引入更高维度标准（系统级失效 -> 电路级失效分析）。</li>
+                                    <li>供应商配合度滞后，无法提供足量图纸支持评审，导致项目卡点。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. 解决方案 (留白调整) -->
+                <section id="page-solve" class="page-slide">
+                    <h2 class="slide-title">解决方案</h2>
+                    <div class="content-compact">
+                        <div class="grid-box">
+                            <div class="card-panel clickable-card" onclick="openModal('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%99%BA%E8%83%BD%E8%A1%A8.png')">
+                                <h3>对内：智能管理</h3>
+                                <ul>
+                                    <li>引入项目管理智能表格，AI完成排期。</li>
+                                    <li>设置checklist和智能提醒，降低延误风险。</li>
+                                    <li>建议：建立标准工期数据库。</li>
+                                </ul>
+                            </div>
+                            <div class="card-panel clickable-card" onclick="openModal('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/DFMEA.png')">
+                                <h3>对外：方案兜底</h3>
+                                <ul>
+                                    <li>针对供应商不提供图纸的情况，制定 DFMEA 备选方案。</li>
+                                    <li>前置风险识别，确保项目评审通过。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. AI沉淀 (留白调整) -->
+                <section id="page-ai" class="page-slide">
+                    <h2 class="slide-title">主动沉淀：IPD + Agent</h2>
+                    <div class="content-compact">
+                        <p>基于 IPD 方法论，创建 Agent 工作流，将重复性工作自动化。</p>
+                        <div class="grid-box" style="margin-top:20px; height: 100%;">
+                            <div class="card-panel clickable-card" onclick="openModal('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E8%B0%83%E7%A0%94.png')" style="text-align:center; justify-content:center;">
+                                <div style="font-size:48px; margin-bottom:15px;">📊</div>
+                                <h3 style="border:none;">调研 Agent</h3>
+                                <p style="font-size:14px; opacity:0.8;">自动搜集竞品参数与用户评价，生成结构化报告</p>
+                            </div>
+                            <div class="card-panel clickable-card" onclick="openModal('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%94%9F%E5%9B%BE.png')" style="text-align:center; justify-content:center;">
+                                <div style="font-size:48px; margin-bottom:15px;">🎨</div>
+                                <h3 style="border:none;">生图 Agent</h3>
+                                <p style="font-size:14px; opacity:0.8;">辅助生成 ID 概念草图，加速视觉沟通</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. 收获成长 (重构：2x2网格 + 新增板块 + 留白) -->
+                <section id="page-growth" class="page-slide">
+                    <h2 class="slide-title">收获与成长</h2>
+                    <div class="content-compact">
+                        <div class="grid-2x2">
+                            <div class="card-panel" style="text-align:center;">
+                                <div style="font-size:32px; margin-bottom:10px;">🧠</div>
+                                <h3>思维升级</h3>
+                                <p>建立非线性工作的系统思维。</p>
+                            </div>
+                            <div class="card-panel" style="text-align:center;">
+                                <div style="font-size:32px; margin-bottom:10px;">💎</div>
+                                <h3>价值观升级</h3>
+                                <p>聚焦核心竞争力和长期价值。</p>
+                            </div>
+                            <div class="card-panel" style="text-align:center;">
+                                <div style="font-size:32px; margin-bottom:10px;">🛡️</div>
+                                <h3>方法论升级</h3>
+                                <p>FMEA分析，提前识别与处理风险。</p>
+                            </div>
+                            <!-- 新增板块 -->
+                            <div class="card-panel" style="text-align:center; background-color:#fffaf5; border-color:#ffe0b2;">
+                                <div style="font-size:32px; margin-bottom:10px;">🤖</div>
+                                <h3>AI应用升级</h3>
+                                <p>从单纯搜索到完整交付的落地。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. 规划1：产品矩阵 (留白调整) -->
+                <section id="page-future-product" class="page-slide">
+                    <h2 class="slide-title">未来规划：产品矩阵</h2>
+                    <div class="content-compact">
+                        <p style="margin-bottom:15px;">总目标：确保全年结果指标达成率 >100%</p>
+                        <div class="grid-box-3">
+                            <div class="card-panel">
+                                <h3>存量</h3>
+                                <p>挖掘灯类升级点，稳固基本盘。</p>
+                            </div>
+                            <div class="card-panel">
+                                <h3>增量</h3>
+                                <p>美甲、美发等智能电器。</p>
+                                <p style="color:var(--primary-orange); font-weight:bold;">目标：3年打造成高壁垒产品线。</p>
+                            </div>
+                            <div class="card-panel">
+                                <h3>变量</h3>
+                                <p>交由团队探索，保持创新敏锐度。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. 规划2：渠道营销 (留白调整) -->
+                <section id="page-future-channel" class="page-slide">
+                    <h2 class="slide-title">未来规划：渠道与营销</h2>
+                    <div class="content-compact">
+                        <div class="grid-box">
+                            <div class="card-panel clickable-card" onclick="openModal('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/TT%E6%95%B0%E6%8D%AE.JPG')">
+                                <h3>渠道升维</h3>
+                                <ul>
+                                    <li><strong>放弃内卷：</strong>亚马逊“参数内卷”效益递减。</li>
+                                    <li><strong>拥抱熵增：</strong>TT爆发证明“高频视觉刺激”是趋势。</li>
+                                    <li><strong>策略：</strong>从“功能价值”向“情绪价值”迁移。</li>
+                                </ul>
+                            </div>
+                            <div class="card-panel">
+                                <h3>营销配合</h3>
+                                <ul>
+                                    <li><strong>内容生产：</strong>参数可视化，技术降维视觉冲击。</li>
+                                    <li><strong>流量分发：</strong>分布式矩阵，撞算法推荐，提高成功率。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 9. 团队与个人 (留白调整) -->
+                <section id="page-future-team" class="page-slide">
+                    <h2 class="slide-title">团队管理 & 个人成长</h2>
+                    <div class="content-compact">
+                        <div class="grid-box">
+                            <div class="card-panel">
+                                <h3>团队管理</h3>
+                                <p>将 3 名管培生放入产品开发项目。</p>
+                                <p>通过 IPD 流程、项目管理、供应链等实战训练。</p>
+                                <p><strong>目标：</strong>个人方法论“内化”为团队能力。</p>
+                            </div>
+                            <div class="card-panel">
+                                <h3>个人成长：升级认知供应链</h3>
+                                <ul>
+                                    <li><strong>解构：</strong>认知工序 Agent 化。</li>
+                                    <li><strong>总工：</strong>定义工序接口，系统自行运转。</li>
+                                    <li><strong>洞察：</strong>提升鉴赏力，让AI输出向卓越靠拢。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 10. 致谢 (留白调整) -->
+                <section id="page-thanks" class="page-slide">
+                    <h2 class="slide-title">致谢</h2>
+                    <div class="content-compact">
+                        <div class="grid-box-3">
+                            <div class="card-panel" style="text-align:center; justify-content:center;">
+                                <div style="font-size:40px; margin-bottom:15px;">🌟</div>
+                                <h3>To: VC</h3>
+                                <p>感谢您在战略方向及思维层面的指引。</p>
+                            </div>
+                            <div class="card-panel" style="text-align:center; justify-content:center;">
+                                <div style="font-size:40px; margin-bottom:15px;">🤝</div>
+                                <h3>To: 业务协同团队</h3>
+                                <p>感谢运营、供应链及研发兄弟部门的全力支持。</p>
+                            </div>
+                            <div class="card-panel" style="text-align:center; justify-content:center;">
+                                <div style="font-size:40px; margin-bottom:15px;">❤️</div>
+                                <h3>To: HR团队</h3>
+                                <p>感谢你们在入职引导与文化融入上给予的温暖帮助。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="slide-footer">
+                Make It Happen!
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const pageIds = [
+            'page-cover',           // 0
+            'page-product',         // 1
+            'page-kpi',             // 2
+            'page-review',          // 3
+            'page-solve',           // 4
+            'page-ai',              // 5
+            'page-growth',          // 6
+            'page-future-product',  // 7
+            'page-future-channel',  // 8
+            'page-future-team',     // 9
+            'page-thanks'           // 10
+        ];
+        
+        const pageGroupMap = {
+            1: 'group1', 2: 'group1',
+            3: 'group2', 4: 'group2', 5: 'group2', 6: 'group2',
+            7: 'group3', 8: 'group3', 9: 'group3',
+            10: 'group4'
+        };
+
+        let currentIndex = 0;
+        let lastScrollTime = 0;
+        const scrollCooldown = 800; 
+
+        function navigateTo(index) {
+            if (index < 0) index = 0;
+            if (index >= pageIds.length) index = pageIds.length - 1;
+            
+            currentIndex = index;
+            const targetId = pageIds[currentIndex];
+
+            document.querySelectorAll('.page-slide').forEach(p => p.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+
+            document.querySelectorAll('.nav-sub-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.nav-header').forEach(item => item.classList.remove('active-header'));
+
+            const navId = 'nav-' + targetId;
+            const navItem = document.getElementById(navId);
+            if (navItem) {
+                navItem.classList.add('active');
+            } else {
+                if (targetId === 'page-thanks') {
+                    document.getElementById('nav-header-thanks').classList.add('active-header');
+                }
+            }
+
+            const activeGroupId = pageGroupMap[index];
+            document.querySelectorAll('.nav-group').forEach(group => {
+                if (group.id !== activeGroupId) {
+                    group.classList.add('collapsed');
+                }
+            });
+            if (activeGroupId) {
+                document.getElementById(activeGroupId).classList.remove('collapsed');
+            }
+
+            document.querySelector('.slide-scroll-area').scrollTop = 0;
+        }
+
+        function toggleGroup(groupId) {
+            document.getElementById(groupId).classList.toggle('collapsed');
+        }
+
+        function openModal(imgSrc) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImg");
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
+        }
+
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        window.addEventListener('wheel', function(e) {
+            if (document.getElementById("imageModal").style.display === "flex") return;
+            const now = Date.now();
+            if (now - lastScrollTime > scrollCooldown) {
+                if (e.deltaY > 0) {
+                    if (currentIndex < pageIds.length - 1) {
+                        navigateTo(currentIndex + 1);
+                        lastScrollTime = now;
+                    }
+                } else if (e.deltaY < 0) {
+                    if (currentIndex > 0) {
+                        navigateTo(currentIndex - 1);
+                        lastScrollTime = now;
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                closeModal();
+                return;
+            }
+            if (document.getElementById("imageModal").style.display === "flex") return;
+
+            switch(e.key) {
+                case "ArrowDown":
+                case "ArrowRight":
+                    if (currentIndex < pageIds.length - 1) navigateTo(currentIndex + 1);
+                    break;
+                case "ArrowUp":
+                case "ArrowLeft":
+                    if (currentIndex > 0) navigateTo(currentIndex - 1);
+                    break;
+            }
+        });
+
+    </script>
+</body>
+</html>
