@@ -228,7 +228,6 @@
         .card-special-align h3 { text-align: center; margin-bottom: 20px; flex-shrink: 0; }
         .card-special-align .text-content-wrapper { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: left; }
         
-        /* 强化的紧凑间距控制 */
         .tight-spacing h3 { margin-bottom: 2px !important; }
         .tight-spacing ul { margin-top: 0 !important; }
         .tight-spacing li { margin-bottom: 4px !important; }
@@ -244,7 +243,6 @@
             box-shadow: 0 6px 18px rgba(0,0,0,0.1); background-color: #333;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; cursor: pointer;
         }
-        /* 第一页悬浮：放大倍率提升 */
         .product-card:hover { transform: translateY(-12px) scale(1.1); box-shadow: 0 25px 50px rgba(0,0,0,0.3); z-index: 10; }
         
         .product-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.6s ease; z-index: 0; }
@@ -303,8 +301,8 @@
             <div class="nav-group collapsed" id="group3">
                 <div class="nav-header has-arrow" onclick="toggleGroup('group3')">三、未来规划</div>
                 <div class="sub-items">
-                    <div class="nav-sub-item" id="nav-page-future-product" onclick="navigateTo(6)"><i>🧩</i>产品矩阵规划</div>
-                    <div class="nav-sub-item" id="nav-page-future-channel" onclick="navigateTo(7)"><i>📢</i>渠道营销思考</div>
+                    <div class="nav-sub-item" id="nav-page-future-product" onclick="navigateTo(6)"><i>🗂️</i>产品矩阵规划</div>
+                    <div class="nav-sub-item" id="nav-page-future-channel" onclick="navigateTo(7)"><i>🌐</i>渠道营销思考</div>
                     <div class="nav-sub-item" id="nav-page-future-team" onclick="navigateTo(8)"><i>👥</i>团队管理建设</div>
                 </div>
             </div>
@@ -381,14 +379,12 @@
                                 <h3 style="border-bottom:1px dashed #ccc; padding-bottom:10px;">外因 (供应商滞后)</h3>
                                 <ul><li>TR3准出评审引入更高标准，DFMEA由系统级升级到电路级</li><li>供应商无法提供足量图纸支持评审，导致项目卡点</li></ul>
                             </div>
-                            <!-- 对内解决方案 -->
                             <div id="sol-internal" class="card-panel hidden-solution clickable-card" style="background-color:#f0f9ff; border-color:#b3e5fc;" onclick="openModal('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%99%BA%E8%83%BD%E8%A1%A8.png')">
-                                <h3 style="color:#0277bd;">对内解决方案</h3>
+                                <h3 style="color:#0277bd; border-bottom:1px dashed #ccc; padding-bottom:10px;">对内解决方案</h3>
                                 <ul><li>引入项目管理智能表格，AI完成排期</li><li>设置checklist和智能提醒，降低延误风险</li><li>建议：建立标准工期数据库，进而制定标准工期要求</li></ul>
                             </div>
-                            <!-- 对外解决方案：背景色调浅 -->
                             <div id="sol-external" class="card-panel hidden-solution clickable-card" style="background-color:#fffcf5; border-color:#ffedcc;" onclick="openModal('https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/DFMEA.png')">
-                                <h3 style="color:#ef6c00;">对外解决方案</h3>
+                                <h3 style="color:#ef6c00; border-bottom:1px dashed #ccc; padding-bottom:10px;">对外解决方案</h3>
                                 <ul><li>针对供应商不提供图纸的情况，制定备选方案</li><li>确保有效完成 DFMEA 分析，提前识别风险</li></ul>
                             </div>
                         </div>
@@ -406,7 +402,9 @@
                                 <div style="font-size:48px; margin-bottom:15px;">🎨</div><h3 style="border:none;">生图 Agent</h3><p style="font-size:14px; opacity:0.8;">辅助生成概念草图，提高设计沟通效率</p>
                             </div>
                         </div>
-                        <div class="strategy-box double-spacing"><p style="margin:0; font-weight:500;">基于 IPD 方法论，创建 Agent 工作流，将体力工作自动化</p></div>
+                        <div class="strategy-box double-spacing">
+                            <p style="margin:0; font-weight:bold;"><strong>基于 IPD 方法论，创建 Agent 工作流，将体力工作自动化</strong></p>
+                        </div>
                     </div>
                 </section>
 
@@ -426,16 +424,20 @@
                     <h2 class="slide-title">产品矩阵规划</h2>
                     <div class="content-compact">
                         <div class="grid-box-3 standard-top-margin" style="flex:1;">
-                            <div class="card-panel flex-center-all"><h3>存量</h3><p>挖掘灯类升级点，稳中提升基本盘</p></div>
-                            <!-- 增量：背景色同步更新 -->
-                            <div class="card-panel flex-center-all" style="background-color:#fffcf5; border-color:#ffedcc;">
+                            <div class="card-panel flex-center-all clickable-card" onclick="openStockGallery()">
+                                <h3>存量</h3><p>挖掘灯类升级点，稳中提升基本盘</p>
+                            </div>
+                            <div class="card-panel flex-center-all clickable-card" style="background-color:#fffcf5; border-color:#ffedcc;" onclick="openIncrementGallery()">
                                 <h3 style="color:#ef6c00;">增量</h3><p style="color:#bf360c;">美甲、美发等智能电器，形成新增长点</p>
                             </div>
-                            <div class="card-panel flex-center-all" style="background-color:#f0f9ff; border-color:#b3e5fc;">
+                            <div class="card-panel flex-center-all clickable-card" style="background-color:#f0f9ff; border-color:#b3e5fc;" onclick="openVariableGallery()">
                                 <h3 style="color:#0277bd;">变量</h3><p style="color:#01579b;">交由团队探索，保持市场与创新敏锐度</p>
                             </div>
                         </div>
-                        <div class="strategy-box double-spacing"><p style="margin:0; font-weight:500;">目标：用3年时间打造成战略级产品线<br>指标达成：确保全年指标达成率 >100%</p></div>
+                        <div class="strategy-box double-spacing">
+                            <p style="margin:0; font-weight:bold; margin-bottom: 20px;"><strong>目标：用3年时间打造成战略级产品线</strong></p>
+                            <p style="margin:0; font-weight:bold;"><strong>指标达成：确保全年指标达成率 >100%</strong></p>
+                        </div>
                     </div>
                 </section>
 
@@ -443,24 +445,20 @@
                     <h2 class="slide-title">渠道营销思考</h2>
                     <div class="content-compact">
                         <div class="grid-box standard-top-margin">
-                            <div class="card-panel clickable-card card-special-align tight-spacing" onclick="openChannelGallery(0)">
-                                <h3>渠道升维</h3>
-                                <div class="text-content-wrapper">
-                                    <ul>
-                                        <li><strong>放弃内卷：</strong>亚马逊“卷参数价格”已进入边际效益递减阶段</li>
-                                        <li><strong>把握红利：</strong>TT爆发证明“高频视觉刺激”更符合新一代消费习惯</li>
-                                        <li><strong>产品策略调整：</strong>既要“好用“，又要“好看+有趣”</li>
-                                    </ul>
-                                </div>
+                            <div class="card-panel cause-card clickable-card" onclick="openChannelGallery(0)">
+                                <h3 style="border-bottom:1px dashed #ccc; padding-bottom:10px; text-align:center;">渠道升维</h3>
+                                <ul>
+                                    <li style="min-height: 60px;"><strong>放弃内卷：</strong>亚马逊“卷参数价格”已进入边际效益递减阶段</li>
+                                    <li style="min-height: 60px;"><strong>把握红利：</strong>TT爆发证明“高频视觉刺激”更符合新一代消费习惯</li>
+                                    <li><strong>产品策略调整：</strong>既要“好用“，又要“好看+有趣”</li>
+                                </ul>
                             </div>
-                            <div class="card-panel card-special-align tight-spacing">
-                                <h3>营销配合</h3>
-                                <div class="text-content-wrapper">
-                                    <ul>
-                                        <li><strong>内容生产：</strong>参数可视化，把技术降维成小白能看懂的视觉冲击</li>
-                                        <li><strong>流量分发：</strong>建立分布式流量矩阵，用低成本内容撞算法推荐，提高爆率</li>
-                                    </ul>
-                                </div>
+                            <div class="card-panel cause-card">
+                                <h3 style="border-bottom:1px dashed #ccc; padding-bottom:10px; text-align:center;">营销配合</h3>
+                                <ul>
+                                    <li style="min-height: 60px;"><strong>内容生产：</strong>参数可视化，把技术降维成小白能看懂的视觉冲击</li>
+                                    <li style="min-height: 60px;"><strong>流量分发：</strong>建立分布式流量矩阵，用低成本内容撞算法推荐，提高爆率</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -470,25 +468,20 @@
                     <h2 class="slide-title">团队管理建设</h2>
                     <div class="content-compact">
                         <div class="grid-box standard-top-margin">
-                            <div class="card-panel card-special-align tight-spacing">
-                                <h3>成员培养</h3>
-                                <div class="text-content-wrapper">
-                                    <ul>
-                                        <li>将 3 名管培生加入产品开发项目</li>
-                                        <li>通过 IPD 流程、项目管理、供应链等模块的实战训练，将我的产品方法论“内化”为团队能力</li>
-                                        
-                                    </ul>
-                                </div>
+                            <div class="card-panel cause-card">
+                                <h3 style="border-bottom:1px dashed #ccc; padding-bottom:10px; text-align:center;">成员培养</h3>
+                                <ul>
+                                    <li style="min-height: 35px;">将 3 名管培生加入产品开发项目</li>
+                                    <li>通过 IPD 流程、项目管理、供应链等模块的实战训练，将我的产品方法论“内化”为团队能力</li>
+                                </ul>
                             </div>
-                            <div class="card-panel card-special-align tight-spacing">
-                                <h3>个人认知升级</h3>
-                                <div class="text-content-wrapper">
-                                    <ul>
-                                        <li>解构认知工序，各项工序Agent化</li>
-                                        <li>成为认知供应链“总工程师”，定义工序接口，让其自行运转</li>
-                                        <li>提升鉴赏力，判断力、创造力，洞察需求，挖掘业务的底层逻辑，让AI输出的结果超越平庸，向卓越靠拢</li>
-                                    </ul>
-                                </div>
+                            <div class="card-panel cause-card">
+                                <h3 style="border-bottom:1px dashed #ccc; padding-bottom:10px; text-align:center;">个人认知升级</h3>
+                                <ul>
+                                    <li style="min-height: 35px;">解构认知工序，各项工序Agent化</li>
+                                    <li>成为认知供应链“总工程师”，定义工序接口，让其自行运转</li>
+                                    <li>提升鉴赏力，判断力、创造力，洞察需求，挖掘业务的底层逻辑，让AI输出的结果超越平庸，向卓越靠拢</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -511,10 +504,19 @@
     </div>
 
     <script>
-        // 更新了第三张图（对应高速电吹风板块点击后）的全屏链接
         const productImages = ["https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BE%8E%E7%94%B2%E4%BA%91%E5%9B%BE.png", "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%99%A4%E8%9E%A8%E4%BA%91%E5%9B%BE.png", "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%94%B5%E5%90%B9%E9%A3%8E%E4%BA%91%E5%9B%BE.png"];
         const channelImages = ["https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/TT%E6%95%B0%E6%8D%AE1.png", "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/TT%E6%95%B0%E6%8D%AE2.png"];
         const aiImages = ["https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E8%B0%83%E7%A0%94.png", "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%94%9F%E5%9B%BE.png"];
+        
+        const incrementImages = [
+            "https://vestige0915-dotcom.github.io/report/%E7%BE%8E%E7%94%B2%E5%A2%9E%E9%87%8F.png", 
+            "https://vestige0915-dotcom.github.io/report/%E7%BE%8E%E5%8F%91%E5%A2%9E%E9%87%8F.png"
+        ];
+        const variableImages = [
+            "https://vestige0915-dotcom.github.io/report/%E9%A6%99%E8%96%B0%E5%8F%98%E9%87%8F.png", 
+            "https://vestige0915-dotcom.github.io/report/%E6%8C%89%E6%91%A9%E5%8F%98%E9%87%8F.png", 
+            "https://vestige0915-dotcom.github.io/report/%E5%85%B3%E5%8F%98%E9%87%8F.png"
+        ];
 
         let currentGalleryImages = [];
         let currentGalleryIndex = 0;
@@ -532,7 +534,6 @@
             currentIndex = index;
             const targetId = pageIds[currentIndex];
 
-            // 侧边栏“致谢”动态显示/隐藏逻辑调整：一旦显示（targetId === 'page-thanks'），就不再隐藏
             const group4 = document.getElementById('group4');
             if (targetId === 'page-thanks') {
                 group4.style.display = 'block';
@@ -556,6 +557,7 @@
         }
 
         function toggleGroup(groupId) { document.getElementById(groupId).classList.toggle('collapsed'); }
+        
         function openModal(imgSrc) {
             const modal = document.getElementById("imageModal");
             document.getElementById("modalImg").src = imgSrc;
@@ -564,6 +566,7 @@
             modal.style.display = "flex";
             isGalleryOpen = false;
         }
+        
         function openGallery(images, index) {
             currentGalleryImages = images;
             currentGalleryIndex = index;
@@ -574,9 +577,15 @@
             modal.style.display = "flex";
             isGalleryOpen = true;
         }
+        
         function openProductGallery(index) { openGallery(productImages, index); }
         function openChannelGallery(index) { openGallery(channelImages, index); }
         function openAIGallery(index) { openGallery(aiImages, index); }
+        
+        function openStockGallery() { openModal('https://vestige0915-dotcom.github.io/report/%E7%81%AF%E5%AD%98%E9%87%8F.png'); }
+        function openIncrementGallery() { openGallery(incrementImages, 0); }
+        function openVariableGallery() { openGallery(variableImages, 0); }
+
         function changeImage(direction) {
             if (!isGalleryOpen) return;
             currentGalleryIndex = (currentGalleryIndex + direction + currentGalleryImages.length) % currentGalleryImages.length;
@@ -610,4 +619,3 @@
     </script>
 </body>
 </html>
-```
