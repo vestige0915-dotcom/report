@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>邓广坚 - 产品工作双周汇报</title>
+    <title>邓广坚 - 产品工作双周汇报/0305</title>
     <!-- 引入更加现代的字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -227,10 +227,10 @@
         }
 
         .progress-card {
-            background: #ffffff;
+            background: #f8fafc; /* 修改：背景改为浅灰色 */
             border: 1px solid #e5e7eb;
             padding: 35px;
-            border-radius: 16px;
+            border-radius: 24px; /* 修改：圆角加大 */
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
@@ -267,6 +267,7 @@
 
         /* --- 卡片悬浮放大效果 --- */
         .progress-card.hover-trigger:hover {
+            background: #ffffff; /* 修改：悬浮时背景变白 */
             transform: translateY(-24px) scale(1.10); 
             box-shadow: 0 30px 60px -12px rgba(37, 99, 235, 0.15); 
             z-index: 10;
@@ -313,7 +314,7 @@
         .progress-list { list-style: none; padding: 0; margin: 0; }
         .progress-list li {
             padding: 12px 0;
-            border-bottom: 1px dashed #f3f4f6;
+            border-bottom: 1px dashed #e5e7eb;
             font-size: 15px; 
             color: var(--text-secondary);
             line-height: 1.6;
@@ -339,7 +340,7 @@
             align-items: center;
             cursor: pointer;
             height: 240px; 
-            border-radius: 16px;
+            border-radius: 24px; /* 修改：圆角加大 */
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
@@ -350,8 +351,8 @@
             width: 10px; 
             opacity: 0;
             transition: 0.3s;
-            border-top-left-radius: 16px;
-            border-bottom-left-radius: 16px;
+            border-top-left-radius: 24px;
+            border-bottom-left-radius: 24px;
         }
         .clickable-text-card:hover::before {
             opacity: 1;
@@ -364,27 +365,27 @@
             margin-top: 15px;
         }
 
-        /* 第三页：极致硬朗、户外战术配色（深碳黑底 + 高饱和重边框） */
+        /* 第三页：样式调整为匹配整体风格（浅灰色背景） */
         /* 1. 远红外发热 (战术橙) */
-        .outdoor-card-1 { background-color: #18181b; border: 2px solid #ea580c; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+        .outdoor-card-1 { background-color: #f8fafc; border: 2px solid #ea580c; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
         .outdoor-card-1::before { background: #ea580c; }
-        .outdoor-card-1 .card-center-text { color: #fdba74; }
+        .outdoor-card-1 .card-center-text { color: #ea580c; } /* 修改字体颜色为深色以适配浅底 */
         .outdoor-card-1 svg { fill: #ea580c; width: 56px; height: 56px; }
-        .outdoor-card-1:hover { transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(234, 88, 12, 0.35); border-color: #f97316; }
+        .outdoor-card-1:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(234, 88, 12, 0.15); border-color: #f97316; }
 
         /* 2. 便携 (军工绿) */
-        .outdoor-card-2 { background-color: #18181b; border: 2px solid #16a34a; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+        .outdoor-card-2 { background-color: #f8fafc; border: 2px solid #16a34a; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
         .outdoor-card-2::before { background: #16a34a; }
-        .outdoor-card-2 .card-center-text { color: #86efac; }
+        .outdoor-card-2 .card-center-text { color: #16a34a; } /* 修改字体颜色为深色以适配浅底 */
         .outdoor-card-2 svg { fill: #16a34a; width: 56px; height: 56px; }
-        .outdoor-card-2:hover { transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(22, 163, 74, 0.35); border-color: #22c55e; }
+        .outdoor-card-2:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(22, 163, 74, 0.15); border-color: #22c55e; }
 
         /* 3. 专利壁垒 (科技蓝) */
-        .outdoor-card-3 { background-color: #18181b; border: 2px solid #2563eb; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+        .outdoor-card-3 { background-color: #f8fafc; border: 2px solid #2563eb; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
         .outdoor-card-3::before { background: #2563eb; }
-        .outdoor-card-3 .card-center-text { color: #93c5fd; }
+        .outdoor-card-3 .card-center-text { color: #2563eb; } /* 修改字体颜色为深色以适配浅底 */
         .outdoor-card-3 svg { fill: #2563eb; width: 56px; height: 56px; }
-        .outdoor-card-3:hover { transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(37, 99, 235, 0.35); border-color: #3b82f6; }
+        .outdoor-card-3:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(37, 99, 235, 0.15); border-color: #3b82f6; }
 
         /* --- 第四页：图文数据看板样式 --- */
         .market-dashboard {
@@ -542,9 +543,9 @@
             width: 100%; 
             height: 100%; 
             overflow: auto; 
-            background-color: rgb(0,0,0); 
-            background-color: rgba(0,0,0,0.9); 
-            backdrop-filter: blur(5px);
+            background-color: rgb(255, 255, 255); /* 修改：背景色改为白色 */
+            background-color: rgba(255, 255, 255, 0.95); /* 修改：高透明度白色 */
+            backdrop-filter: blur(10px);
         }
 
         .modal-content {
@@ -553,8 +554,8 @@
             width: auto;
             max-width: 90%;
             max-height: 90vh;
-            border-radius: 8px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            border-radius: 24px; /* 修改：增加圆角 */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* 适配浅色背景的阴影 */
             animation-name: zoom;
             animation-duration: 0.3s;
             position: absolute;
@@ -572,7 +573,7 @@
             position: absolute;
             top: 30px;
             right: 50px;
-            color: #f1f1f1;
+            color: #333; /* 修改：深色关闭按钮 */
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
@@ -582,7 +583,7 @@
 
         .close:hover,
         .close:focus {
-            color: #bbb;
+            color: #000;
             text-decoration: none;
             cursor: pointer;
         }
@@ -592,7 +593,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            color: #fff;
+            color: #333; /* 修改：深色导航箭头 */
             font-size: 50px;
             font-weight: bold;
             cursor: pointer;
@@ -600,12 +601,12 @@
             z-index: 10001;
             padding: 15px 20px;
             transition: 0.3s;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.05); /* 浅色背景 */
             border-radius: 12px;
         }
         .gallery-nav:hover {
-            color: #fff;
-            background: rgba(0,0,0,0.7);
+            color: #000;
+            background: rgba(0,0,0,0.1);
         }
         .gallery-prev { left: 30px; }
         .gallery-next { right: 30px; }
@@ -672,8 +673,8 @@
                             美甲集尘器
                         </h3>
                         <ul class="progress-list">
-                            <li>1款ODMA首批已于2月10日发起调拨；另一款首批3月10日前试产，目前确认备料情况正常</li>
-                            <li><span class="anomaly-highlight">异常点：IRDA静音款的ID评审No Go，目前还没达到再次评审的要求</span></li>
+                            <li>1款ODMA准备第二批订单生产；另一款首批3月14日前试产</li>
+                            <li><span class="anomaly-highlight">IRDA静音款已完成ID和结构设计，正进行3D打印验证</span></li>
                         </ul>
                     </div>
                     
@@ -684,8 +685,8 @@
                             除螨吸尘器
                         </h3>
                         <ul class="progress-list">
-                            <li>2款ODMA的测试问题全部关闭，节后安排TR4准出，MR1&MR2，推进PDCP</li>
-                            <li>IRDA已完成结构堆叠设计，ID设计年后启动</li>
+                            <li>2款ODMA的测试问题全部关闭，准备TR4准出</li>
+                            <li>IRDA已完成结构堆叠设计，ID设计启动</li>
                         </ul>
                     </div>
                     
@@ -696,9 +697,9 @@
                             高速电吹风
                         </h3>
                         <ul class="progress-list">
-                            <li>2款ODMA已通过TR3评审，进入TR4测试</li>
-                            <li>IRD款下午TR1预评审，通过后发起正式评审</li>
-                            <li><span class="anomaly-highlight">异常点：1款ODMA厂家反悔合作条件，已对接备选厂家</span></li>
+                            <li>3款ODMA进行TR4测试</li>
+                            <li>IRD款年前通过TR1评审，目前已对接传感模组</li>
+                            
                         </ul>
                     </div>
                     
@@ -709,7 +710,7 @@
                             扩香机
                         </h3>
                         <ul class="progress-list">
-                            <li><span class="anomaly-highlight">异常点：硬件方案已完成，但核心盈利点的配套精油方案需要相关工程师进行技术评估。待明确后再发起TR1</span></li>
+                            <li><span class="anomaly-highlight">已有精油工程师面试</span></li>
                         </ul>
                     </div>
 
@@ -720,8 +721,8 @@
                             无线壁灯
                         </h3>
                         <ul class="progress-list">
-                            <li>2款ODMA年后TR5试产</li>
-                            <li><span class="anomaly-highlight">异常点：详见复盘</span></li>
+                            <li>2款ODMA3月底TR5试产</li>
+                            
                         </ul>
                     </div>
 
@@ -748,7 +749,8 @@
                 </div>
                 <!-- 外层容器100%居中，内部宽度高度调整为 90%，实现等比例放大15% -->
                 <div class="planning-grid" style="grid-template-columns: 1fr; height: 100%;">
-                    <div class="image-card image-card-extra-zoom" style="width: 90%; height: 90%; margin: auto; display: flex; align-items: center; justify-content: center;" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E5%A4%9A%E5%8A%9F%E8%83%BD.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97.png'], 0)">
+                    <!-- 修改：增加了新的图片链接到点击事件中 -->
+                    <div class="image-card image-card-extra-zoom" style="width: 90%; height: 90%; margin: auto; display: flex; align-items: center; justify-content: center;" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E5%A4%9A%E5%8A%9F%E8%83%BD.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%9C%BA%E6%99%AF%E5%9B%BE%20%E5%90%8E%E8%8A%B1%E5%9B%AD.jpg'], 0)">
                         <img src="https://vestige0915-dotcom.github.io/report/Air/%E6%A6%82%E8%A7%88.png" alt="产品简介" style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">
                     </div>
                 </div>
