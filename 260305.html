@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>邓广坚 - 产品工作双周汇报/0305</title>
+    <title>邓广坚 - 产品工作双周汇报</title>
     <!-- 引入更加现代的字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -86,12 +86,39 @@
             font-size: 15px; 
             font-weight: 600;
             margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sidebar-nav ul li.nav-group-main:hover {
+            color: var(--primary-blue);
         }
         .sidebar-nav ul li.nav-group-main svg {
             width: 20px; 
             height: 20px; 
             margin-right: 12px; 
             fill: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        .sidebar-nav ul li.nav-group-main:hover svg {
+            fill: var(--primary-blue);
+        }
+
+        /* 子菜单折叠样式 */
+        .sub-nav-item {
+            display: none; /* 默认折叠收起 */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .sub-nav-item.show {
+            display: block;
+            animation: fadeIn 0.3s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .sub-nav-item a {
+            padding-left: 45px !important; /* 子级缩进 */
+            font-size: 14px !important;
         }
 
         .sidebar-nav ul li a {
@@ -227,10 +254,10 @@
         }
 
         .progress-card {
-            background: #f8fafc; /* 修改：背景改为浅灰色 */
+            background: #f8fafc; 
             border: 1px solid #e5e7eb;
             padding: 35px;
-            border-radius: 24px; /* 修改：圆角加大 */
+            border-radius: 24px; 
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
@@ -267,7 +294,7 @@
 
         /* --- 卡片悬浮放大效果 --- */
         .progress-card.hover-trigger:hover {
-            background: #ffffff; /* 修改：悬浮时背景变白 */
+            background: #ffffff; 
             transform: translateY(-24px) scale(1.10); 
             box-shadow: 0 30px 60px -12px rgba(37, 99, 235, 0.15); 
             z-index: 10;
@@ -332,15 +359,26 @@
             flex-shrink: 0;
         }
 
+        /* --- 第三页：专项缩小版排版 --- */
+        #section-advantage .planning-grid {
+            /* 列宽缩小实现面积缩小10%，并在父级居中对齐 */
+            grid-template-columns: repeat(3, minmax(0, 28%)); 
+            justify-content: center; 
+            align-content: center;
+            gap: 50px; /* 间距保持不变 */
+        }
+        #section-advantage .clickable-text-card {
+            height: 216px; /* 原本240px，缩小10% */
+        }
+
         /* --- 纯文字可点击卡片（第三页） --- */
         .clickable-text-card {
             display: flex;
-            flex-direction: column; /* 垂直排列图标与文字 */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            height: 240px; 
-            border-radius: 24px; /* 修改：圆角加大 */
+            border-radius: 24px; 
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
@@ -365,25 +403,25 @@
             margin-top: 15px;
         }
 
-        /* 第三页：样式调整为匹配整体风格（浅灰色背景） */
+        /* 第三页：浅灰色背景主题 */
         /* 1. 远红外发热 (战术橙) */
         .outdoor-card-1 { background-color: #f8fafc; border: 2px solid #ea580c; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
         .outdoor-card-1::before { background: #ea580c; }
-        .outdoor-card-1 .card-center-text { color: #ea580c; } /* 修改字体颜色为深色以适配浅底 */
+        .outdoor-card-1 .card-center-text { color: #ea580c; }
         .outdoor-card-1 svg { fill: #ea580c; width: 56px; height: 56px; }
         .outdoor-card-1:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(234, 88, 12, 0.15); border-color: #f97316; }
 
         /* 2. 便携 (军工绿) */
         .outdoor-card-2 { background-color: #f8fafc; border: 2px solid #16a34a; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
         .outdoor-card-2::before { background: #16a34a; }
-        .outdoor-card-2 .card-center-text { color: #16a34a; } /* 修改字体颜色为深色以适配浅底 */
+        .outdoor-card-2 .card-center-text { color: #16a34a; }
         .outdoor-card-2 svg { fill: #16a34a; width: 56px; height: 56px; }
         .outdoor-card-2:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(22, 163, 74, 0.15); border-color: #22c55e; }
 
         /* 3. 专利壁垒 (科技蓝) */
         .outdoor-card-3 { background-color: #f8fafc; border: 2px solid #2563eb; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
         .outdoor-card-3::before { background: #2563eb; }
-        .outdoor-card-3 .card-center-text { color: #2563eb; } /* 修改字体颜色为深色以适配浅底 */
+        .outdoor-card-3 .card-center-text { color: #2563eb; }
         .outdoor-card-3 svg { fill: #2563eb; width: 56px; height: 56px; }
         .outdoor-card-3:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(37, 99, 235, 0.15); border-color: #3b82f6; }
 
@@ -415,6 +453,8 @@
             position: relative;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
         }
+        .stat-card::before { display: none; /* 取消左侧黑色条块 */ }
+        
         /* 悬浮放大加倍效果 */
         .stat-card:hover {
             transform: translateY(-10px) scale(1.05);
@@ -422,14 +462,6 @@
             z-index: 10; 
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; width: 4px; height: 100%;
-            background: var(--text-main);
-            border-top-left-radius: 16px;
-            border-bottom-left-radius: 16px;
-        }
         .stat-title {
             font-size: 16px;
             font-weight: 800;
@@ -520,18 +552,18 @@
         }
         .trend-card p strong { color: var(--text-main); font-weight: 700; }
 
-        /* 四大趋势个性化配色 */
-        .trend-card:nth-child(1) .trend-icon { background: #fffbeb; }
-        .trend-card:nth-child(1) .trend-icon svg { fill: #d97706; }
+        /* 四大趋势个性化配色（独立类名控制） */
+        .trend-eco .trend-icon { background: #f0fdf4; }
+        .trend-eco .trend-icon svg { fill: #16a34a; }
         
-        .trend-card:nth-child(2) .trend-icon { background: #f0fdf4; }
-        .trend-card:nth-child(2) .trend-icon svg { fill: #16a34a; }
+        .trend-fireless .trend-icon { background: #f5f3ff; }
+        .trend-fireless .trend-icon svg { fill: #7c3aed; }
+
+        .trend-elec .trend-icon { background: #fffbeb; }
+        .trend-elec .trend-icon svg { fill: #d97706; }
         
-        .trend-card:nth-child(3) .trend-icon { background: #fef2f2; }
-        .trend-card:nth-child(3) .trend-icon svg { fill: #dc2626; }
-        
-        .trend-card:nth-child(4) .trend-icon { background: #f5f3ff; }
-        .trend-card:nth-child(4) .trend-icon svg { fill: #7c3aed; }
+        .trend-hybrid .trend-icon { background: #fef2f2; }
+        .trend-hybrid .trend-icon svg { fill: #dc2626; }
 
         /* --- 图片全屏模态框与画廊 --- */
         .modal {
@@ -543,8 +575,8 @@
             width: 100%; 
             height: 100%; 
             overflow: auto; 
-            background-color: rgb(255, 255, 255); /* 修改：背景色改为白色 */
-            background-color: rgba(255, 255, 255, 0.95); /* 修改：高透明度白色 */
+            background-color: rgb(255, 255, 255); 
+            background-color: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(10px);
         }
 
@@ -554,8 +586,8 @@
             width: auto;
             max-width: 90%;
             max-height: 90vh;
-            border-radius: 24px; /* 修改：增加圆角 */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* 适配浅色背景的阴影 */
+            border-radius: 24px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
             animation-name: zoom;
             animation-duration: 0.3s;
             position: absolute;
@@ -573,7 +605,7 @@
             position: absolute;
             top: 30px;
             right: 50px;
-            color: #333; /* 修改：深色关闭按钮 */
+            color: #333; 
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
@@ -593,7 +625,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            color: #333; /* 修改：深色导航箭头 */
+            color: #333; 
             font-size: 50px;
             font-weight: bold;
             cursor: pointer;
@@ -601,7 +633,7 @@
             z-index: 10001;
             padding: 15px 20px;
             transition: 0.3s;
-            background: rgba(0,0,0,0.05); /* 浅色背景 */
+            background: rgba(0,0,0,0.05); 
             border-radius: 12px;
         }
         .gallery-nav:hover {
@@ -618,7 +650,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="name">邓广坚</div>
-            <div class="role">产品工作双周汇报</div>
+            <div class="role">产品工作双周汇报/0305</div>
         </div>
 
         <nav class="sidebar-nav">
@@ -629,26 +661,27 @@
                     项目进度
                 </a></li>
                 
-                <!-- 新增：多功能户外集成装备（一级标题样式+匹配的山峰户外图标） -->
-                <li class="nav-group-main">
+                <!-- 多功能户外集成装备（一级标题样式+匹配的山峰户外图标，点击跳转到简介并展开子菜单） -->
+                <li class="nav-group-main" onclick="document.getElementById('section-intro').scrollIntoView({ behavior: 'smooth' });">
                     <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
                     多功能户外集成装备
                 </li>
 
+                <!-- 以下三个为子菜单项目，默认折叠收起 -->
                 <!-- 2. 产品简介 -->
-                <li><a href="#section-intro">
+                <li class="sub-nav-item"><a href="#section-intro">
                     <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                     产品简介
                 </a></li>
 
                 <!-- 3. 产品优势 -->
-                <li><a href="#section-advantage">
+                <li class="sub-nav-item"><a href="#section-advantage">
                     <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
                     产品优势
                 </a></li>
 
                 <!-- 4. 市场机会 -->
-                <li><a href="#section-opportunity">
+                <li class="sub-nav-item"><a href="#section-opportunity">
                     <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
                     市场机会
                 </a></li>
@@ -662,7 +695,7 @@
         <div id="section-progress" class="section-container">
             <div class="report-paper">
                 <div class="report-header">
-                    <h1>项目进度(截至3月4日）</h1>
+                    <h1>项目进度</h1>
                 </div>
                 <div class="progress-grid">
                     
@@ -685,7 +718,7 @@
                             除螨吸尘器
                         </h3>
                         <ul class="progress-list">
-                            <li>2款ODMA的测试问题全部关闭，准备TR4准出</li>
+                            <li>2款ODMA的测试问题全部关闭，准备TR4准出，本月完成PDCP</li>
                             <li>IRDA已完成结构堆叠设计，ID设计启动</li>
                         </ul>
                     </div>
@@ -699,7 +732,6 @@
                         <ul class="progress-list">
                             <li>3款ODMA进行TR4测试</li>
                             <li><span class="anomaly-highlight">IRD款年前通过TR1评审，目前已对接传感模组</span></li>
-                            
                         </ul>
                     </div>
                     
@@ -722,7 +754,6 @@
                         </h3>
                         <ul class="progress-list">
                             <li>2款ODMA3月底TR5试产</li>
-                            
                         </ul>
                     </div>
 
@@ -749,8 +780,8 @@
                 </div>
                 <!-- 外层容器100%居中，内部宽度高度调整为 90%，实现等比例放大15% -->
                 <div class="planning-grid" style="grid-template-columns: 1fr; height: 100%;">
-                    <!-- 修改：增加了新的图片链接到点击事件中 -->
-                    <div class="image-card image-card-extra-zoom" style="width: 90%; height: 90%; margin: auto; display: flex; align-items: center; justify-content: center;" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E5%A4%9A%E5%8A%9F%E8%83%BD.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%9C%BA%E6%99%AF%E5%9B%BE%20%E5%90%8E%E8%8A%B1%E5%9B%AD.jpg'], 0)">
+                    <!-- 更新了点击展开的4张图片链接数组 -->
+                    <div class="image-card image-card-extra-zoom" style="width: 90%; height: 90%; margin: auto; display: flex; align-items: center; justify-content: center;" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E5%A4%9A%E5%8A%9F%E8%83%BD.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97.png', 'https://vestige0915-dotcom.github.io/report/Air/%E6%8E%A5%E5%8F%A3.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%9C%BA%E6%99%AF%E5%90%88%E5%B9%B6.png'], 0)">
                         <img src="https://vestige0915-dotcom.github.io/report/Air/%E6%A6%82%E8%A7%88.png" alt="产品简介" style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">
                     </div>
                 </div>
@@ -763,7 +794,7 @@
                 <div class="report-header">
                     <h1>产品优势</h1>
                 </div>
-                <!-- 增加 SVG 图标，应用深色硬朗的战术风格配色 -->
+                <!-- 版块面积缩小10%并保持间距水平垂直居中 -->
                 <div class="planning-grid">
                     
                     <!-- 1. 远红外发热 -->
@@ -792,7 +823,7 @@
         <div id="section-opportunity" class="section-container">
             <div class="report-paper">
                 <div class="report-header">
-                    <h1>市场机会：未来3-5年趋势预测</h1>
+                    <h1>市场机会：综合对比与未来3-5年趋势预测</h1>
                 </div>
                 
                 <div class="market-dashboard">
@@ -814,22 +845,11 @@
                         </div>
                     </div>
 
-                    <!-- 下半部：未来四大趋势提炼 -->
+                    <!-- 下半部：未来四大趋势提炼（重排顺序与样式） -->
                     <div class="trend-grid">
                         
-                        <!-- 趋势1 -->
-                        <div class="trend-card">
-                            <div class="trend-header">
-                                <div class="trend-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
-                                </div>
-                                <h4>用电增速远超用火</h4>
-                            </div>
-                            <p>据 Mordor Intelligence 预测，全球户外电加热和电烹饪设备的复合年增长率（CAGR）在 2024-2029 年将达到 <strong>7.5% - 8.5%</strong>，而传统的燃气/木炭设备增速仅为 <strong>4%</strong> 左右。</p>
-                        </div>
-
-                        <!-- 趋势2 -->
-                        <div class="trend-card">
+                        <!-- 1. 环保与智能深度绑定 -->
+                        <div class="trend-card trend-eco">
                             <div class="trend-header">
                                 <div class="trend-icon">
                                     <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 11.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -839,19 +859,8 @@
                             <p>环保法规（Decarbonization）外溢，无废气设备受年轻一代欢迎。用电设备天然契合 <strong>Smart Home</strong>（Tuya, Alexa），可轻松实现 App 远程调温与定时断电。</p>
                         </div>
 
-                        <!-- 趋势3 -->
-                        <div class="trend-card">
-                            <div class="trend-header">
-                                <div class="trend-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M17.66 11.2c-.23-.3-.51-.56-.77-.82-.67-.6-1.43-1.03-2.07-1.66C13.33 7.26 13 4.85 13.95 3c-.95.23-1.78.75-2.49 1.32-2.59 2.08-3.61 5.75-2.39 8.9.04.1.08.2.08.33 0 .22-.15.42-.35.5-.22.1-.46.04-.64-.12a7.33 7.33 0 0 1-1.28-1.54c-1.95 3.21-1.09 7.35 1.7 9.53C10.51 23.41 12.76 24 14.99 24c4.12 0 7.53-3.1 7.97-7.1.1-.96-.13-1.93-.57-2.76-.24-.46-.51-.88-.73-1.34v.4z"/></svg>
-                                </div>
-                                <h4>“火电结合”跨界新宠</h4>
-                            </div>
-                            <p>纯电产品无法提供真实火焰与烟熏味。<strong>“用电控温 + 用火发热”</strong>的颗粒烤炉（Pellet Grills）插电由单片机精准控温，既保留了火的灵魂，又拥有电的便利，销量暴增。</p>
-                        </div>
-
-                        <!-- 趋势4 -->
-                        <div class="trend-card">
+                        <!-- 2. 无明火氛围取暖器 -->
+                        <div class="trend-card trend-fireless">
                             <div class="trend-header">
                                 <div class="trend-icon">
                                     <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-1.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
@@ -859,6 +868,28 @@
                                 <h4>无明火氛围取暖器</h4>
                             </div>
                             <p>利用水蒸气、LED光影技术模拟真实火焰的<strong>户外电火盆</strong>开始在高端庭院中出现，满足了高频风控地区（如加州山火区）不能生明火但需要氛围感的需求。</p>
+                        </div>
+
+                        <!-- 3. 用电增速远超用火 -->
+                        <div class="trend-card trend-elec">
+                            <div class="trend-header">
+                                <div class="trend-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                                </div>
+                                <h4>用电增速远超用火</h4>
+                            </div>
+                            <p>据 Mordor Intelligence 预测，全球户外电加热和电烹饪设备的复合年增长率（CAGR）在 2024-2029 年将达到 <strong>7.5% - 8.5%</strong>，而传统的燃气/木炭设备增速仅为 <strong>4%</strong> 左右。</p>
+                        </div>
+
+                        <!-- 4. “火电结合”跨界新宠 -->
+                        <div class="trend-card trend-hybrid">
+                            <div class="trend-header">
+                                <div class="trend-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M17.66 11.2c-.23-.3-.51-.56-.77-.82-.67-.6-1.43-1.03-2.07-1.66C13.33 7.26 13 4.85 13.95 3c-.95.23-1.78.75-2.49 1.32-2.59 2.08-3.61 5.75-2.39 8.9.04.1.08.2.08.33 0 .22-.15.42-.35.5-.22.1-.46.04-.64-.12a7.33 7.33 0 0 1-1.28-1.54c-1.95 3.21-1.09 7.35 1.7 9.53C10.51 23.41 12.76 24 14.99 24c4.12 0 7.53-3.1 7.97-7.1.1-.96-.13-1.93-.57-2.76-.24-.46-.51-.88-.73-1.34v.4z"/></svg>
+                                </div>
+                                <h4>“火电结合”跨界新宠</h4>
+                            </div>
+                            <p>纯电产品无法提供真实火焰与烟熏味。<strong>“用电控温 + 用火发热”</strong>的颗粒烤炉（Pellet Grills）插电由单片机精准控温，既保留了火的灵魂，又拥有电的便利，销量暴增。</p>
                         </div>
 
                     </div>
@@ -882,8 +913,9 @@
             const sections = document.querySelectorAll('.section-container');
             const navLinks = document.querySelectorAll('.sidebar-nav ul li a');
             const mainContent = document.querySelector('.main-content');
+            const subNavItems = document.querySelectorAll('.sub-nav-item');
 
-            // 滚动监听，自动高亮侧边栏
+            // 滚动监听，自动高亮侧边栏与折叠控制
             mainContent.addEventListener('scroll', () => {
                 let current = '';
                 sections.forEach(section => {
@@ -894,6 +926,13 @@
                     }
                 });
                 
+                // 子菜单折叠控制：仅在进入特定的三大页面时展开
+                if (['section-intro', 'section-advantage', 'section-opportunity'].includes(current)) {
+                    subNavItems.forEach(item => item.classList.add('show'));
+                } else {
+                    subNavItems.forEach(item => item.classList.remove('show'));
+                }
+
                 navLinks.forEach(a => {
                     a.classList.remove('active');
                     if (a.getAttribute('href').includes(current)) {
