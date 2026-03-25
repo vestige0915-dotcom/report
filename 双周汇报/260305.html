@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>邓广坚 - 产品工作双周汇报</title>
+    <!-- 引入更加现代的字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- 变量定义：商务配色体系 --- */
+        :root {
+            --bg-color: #f3f4f6;
+            --sidebar-bg: #ffffff;
+            --text-main: #111827;
+            --text-secondary: #6b7280;
+            --primary-blue: #2563eb;
+            --accent-bg: #eff6ff;
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --card-hover-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --border-color: #e5e7eb;
+        }
+
+        /* 全局重置 */
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* --- 侧边栏：极简磨砂风格 --- */
+        .sidebar {
+            width: 240px; 
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+            height: 100vh;
+            border-right: 1px solid rgba(0,0,0,0.05); 
+            padding: 50px 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.02);
+        }
+
+        .sidebar-header {
+            padding: 0 32px 30px 32px; 
+            margin-bottom: 10px;
+        }
+        .sidebar-header .name {
+            font-size: 24px; 
+            font-weight: 900; 
+            color: var(--text-main); 
+            line-height: 1.2;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+        .sidebar-header .role {
+            font-size: 14px; 
+            color: var(--text-secondary); 
+            font-weight: 500; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav ul { list-style-type: none; padding: 0 16px; margin: 0; }
+        .sidebar-nav ul li { margin-bottom: 8px; }
+        
+        /* 导航组主标题 */
+        .sidebar-nav ul li.nav-group-main {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-main);
+            font-size: 15px; 
+            font-weight: 600;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sidebar-nav ul li.nav-group-main:hover {
+            color: var(--primary-blue);
+        }
+        .sidebar-nav ul li.nav-group-main svg {
+            width: 20px; 
+            height: 20px; 
+            margin-right: 12px; 
+            fill: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        .sidebar-nav ul li.nav-group-main:hover svg {
+            fill: var(--primary-blue);
+        }
+
+        /* 子菜单折叠样式 */
+        .sub-nav-item {
+            display: none; /* 默认折叠收起 */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .sub-nav-item.show {
+            display: block;
+            animation: fadeIn 0.3s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .sub-nav-item a {
+            padding-left: 45px !important; /* 子级缩进 */
+            font-size: 14px !important;
+        }
+
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            font-size: 15px; 
+            font-weight: 600;
+            border-radius: 12px;
+        }
+        .sidebar-nav ul li a:hover {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+        
+        /* 侧边栏高亮效果 - 黑色 */
+        .sidebar-nav ul li a.active { 
+            background-color: var(--text-main); 
+            color: #fff; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .sidebar-nav ul li a svg { width: 20px; height: 20px; margin-right: 12px; transition: 0.3s; }
+        .sidebar-nav ul li a.active svg { fill: #fff; }
+        .sidebar-nav ul li a:not(.active) svg { fill: #9ca3af; }
+
+        /* --- 主内容区 --- */
+        .main-content {
+            flex-grow: 1;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* --- 页面容器 --- */
+        .section-container {
+            height: 100vh;
+            width: 100%;
+            padding: 40px 60px; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        /* --- 汇报大框 (拟态风格) --- */
+        .report-paper {
+            background: #fff;
+            width: 100%;
+            max-width: 1400px;
+            max-height: 90vh; 
+            min-height: 70vh;
+            border-radius: 24px;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            position: relative; 
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255,255,255,0.8);
+            overflow: hidden; 
+        }
+
+        /* --- 标题栏 --- */
+        .report-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 25px;
+            margin-bottom: 20px; 
+            border-bottom: 1px solid #f3f4f6;
+            flex-shrink: 0;
+        }
+        .report-header h1 { 
+            font-size: 28px; 
+            margin: 0; 
+            color: var(--text-main); 
+            font-weight: 800; 
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+        .report-header h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -27px;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+        
+        /* --- 通用交互 --- */
+        .hover-trigger {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid transparent;
+        }
+        .hover-trigger:hover {
+            transform: translateY(-5px); 
+            box-shadow: var(--card-hover-shadow);
+            border-color: rgba(37, 99, 235, 0.1);
+        }
+
+        /* --- 第一页：异常点高亮样式 --- */
+        .anomaly-highlight {
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        /* ================= 进度与规划的网格系统 ================= */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 1fr 1fr; 
+            gap: 25px; 
+            flex-grow: 1; 
+            height: 100%;
+        }
+
+        /* --- Grid 布局 --- */
+        .planning-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 50px; 
+            width: 100%;
+            height: 100%;
+            align-content: center; 
+            padding: 0 40px; 
+        }
+
+        .progress-card {
+            background: #f8fafc; 
+            border: 1px solid #e5e7eb;
+            padding: 35px;
+            border-radius: 24px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* --- 图片卡片样式 --- */
+        .image-card {
+            padding: 0 !important;
+            cursor: zoom-in;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column; 
+            position: relative;
+        }
+        
+        .image-card.hover-trigger:hover {
+            border-color: transparent;
+            box-shadow: none; 
+        }
+
+        /* 第二页：图片的悬浮放大效果加倍 */
+        .image-card-extra-zoom {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .image-card-extra-zoom:hover {
+            transform: scale(1.25) !important;
+            z-index: 20;
+        }
+
+        /* --- 卡片悬浮放大效果 --- */
+        .progress-card.hover-trigger:hover {
+            background: #ffffff; 
+            transform: translateY(-24px) scale(1.10); 
+            box-shadow: 0 30px 60px -12px rgba(37, 99, 235, 0.15); 
+            z-index: 10;
+        }
+
+        .progress-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 6px;
+            background: var(--primary-blue);
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 2;
+        }
+        .progress-card:hover::before { opacity: 1; }
+        .image-card::before { display: none; }
+
+        .progress-card h3 { 
+            margin: 0 0 20px 0; 
+            font-size: 20px; 
+            color: var(--text-main); 
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .index-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: #eff6ff; 
+            color: var(--primary-blue);
+            font-weight: 900;
+            border-radius: 8px;
+            margin-right: 12px;
+            font-size: 18px;
+            font-family: 'Arial', sans-serif;
+            flex-shrink: 0;
+        }
+        
+        .progress-list { list-style: none; padding: 0; margin: 0; }
+        .progress-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed #e5e7eb;
+            font-size: 15px; 
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+        }
+        .progress-list li:last-child { border-bottom: none; }
+        .progress-list li::before {
+            content: "•";
+            color: var(--primary-blue);
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        /* --- 第三页：专项缩小版排版 --- */
+        #section-advantage .planning-grid {
+            /* 列宽缩小实现面积缩小10%，并在父级居中对齐 */
+            grid-template-columns: repeat(3, minmax(0, 28%)); 
+            justify-content: center; 
+            align-content: center;
+            gap: 50px; /* 间距保持不变 */
+        }
+        #section-advantage .clickable-text-card {
+            height: 216px; /* 原本240px，缩小10% */
+        }
+
+        /* --- 纯文字可点击卡片（第三页） --- */
+        .clickable-text-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 24px; 
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        .clickable-text-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 10px; 
+            opacity: 0;
+            transition: 0.3s;
+            border-top-left-radius: 24px;
+            border-bottom-left-radius: 24px;
+        }
+        .clickable-text-card:hover::before {
+            opacity: 1;
+        }
+        .card-center-text {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+            margin-top: 15px;
+        }
+
+        /* 第三页：浅灰色背景主题 */
+        /* 1. 远红外发热 (战术橙) */
+        .outdoor-card-1 { background-color: #f8fafc; border: 2px solid #ea580c; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .outdoor-card-1::before { background: #ea580c; }
+        .outdoor-card-1 .card-center-text { color: #ea580c; }
+        .outdoor-card-1 svg { fill: #ea580c; width: 56px; height: 56px; }
+        .outdoor-card-1:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(234, 88, 12, 0.15); border-color: #f97316; }
+
+        /* 2. 集成&便携 (军工绿) */
+        .outdoor-card-2 { background-color: #f8fafc; border: 2px solid #16a34a; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .outdoor-card-2::before { background: #16a34a; }
+        .outdoor-card-2 .card-center-text { color: #16a34a; }
+        .outdoor-card-2 svg { fill: #16a34a; width: 56px; height: 56px; }
+        .outdoor-card-2:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(22, 163, 74, 0.15); border-color: #22c55e; }
+
+        /* 3. 专利壁垒 (科技蓝) */
+        .outdoor-card-3 { background-color: #f8fafc; border: 2px solid #2563eb; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .outdoor-card-3::before { background: #2563eb; }
+        .outdoor-card-3 .card-center-text { color: #2563eb; }
+        .outdoor-card-3 svg { fill: #2563eb; width: 56px; height: 56px; }
+        .outdoor-card-3:hover { background-color: #ffffff; transform: translateY(-15px) scale(1.05); box-shadow: 0 25px 35px rgba(37, 99, 235, 0.15); border-color: #3b82f6; }
+
+        /* --- 第四页：图文数据看板样式 --- */
+        .market-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            height: 100%;
+            width: 100%;
+            padding: 10px 0;
+            flex-grow: 1;
+        }
+        
+        /* 顶部数据对比条 */
+        .market-stats-row {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+        .stat-card {
+            flex: 1;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+        .stat-card::before { display: none; /* 取消左侧黑色条块 */ }
+        
+        /* 悬浮放大加倍效果 */
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 30px 60px -12px rgba(37, 99, 235, 0.15); 
+            z-index: 10; 
+        }
+
+        .stat-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .stat-title span {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .bar-container {
+            display: flex;
+            height: 32px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .bar.fire { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .bar.elec { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        
+        /* 下部四大趋势网格 */
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
+            flex-grow: 1;
+        }
+        .trend-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+        /* 悬浮放大加倍效果 */
+        .trend-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 30px 60px -12px rgba(37, 99, 235, 0.15); 
+            border-color: #cbd5e1;
+            background: #ffffff;
+            z-index: 10;
+        }
+
+        .trend-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .trend-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .trend-icon svg { width: 24px; height: 24px; }
+        .trend-card h4 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+        .trend-card p {
+            margin: 0;
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .trend-card p strong { color: var(--text-main); font-weight: 700; }
+
+        /* 四大趋势个性化配色（独立类名控制） */
+        .trend-eco .trend-icon { background: #f0fdf4; }
+        .trend-eco .trend-icon svg { fill: #16a34a; }
+        
+        .trend-fireless .trend-icon { background: #f5f3ff; }
+        .trend-fireless .trend-icon svg { fill: #7c3aed; }
+
+        .trend-elec .trend-icon { background: #fffbeb; }
+        .trend-elec .trend-icon svg { fill: #d97706; }
+        
+        .trend-hybrid .trend-icon { background: #fef2f2; }
+        .trend-hybrid .trend-icon svg { fill: #dc2626; }
+
+        /* --- 图片全屏模态框与画廊 --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(255, 255, 255); 
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: auto;
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 24px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
+            animation-name: zoom;
+            animation-duration: 0.3s;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes zoom {
+            from {transform:translate(-50%, -50%) scale(0)} 
+            to {transform:translate(-50%, -50%) scale(1)}
+        }
+
+        .close {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            color: #333; 
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 画廊导航按钮 */
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #333; 
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            z-index: 10001;
+            padding: 15px 20px;
+            transition: 0.3s;
+            background: rgba(0,0,0,0.05); 
+            border-radius: 12px;
+        }
+        .gallery-nav:hover {
+            color: #000;
+            background: rgba(0,0,0,0.1);
+        }
+        .gallery-prev { left: 30px; }
+        .gallery-next { right: 30px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="name">邓广坚</div>
+            <div class="role">产品工作双周汇报/0305</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <!-- 1. 项目进度 -->
+                <li><a href="#section-progress" class="active">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                    项目进度
+                </a></li>
+                
+                <!-- 多功能户外集成装备（一级标题样式+匹配的山峰户外图标，点击跳转到简介并展开子菜单） -->
+                <li class="nav-group-main" onclick="document.getElementById('section-intro').scrollIntoView({ behavior: 'smooth' });">
+                    <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+                    多功能户外集成装备
+                </li>
+
+                <!-- 以下三个为子菜单项目，默认折叠收起 -->
+                <!-- 2. 产品简介 -->
+                <li class="sub-nav-item"><a href="#section-intro">
+                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    产品简介
+                </a></li>
+
+                <!-- 3. 产品优势 -->
+                <li class="sub-nav-item"><a href="#section-advantage">
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    产品优势
+                </a></li>
+
+                <!-- 4. 市场机会 -->
+                <li class="sub-nav-item"><a href="#section-opportunity">
+                    <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                    市场机会
+                </a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        
+        <!-- 第1页：项目进度 -->
+        <div id="section-progress" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>项目进度</h1>
+                </div>
+                <div class="progress-grid">
+                    
+                    <!-- 卡片 A -->
+                    <div class="progress-card hover-trigger">
+                        <h3>
+                            <div class="index-icon">A</div>
+                            美甲集尘器
+                        </h3>
+                        <ul class="progress-list">
+                            <li>1款ODMA准备第二批订单生产；另一款首批3月14日前试产</li>
+                            <li><span class="anomaly-highlight">IRDA静音款已完成ID和结构设计，正进行3D打印验证</span></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片 B -->
+                    <div class="progress-card hover-trigger">
+                        <h3>
+                            <div class="index-icon">B</div>
+                            除螨吸尘器
+                        </h3>
+                        <ul class="progress-list">
+                            <li>2款ODMA的测试问题全部关闭，准备TR4准出，本月完成PDCP</li>
+                            <li>IRDA已完成结构堆叠设计，ID设计启动</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片 C -->
+                    <div class="progress-card hover-trigger">
+                        <h3>
+                            <div class="index-icon">C</div>
+                            高速电吹风
+                        </h3>
+                        <ul class="progress-list">
+                            <li>3款ODMA进行TR4测试</li>
+                            <li><span class="anomaly-highlight">IRD款年前通过TR1评审，目前已对接传感模组</span></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片 D -->
+                    <div class="progress-card hover-trigger">
+                        <h3>
+                            <div class="index-icon">D</div>
+                            扩香机
+                        </h3>
+                        <ul class="progress-list">
+                            <li><span class="anomaly-highlight">已有精油工程师面试</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- 卡片 E -->
+                    <div class="progress-card hover-trigger">
+                        <h3>
+                            <div class="index-icon">E</div>
+                            无线壁灯
+                        </h3>
+                        <ul class="progress-list">
+                            <li>2款ODMA3月底TR5试产</li>
+                        </ul>
+                    </div>
+
+                    <!-- 卡片 F -->
+                    <div class="progress-card hover-trigger">
+                        <h3>
+                            <div class="index-icon">F</div>
+                            庭院灯
+                        </h3>
+                        <ul class="progress-list">
+                            <li>存量产品的升级以及增加分销，正在按ECNA方式快速推进</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 第2页：产品简介 -->
+        <div id="section-intro" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>产品简介</h1>
+                </div>
+                <!-- 外层容器100%居中，内部宽度高度调整为 90%，实现等比例放大15% -->
+                <div class="planning-grid" style="grid-template-columns: 1fr; height: 100%;">
+                    <!-- 更新了点击展开的4张图片链接数组 -->
+                    <div class="image-card image-card-extra-zoom" style="width: 90%; height: 90%; margin: auto; display: flex; align-items: center; justify-content: center;" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E5%A4%9A%E5%8A%9F%E8%83%BD.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97.png', 'https://vestige0915-dotcom.github.io/report/Air/%E6%8E%A5%E5%8F%A3.png', 'https://vestige0915-dotcom.github.io/report/Air/%E5%9C%BA%E6%99%AF%E5%90%88%E5%B9%B6.png'], 0)">
+                        <img src="https://vestige0915-dotcom.github.io/report/Air/%E6%A6%82%E8%A7%88.png" alt="产品简介" style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：产品优势 -->
+        <div id="section-advantage" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>产品优势</h1>
+                </div>
+                <!-- 版块面积缩小10%并保持间距水平垂直居中 -->
+                <div class="planning-grid">
+                    
+                    <!-- 1. 远红外发热 -->
+                    <div class="clickable-text-card outdoor-card-1" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E8%BF%9C%E7%BA%A2%E5%A4%96.png', 'https://vestige0915-dotcom.github.io/report/Air/%E4%BE%BF%E6%90%BA.png', 'https://vestige0915-dotcom.github.io/report/Air/%E4%B8%93%E5%88%A9.png'], 0)">
+                        <svg viewBox="0 0 24 24"><path d="M17.66 11.2c-.23-.3-.51-.56-.77-.82-.67-.6-1.43-1.03-2.07-1.66C13.33 7.26 13 4.85 13.95 3c-.95.23-1.78.75-2.49 1.32-2.59 2.08-3.61 5.75-2.39 8.9.04.1.08.2.08.33 0 .22-.15.42-.35.5-.22.1-.46.04-.64-.12a7.33 7.33 0 0 1-1.28-1.54c-1.95 3.21-1.09 7.35 1.7 9.53C10.51 23.41 12.76 24 14.99 24c4.12 0 7.53-3.1 7.97-7.1.1-.96-.13-1.93-.57-2.76-.24-.46-.51-.88-.73-1.34v.4z"/></svg>
+                        <div class="card-center-text">远红外发热</div>
+                    </div>
+
+                    <!-- 2. 便携 -->
+                    <div class="clickable-text-card outdoor-card-2" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E8%BF%9C%E7%BA%A2%E5%A4%96.png', 'https://vestige0915-dotcom.github.io/report/Air/%E4%BE%BF%E6%90%BA.png', 'https://vestige0915-dotcom.github.io/report/Air/%E4%B8%93%E5%88%A9.png'], 1)">
+                        <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM10 4h4v2h-4V4zm10 15H4V8h16v11z"/></svg>
+                        <div class="card-center-text">集成&便携</div>
+                    </div>
+
+                    <!-- 3. 专利壁垒 -->
+                    <div class="clickable-text-card outdoor-card-3" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/Air/%E8%BF%9C%E7%BA%A2%E5%A4%96.png', 'https://vestige0915-dotcom.github.io/report/Air/%E4%BE%BF%E6%90%BA.png', 'https://vestige0915-dotcom.github.io/report/Air/%E4%B8%93%E5%88%A9.png'], 2)">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                        <div class="card-center-text">专利壁垒</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：市场机会 (图文排版，悬浮效果已加倍) -->
+        <div id="section-opportunity" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>市场机会：未来3-5年趋势预测</h1>
+                </div>
+                
+                <div class="market-dashboard">
+                    <!-- 上半部：数据可视化对比 -->
+                    <div class="market-stats-row">
+                        <div class="stat-card">
+                            <div class="stat-title">美国市场</div>
+                            <div class="bar-container">
+                                <div class="bar fire" style="width: 80%;">用火 80%</div>
+                                <div class="bar elec" style="width: 20%;">用电 20%</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">欧洲市场</div>
+                            <div class="bar-container">
+                                <div class="bar fire" style="width: 65%;">用火 65%</div>
+                                <div class="bar elec" style="width: 35%;">用电 35%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 下半部：未来四大趋势提炼（重排顺序与样式） -->
+                    <div class="trend-grid">
+                        
+                        <!-- 1. 环保与智能深度绑定 -->
+                        <div class="trend-card trend-eco">
+                            <div class="trend-header">
+                                <div class="trend-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 11.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                </div>
+                                <h4>环保与智能深度绑定</h4>
+                            </div>
+                            <p>环保法规（Decarbonization）外溢，无废气设备受年轻一代欢迎。用电设备天然契合 <strong>Smart Home</strong>（Tuya, Alexa），可轻松实现 App 远程调温与定时断电。</p>
+                        </div>
+
+                        <!-- 2. 无明火氛围取暖器 -->
+                        <div class="trend-card trend-fireless">
+                            <div class="trend-header">
+                                <div class="trend-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-1.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+                                </div>
+                                <h4>无明火氛围取暖器</h4>
+                            </div>
+                            <p>利用水蒸气、LED光影技术模拟真实火焰的户外电火盆开始在高端庭院中出现，满足了高频风控地区（如加州山火区）不能生明火但需要氛围感的需求。</p>
+                        </div>
+
+                        <!-- 3. 用电增速远超用火 -->
+                        <div class="trend-card trend-elec">
+                            <div class="trend-header">
+                                <div class="trend-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                                </div>
+                                <h4>用电增速远超用火</h4>
+                            </div>
+                            <p>据 Mordor Intelligence 预测，全球户外电加热和电烹饪设备的复合年增长率（CAGR）在 2024-2029 年将达到 <strong>7.5% - 8.5%</strong>，而传统的燃气/木炭设备增速仅为 <strong>4%</strong> 左右。</p>
+                        </div>
+
+                        <!-- 4. 场景闭环 -->
+                        <div class="trend-card trend-hybrid">
+                            <div class="trend-header">
+                                <div class="trend-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M17.66 11.2c-.23-.3-.51-.56-.77-.82-.67-.6-1.43-1.03-2.07-1.66C13.33 7.26 13 4.85 13.95 3c-.95.23-1.78.75-2.49 1.32-2.59 2.08-3.61 5.75-2.39 8.9.04.1.08.2.08.33 0 .22-.15.42-.35.5-.22.1-.46.04-.64-.12a7.33 7.33 0 0 1-1.28-1.54c-1.95 3.21-1.09 7.35 1.7 9.53C10.51 23.41 12.76 24 14.99 24c4.12 0 7.53-3.1 7.97-7.1.1-.96-.13-1.93-.57-2.76-.24-.46-.51-.88-.73-1.34v.4z"/></svg>
+                                </div>
+                                <h4>场景闭环</h4>
+                            </div>
+                            <p>我们的户外庭院产品目前已涵盖餐炉、音箱、制冰机、庭院灯等，通过加入<strong>多合一集成设备</strong>，所有产品可实现互补联动，为用户提供全面的场景解决方案</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 图片全屏显示画廊模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="gallery-nav gallery-prev" onclick="changeImage(-1, event)">&#10094;</span>
+        <img class="modal-content" id="fullImage">
+        <span class="gallery-nav gallery-next" onclick="changeImage(1, event)">&#10095;</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section-container');
+            const navLinks = document.querySelectorAll('.sidebar-nav ul li a');
+            const mainContent = document.querySelector('.main-content');
+            const subNavItems = document.querySelectorAll('.sub-nav-item');
+
+            // 滚动监听，自动高亮侧边栏与折叠控制
+            mainContent.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // 当滚动到页面区域的 1/3 处时切换高亮
+                    if (mainContent.scrollTop >= (sectionTop - section.clientHeight / 3)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                // 子菜单折叠控制：仅在进入特定的三大页面时展开
+                if (['section-intro', 'section-advantage', 'section-opportunity'].includes(current)) {
+                    subNavItems.forEach(item => item.classList.add('show'));
+                } else {
+                    subNavItems.forEach(item => item.classList.remove('show'));
+                }
+
+                navLinks.forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href').includes(current)) {
+                        a.classList.add('active');
+                    }
+                });
+            });
+
+            // 点击平滑滚动
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    if(href) {
+                        const targetId = href.substring(1);
+                        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+
+        // ---------------- 画廊核心逻辑 ----------------
+        let currentGallery = [];
+        let currentIndex = 0;
+
+        // 启动画廊
+        function openGallery(images, index) {
+            currentGallery = images;
+            currentIndex = index;
+            var modal = document.getElementById("imageModal");
+            modal.style.display = "block";
+            updateGalleryImage();
+        }
+
+        // 更新画廊中显示的图片及按钮可见性
+        function updateGalleryImage() {
+            var modalImg = document.getElementById("fullImage");
+            modalImg.src = currentGallery[currentIndex];
+            
+            // 如果仅有一张图片，则隐藏左右切换箭头
+            if (currentGallery.length > 1) {
+                document.querySelector('.gallery-prev').style.display = 'block';
+                document.querySelector('.gallery-next').style.display = 'block';
+            } else {
+                document.querySelector('.gallery-prev').style.display = 'none';
+                document.querySelector('.gallery-next').style.display = 'none';
+            }
+        }
+
+        // 切换图片
+        function changeImage(step, event) {
+            if (event) event.stopPropagation(); // 阻止事件冒泡以免触发其它操作
+            currentIndex += step;
+            // 循环切换
+            if (currentIndex >= currentGallery.length) {
+                currentIndex = 0;
+            } else if (currentIndex < 0) {
+                currentIndex = currentGallery.length - 1;
+            }
+            updateGalleryImage();
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            var modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+        }
+
+        // 键盘事件监听：包含画廊切换与页面方向键切换
+        document.addEventListener('keydown', function(event) {
+            var modal = document.getElementById("imageModal");
+            
+            // 如果处于模态框显示状态，仅处理画廊的快捷键
+            if (modal.style.display === "block") {
+                if (event.key === "Escape") {
+                    closeModal();
+                } else if (event.key === "ArrowLeft") {
+                    changeImage(-1);
+                } else if (event.key === "ArrowRight") {
+                    changeImage(1);
+                }
+            } 
+            // 如果不在模态框状态，处理方向键切换页面逻辑
+            else {
+                if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+                    event.preventDefault(); // 阻止默认的微小滚动
+                    
+                    const sections = document.querySelectorAll('.section-container');
+                    let activeIndex = 0;
+                    
+                    // 找到目前处于视口中央的主区域索引
+                    sections.forEach((section, index) => {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                            activeIndex = index;
+                        }
+                    });
+
+                    // 向下/向右 切换到下一页
+                    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+                        if (activeIndex < sections.length - 1) {
+                            sections[activeIndex + 1].scrollIntoView({ behavior: 'smooth' });
+                        }
+                    } 
+                    // 向上/向左 切换到上一页
+                    else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+                        if (activeIndex > 0) {
+                            sections[activeIndex - 1].scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
