@@ -17,7 +17,8 @@
         
         .dashboard-container { 
             max-width: 1280px; margin: 0 auto; background: var(--card-bg); 
-            border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); 
+            border-radius: 20px; /* 圆角加强至 20px */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05); 
             padding: 30px; position: relative;
         }
         
@@ -38,7 +39,7 @@
         #scene-info-display {
             width: 760px;
             background: #fff;
-            border-radius: 8px;
+            border-radius: 20px; /* 圆角加强至 20px */
             border: 1px solid #e2e8f0;
             padding: 16px 24px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
@@ -72,7 +73,8 @@
         }
         .content-box {
             width: 85%; max-width: 1140px; padding: 72px;
-            background: #fff; border-radius: 16px; border: 1px solid #e2e8f0;
+            background: #fff; border-radius: 20px; /* 圆角加强至 20px */
+            border: 1px solid #e2e8f0;
             position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.1);
         }
         .content-box h2 { font-size: 38px; color: var(--primary); margin-bottom: 36px; border-bottom: 3px solid #f1f5f9; padding-bottom: 18px; }
@@ -128,7 +130,6 @@
         '无归属': '#94A3B8'
     };
 
-    // 内部文本等比例加大 20%
     const algoX = `
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 36px; font-size: 16px; line-height: 1.8;">
             <div><b style="color:#F97316">1. 战略评级 (25%)</b><br/>公司既有能力禀赋与资源积累的优先级</div>
@@ -149,8 +150,27 @@
         </div>
     `;
 
-    const rawData = [[7.9, 7.6, 52, '雪茄柜', '品质社交',[8,10,10,6,3,10],[8,8,8,8,7], 7.9, 7.6],[6.2, 8.6, 40, '制冰机', '智简轻居',[5,7,10,6,0,7],[8,8,10,10,7], 6.2, 8.6],[7.0, 4.7, 32, '吊扇灯', '智简轻居',[8,7,7,10,0,10],[4,5,5,1,10], 7.0, 4.7],[6.2, 6.9, 34, '无线壁灯', '智简轻居',[8,7,4,10,0,7],[8,7,10,1,10], 6.2, 6.9],[8.1, 7.5, 38, '除螨吸尘器', '智简轻居',[8,7,7,10,7,10],[8,5,10,8,7], 8.1, 7.5],[4.6, 6.8, 24, '户外餐具', '品质社交',[5,1,7,10,0,7], [4,10,8,8,7], 4.6, 6.8],[4.6, 5.7, 24, '火焰灯音箱', '品质社交',[5,4,7,10,0,2],[7,7,5,5,4], 4.6, 5.7],[5.1, 5.1, 24, '仿石音箱', '品质社交',[5,4,10,10,0,7],[6,7,8,1,4], 5.1, 5.1],[4.1, 4.7, 20, '草坪灯', '品质社交',[5,3,1,10,0,7],[5,7,5,1,7], 4.1, 4.7],[5.9, 5.3, 28, '可伸缩露营灯', '品质社交',[10,4,7,6,0,7],[8,7,8,1,4], 5.9, 5.3],[5.5, 6.7, 28, '便携台灯', '品质社交',[8,4,1,10,0,10], [7,8,5,5,10], 5.5, 6.7],[6.5, 6.2, 28, '太阳能电池板', '品质社交',[10,7,1,10,0,10], [4,8,8,5,7], 6.5, 6.2],[6.2, 7.9, 36, '高速电吹风', '私享悦己',[8,7,4,10,0,7],[8,7,10,5,10], 6.2, 7.9],[7.7, 8.5, 38, '无水扩香机', '私享悦己',[8,7,4,10,10,7], [8,8,10,8,10], 7.7, 8.5],[5.3, 7.7, 36, '可替换卷发棒', '私享悦己',[10,3,4,6,0,7], [10,7,8,8,4], 5.3, 7.7],[5.0, 4.5, 24, '电动剃毛器', '私享悦己', [8,4,4,6,3,7],[5,4,5,1,10], 5.0, 4.5],[5.9, 8.15, 24, '无线美甲灯', '私享悦己',[8,4,4,10,0,10], [7,10,8,1,7], 5.9, 8.0],[6.5, 8.0, 24, '美甲打磨器', '私享悦己',[8,4,1,10,7,10], [7,10,8,5,7], 6.5, 8.0],[7.0, 7.3, 24, '美甲集尘器', '私享悦己', [8,4,4,10,7,10],[4,10,8,8,7], 7.0, 7.3],[8.8, 8.3, 44, '咖啡一体机', '智简轻居',[8,10,10,10,7,7], [8,8,8,10,7], 8.8, 8.3],[7.1, 4.1, 34, '外加水洗碗机', '智简轻居',[5,10,10,6,7,7],[4,5,5,1,7], 7.1, 4.1],[5.5, 8.2, 30, '电动磨豆机', '智简轻居',[8,4,1,10,0,10],[8,10,8,10,4], 5.5, 8.2],[7.1, 7.9, 34, '慢速榨汁机', '智简轻居', [5,10,7,10,0,10],[7,6,10,8,10], 7.1, 7.9],[6.0, 4.2, 26, '感应垃圾桶', '智简轻居',[5,3,4,10,7,7], [3,7,5,1,7], 6.0, 4.2],[4.4, 3.7, 22, '红火电陶炉', '智简轻居',[5,3,4,6,0,10],[2,3,5,5,4], 4.4, 3.7],[5.5, 7.7, 28, '电动奶泡机', '智简轻居',[8,4,1,10,0,10],[8,10,5,8,7], 5.5, 7.7],[7.6, 5.5, 40, 'OTC助听器', '活力焕能',[8,10,10,6,3,7],[4,0,10,5,10], 7.6, 5.5],[6.2, 7.2, 34, '红光理疗穿戴', '活力焕能',[5,7,7,10,0,7],[6,5,10,8,10], 6.2, 7.2],[3.9, 7.1, 30, '智能拔罐器', '活力焕能', [8,4,4,2,0,2],[7,7,8,8,4], 3.9, 7.1],[7.0, 6.3, 34, '腿部按摩器', '活力焕能',[8,7,7,10,0,7],[6,5,5,8,10], 7.0, 6.3],[6.25, 6.5, 36, '音乐拳击机', '活力焕能',[8,7,7,10,0,2],[10,4,5,8,4], 6.2, 6.5],[8.0, 7.9, 40, 'AI转录录音机', '心流结界',[8,10,7,6,7,10], [7,3,10,10,10], 8.0, 7.9],[4.4, 3.8, 26, '屏幕挂灯', '心流结界', [8,4,4,2,0,7], [5,3,8,1,4], 4.4, 3.7],[4.7, 4.8, 26, '膝上枕', '心流结界',[8,3,4,6,0,7],[4,3,8,5,4], 4.7, 4.8],[4.9, 5.3, 28, '机械键盘', '心流结界',[8,3,4,6,0,7],[4,0,8,8,7], 4.9, 5.3],[6.4, 4.0, 26, 'LED鞭灯', '无归属',[8,7,7,6,0,10], [7,0,5,5,4], 6.4, 4.0],[7.1, 2.8, 30, '浴室排风扇', '无归属', [8,7,7,10,0,10],[1,0,5,5,7], 7.1, 2.8]
+    // 为每个产品匹配项目阶段映射表
+    const stageMap = {
+        '雪茄柜': '迭代期', '制冰机': '开发期', '吊扇灯': '迭代期', '无线壁灯': '开发期',
+        '除螨吸尘器': '开发期', '户外餐具': '迭代期', '火焰灯音箱': '开发期', '仿石音箱': '迭代期',
+        '草坪灯': '迭代期', '可伸缩露营灯': '概念期', '便携台灯': '概念期', '太阳能电池板': '概念期',
+        '高速电吹风': '开发期', '无水扩香机': '概念期', '可替换卷发棒': '概念期', '电动剃毛器': '迭代期',
+        '无线美甲灯': '概念期', '美甲打磨器': '概念期', '美甲集尘器': '开发期', '咖啡一体机': '概念期',
+        '外加水洗碗机': '迭代期', '电动磨豆机': '概念期', '慢速榨汁机': '概念期', '感应垃圾桶': '概念期',
+        '红火电陶炉': '迭代期', '电动奶泡机': '概念期', 'OTC助听器': '概念期', '红光理疗穿戴': '概念期',
+        '智能拔罐器': '概念期', '腿部按摩器': '迭代期', '音乐拳击机': '概念期', 'AI转录录音机': '概念期',
+        '屏幕挂灯': '迭代期', '膝上枕': '概念期', '机械键盘': '概念期', 'LED鞭灯': '概念期', '浴室排风扇': '概念期'
+    };
+
+    const rawData = [[7.9, 7.6, 52, '雪茄柜', '品质社交',[8,10,10,6,3,10],[8,8,8,8,7], 7.9, 7.6],[6.2, 8.6, 40, '制冰机', '智简轻居',[5,7,10,6,0,7],[8,8,10,10,7], 6.2, 8.6],[7.0, 4.7, 32, '吊扇灯', '智简轻居',[8,7,7,10,0,10],[4,5,5,1,10], 7.0, 4.7],[6.2, 6.9, 34, '无线壁灯', '智简轻居',[8,7,4,10,0,7],[8,7,10,1,10], 6.2, 6.9],[8.1, 7.5, 38, '除螨吸尘器', '智简轻居',[8,7,7,10,7,10],[8,5,10,8,7], 8.1, 7.5],[4.6, 6.8, 24, '户外餐具', '品质社交',[5,1,7,10,0,7], [4,10,8,8,7], 4.6, 6.8],
+        [4.6, 5.7, 24, '火焰灯音箱', '品质社交',[5,4,7,10,0,2],[7,7,5,5,4], 4.6, 5.7],[5.1, 5.1, 24, '仿石音箱', '品质社交',[5,4,10,10,0,7],[6,7,8,1,4], 5.1, 5.1],[4.1, 4.7, 20, '草坪灯', '品质社交',[5,3,1,10,0,7],[5,7,5,1,7], 4.1, 4.7],[5.9, 5.3, 28, '可伸缩露营灯', '品质社交',[10,4,7,6,0,7],[8,7,8,1,4], 5.9, 5.3],[5.5, 6.7, 28, '便携台灯', '品质社交',[8,4,1,10,0,10], [7,8,5,5,10], 5.5, 6.7],[6.5, 6.2, 28, '太阳能电池板', '品质社交',[10,7,1,10,0,10], [4,8,8,5,7], 6.5, 6.2],[6.2, 7.9, 36, '高速电吹风', '私享悦己',[8,7,4,10,0,7],[8,7,10,5,10], 6.2, 7.9],[7.7, 8.5, 38, '无水扩香机', '私享悦己',[8,7,4,10,10,7], [8,8,10,8,10], 7.7, 8.5],[5.3, 7.7, 36, '可替换卷发棒', '私享悦己',[10,3,4,6,0,7], [10,7,8,8,4], 5.3, 7.7],[5.0, 4.5, 24, '电动剃毛器', '私享悦己', [8,4,4,6,3,7],[5,4,5,1,10], 5.0, 4.5],[5.9, 8.15, 24, '无线美甲灯', '私享悦己',[8,4,4,10,0,10], [7,10,8,1,7], 5.9, 8.0],[6.5, 8.0, 24, '美甲打磨器', '私享悦己',[8,4,1,10,7,10], [7,10,8,5,7], 6.5, 8.0],[7.0, 7.3, 24, '美甲集尘器', '私享悦己', [8,4,4,10,7,10],[4,10,8,8,7], 7.0, 7.3],[8.8, 8.3, 44, '咖啡一体机', '智简轻居',[8,10,10,10,7,7], [8,8,8,10,7], 8.8, 8.3],[7.1, 4.1, 34, '外加水洗碗机', '智简轻居',[5,10,10,6,7,7],[4,5,5,1,7], 7.1, 4.1],[5.5, 8.2, 30, '电动磨豆机', '智简轻居',[8,4,1,10,0,10],[8,10,8,10,4], 5.5, 8.2],[7.1, 7.9, 34, '慢速榨汁机', '智简轻居',[5,10,7,10,0,10],[7,6,10,8,10], 7.1, 7.9],[6.0, 4.2, 26, '感应垃圾桶', '智简轻居',[5,3,4,10,7,7], [3,7,5,1,7], 6.0, 4.2],[4.4, 3.7, 22, '红火电陶炉', '智简轻居',[5,3,4,6,0,10],[2,3,5,5,4], 4.4, 3.7],[5.5, 7.7, 28, '电动奶泡机', '智简轻居',[8,4,1,10,0,10],[8,10,5,8,7], 5.5, 7.7],[7.6, 5.5, 40, 'OTC助听器', '活力焕能',[8,10,10,6,3,7],[4,0,10,5,10], 7.6, 5.5],[6.2, 7.2, 34, '红光理疗穿戴', '活力焕能',[5,7,7,10,0,7],[6,5,10,8,10], 6.2, 7.2],[3.9, 7.1, 30, '智能拔罐器', '活力焕能',[8,4,4,2,0,2],[7,7,8,8,4], 3.9, 7.1],[7.0, 6.3, 34, '腿部按摩器', '活力焕能',[8,7,7,10,0,7],[6,5,5,8,10], 7.0, 6.3],[6.25, 6.5, 36, '音乐拳击机', '活力焕能',[8,7,7,10,0,2],[10,4,5,8,4], 6.2, 6.5],[8.0, 7.9, 40, 'AI转录录音机', '心流结界',[8,10,7,6,7,10], [7,3,10,10,10], 8.0, 7.9],[4.4, 3.8, 26, '屏幕挂灯', '心流结界', [8,4,4,2,0,7],[5,3,8,1,4], 4.4, 3.7],[4.7, 4.8, 26, '膝上枕', '心流结界',[8,3,4,6,0,7],[4,3,8,5,4], 4.7, 4.8],[4.9, 5.3, 28, '机械键盘', '心流结界',[8,3,4,6,0,7],[4,0,8,8,7], 4.9, 5.3],[6.4, 4.0, 26, 'LED鞭灯', '无归属',[8,7,7,6,0,10], [7,0,5,5,4], 6.4, 4.0],[7.1, 2.8, 30, '浴室排风扇', '无归属', [8,7,7,10,0,10],[1,0,5,5,7], 7.1, 2.8]
     ];
+
+    // 将阶段数据注入到数组的第 9 号索引位
+    rawData.forEach(d => {
+        d[9] = stageMap[d[3]] || '概念期';
+    });
 
     const series = Object.keys(colors).map(scene => {
         return {
@@ -168,25 +188,49 @@
                 borderColor: '#fff', borderWidth: 1.5,
                 shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.1)'
             },
-            // 产品悬浮放大
-            emphasis: { scale: true, focus: 'series' }
+            // 通过放大阴影与辉光，视觉增强其膨胀感
+            emphasis: { 
+                scale: true, 
+                focus: 'series',
+                itemStyle: { shadowBlur: 25, shadowColor: 'rgba(0,0,0,0.35)', borderWidth: 3 }
+            }
         };
     });
 
+    // 承接项目阶段图例的纯交互拦截空系列
+    const dummySeries =['迭代期', '开发期', '概念期'].map(stage => ({
+        name: stage, type: 'scatter', data:[], silent: true
+    }));
+
     const option = {
-        legend: { 
-            top: 10, itemGap: 30, selectedMode: 'multiple', 
-            textStyle: { fontWeight: '800', color: '#1e293b', fontSize: 13 }
-        },
+        grid: { top: 95 }, // 为双排图例留出空间
+        legend: [
+            {
+                data:[
+                    { name: '迭代期', icon: 'image://data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="12" cy="12" r="10" fill="%23E58C06"/%3E%3C/svg%3E' },
+                    { name: '开发期', icon: 'image://data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M12,2 A10,10 0 0,0 12,22 Z" fill="%23E58C06"/%3E%3Cpath d="M12,2 A10,10 0 0,1 12,22" fill="none" stroke="%23E58C06" stroke-width="2" stroke-dasharray="3,3"/%3E%3C/svg%3E' },
+                    { name: '概念期', icon: 'image://data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="12" cy="12" r="10" fill="none" stroke="%23E58C06" stroke-width="2" stroke-dasharray="3,3"/%3E%3C/svg%3E' }
+                ],
+                top: 5, itemGap: 25, selectedMode: 'multiple', 
+                textStyle: { fontWeight: '800', color: '#E58C06', fontSize: 13 }
+            },
+            { 
+                data: Object.keys(colors),
+                top: 35, itemGap: 30, selectedMode: 'multiple', 
+                textStyle: { fontWeight: '800', color: '#1e293b', fontSize: 13 }
+            }
+        ],
         tooltip: {
             padding: 20, backgroundColor: 'rgba(255, 255, 255, 1)', borderColor: '#e2e8f0', borderWidth: 1,
-            extraCssText: 'box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-radius:10px;', 
+            extraCssText: 'box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-radius: 20px;', 
             formatter: function (params) {
                 const d = params.data;
                 if (!d || !Array.isArray(d)) return ""; 
+                const titleColor = colors[d[4]] || '#F97316';
                 return `
                 <div style="min-width:336px; padding:2px;">
-                    <b style="font-size:20px; color:#F97316; letter-spacing:-0.5px;">${d[3]}</b>
+                    <!-- 动态匹配标题颜色，增加项目阶段文本 -->
+                    <b style="font-size:20px; color:${titleColor}; letter-spacing:-0.5px;">${d[3]} (${d[9]})</b>
                     <div style="margin:12px 0; border-bottom:1.5px solid #f1f5f9; padding-bottom:8px">
                         <b style="font-size:15px; color: #1e293b;">产品力-${d[7]} | 内容力-${d[8]}</b>
                     </div>
@@ -232,12 +276,13 @@
         },
         series:[
             ...series,
+            ...dummySeries,
             {
                 type: 'scatter', silent: true,
                 markLine: { lineStyle: { type: 'solid', color: '#cbd5e0', width: 2 }, symbol: ['none', 'none'], data:[{ xAxis: 6.0 }, { yAxis: 6.5 }] },
                 markArea: {
                     silent: true,
-                    label: { show: false }, // 去除象限文字
+                    label: { show: false }, 
                     data: [[{ xAxis: 6.0, yAxis: 6.5, itemStyle: { color: 'rgba(30, 41, 59, 0.02)' } }, { xAxis: 12, yAxis: 12 }],[{ xAxis: 1, yAxis: 6.5, itemStyle: { color: 'rgba(212, 175, 55, 0.02)' } }, { xAxis: 6.0, yAxis: 12 }]]
                 }
             }
@@ -246,10 +291,42 @@
 
     myChart.setOption(option);
 
-    // 🏆 核心修复：图例防抖与精准显隐
+    // ======== 动态多维图例交叉过滤逻辑 ========
+    let activeStages = { '迭代期': true, '开发期': true, '概念期': true };
+
+    myChart.on('legendselectchanged', function (params) {
+        if (['迭代期', '开发期', '概念期'].includes(params.name)) {
+            // 同步当前“阶段”图例的点击状态
+            activeStages[params.name] = params.selected[params.name];
+            
+            // 重新按选中的阶段进行数据过滤，刷新到原生数据流中
+            const filteredSeries = Object.keys(colors).map(scene => {
+                return {
+                    name: scene,
+                    data: rawData.filter(d => d[4] === scene && activeStages[d[9]])
+                };
+            });
+            // 调用 setOption (局部更新数据)，不影响其他原有配置
+            myChart.setOption({ series: filteredSeries });
+        }
+    });
+
+    // ======== 点击散点直接跳转腾讯文档 ========
+    myChart.on('click', function(params) {
+        if (params.componentType === 'series') {
+            // 确保不误点到标记线或图例占位符
+            if (!['迭代期', '开发期', '概念期'].includes(params.seriesName) && !params.seriesName.includes('mark')) {
+                window.open('https://doc.weixin.qq.com/sheet/e3_Aa8AYQb2AKkCNTb0iBqUISsC6Kd43?scode=ANAAOQf-AAwoVyeYfNAa8AYQb2AKk&tab=BB08J2', '_blank');
+            }
+        } else if (params.componentType === 'xAxis') {
+            showModal('产品力-技术壁垒 加权模型', algoX);
+        } else if (params.componentType === 'yAxis') {
+            showModal('内容力-场景协同 加权模型', algoY);
+        }
+    });
+
     let isHoveringDataPoint = false;
 
-    // 1. 监听数据点悬停，防止误触
     myChart.on('mouseover', 'series', function () {
         isHoveringDataPoint = true;
     });
@@ -257,9 +334,8 @@
         isHoveringDataPoint = false;
     });
 
-    // 2. 利用 highlight/downplay 完美捕获图例行为
     myChart.on('highlight', function (params) {
-        if (isHoveringDataPoint) return; // 如果在产品上，忽略
+        if (isHoveringDataPoint) return; 
         
         let seriesName = null;
         if (params.batch && params.batch.length > 0) {
@@ -297,12 +373,6 @@
     myChart.on('downplay', function (params) {
         if (isHoveringDataPoint) return;
         sceneDisplay.classList.remove('show-card');
-    });
-
-    // X/Y 轴全屏 Modal
-    myChart.on('click', function (params) {
-        if (params.componentType === 'xAxis') showModal('产品力-技术壁垒 加权模型', algoX);
-        if (params.componentType === 'yAxis') showModal('内容力-场景协同 加权模型', algoY);
     });
 
     function showModal(title, content) {
