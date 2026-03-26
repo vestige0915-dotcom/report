@@ -194,19 +194,37 @@
         }
 
         .progress-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-            
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px; 
             padding: 25px 20px;
-            border-radius: 24px; 
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
             position: relative;
             overflow: hidden;
             min-height: 480px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
         }
+
+        /* 第一页卡片悬浮互动：与第三页完全一致 */
+        .progress-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            border-color: #3b82f6;
+            z-index: 10;
+        }
+        
+        .progress-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        
+        .progress-card:hover::before { opacity: 1; }
 
         .progress-card h3 { 
             margin: 0 0 18px 0; 
@@ -216,32 +234,19 @@
             display: flex;
             align-items: center;
         }
-        
-        /* 仅保留图标的背景与前景色，且统一管理圆点颜色 */
-        .color-social .index-icon { color: #D4AF37; background: rgba(212, 175, 55, 0.15); }
-        .color-social .product-item::before { color: #D4AF37; }
 
-        .color-self .index-icon { color: #F4C2C2; background: rgba(244, 194, 194, 0.25); }
-        .color-self .product-item::before { color: #F4C2C2; }
-
-        .color-home .index-icon { color: #81C784; background: rgba(129, 199, 132, 0.15); }
-        .color-home .product-item::before { color: #81C784; }
-
-        .color-energy .index-icon { color: #E57373; background: rgba(229, 115, 115, 0.15); }
-        .color-energy .product-item::before { color: #E57373; }
-
-        .color-flow .index-icon { color: #64B5F6; background: rgba(100, 181, 246, 0.15); }
-        .color-flow .product-item::before { color: #64B5F6; }
-        
+        /* 统一管理所有卡片的图标为浅蓝色底、深蓝色标 */
         .index-icon {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 30px; 
             height: 30px;
-            border-radius: 8px;
+            border-radius: 10px; /* 稍调圆角匹配图片质感 */
             margin-right: 12px;
             flex-shrink: 0;
+            background: #eff6ff; /* 浅蓝底色 */
+            color: #3b82f6; /* 深蓝图标颜色 */
         }
         .index-icon svg {
             fill: currentColor;
@@ -278,6 +283,7 @@
             flex-shrink: 0;
             transition: all 0.2s ease;
             margin-top: 1px;
+            color: #3b82f6; /* 圆点修改为统一蓝色 */
         }
 
         /* 移除带有特定图标项前面的圆点 */
@@ -1075,11 +1081,15 @@
             d[9] = stageMap[d[3]] || '概念期';
         });
 
+        // 提前定义图例筛选状态，并默认关闭“概念期”
+        let activeStages = { '迭代期': true, '开发期': true, '概念期': false };
+
         const series = Object.keys(colors).map(scene => {
             return {
                 name: scene,
                 type: 'scatter',
-                data: rawData.filter(d => d[4] === scene),
+                // 初始化时即过滤掉“概念期”数据
+                data: rawData.filter(d => d[4] === scene && activeStages[d[9]]),
                 symbolSize: function (data) { return data[2]; },
                 label: {
                     show: true, position: 'top', formatter: '{@[3]}', fontSize: 11, color: '#475569', fontWeight: 'bold',
@@ -1112,6 +1122,7 @@
                         { name: '开发期', icon: 'image://data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M12,2 A10,10 0 0,0 12,22 Z" fill="%23E58C06"/%3E%3Cpath d="M12,2 A10,10 0 0,1 12,22" fill="none" stroke="%23E58C06" stroke-width="2" stroke-dasharray="3,3"/%3E%3C/svg%3E' },
                         { name: '概念期', icon: 'image://data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="12" cy="12" r="10" fill="none" stroke="%23E58C06" stroke-width="2" stroke-dasharray="3,3"/%3E%3C/svg%3E' }
                     ],
+                    selected: { '概念期': false }, // 图例状态默认关闭
                     top: 5, itemGap: 25, selectedMode: 'multiple', 
                     textStyle: { fontWeight: '800', color: '#E58C06', fontSize: 13 }
                 },
@@ -1192,7 +1203,6 @@
         myChart.setOption(option);
 
         // 动态图例交叉过滤
-        let activeStages = { '迭代期': true, '开发期': true, '概念期': true };
         myChart.on('legendselectchanged', function (params) {
             if (['迭代期', '开发期', '概念期'].includes(params.name)) {
                 activeStages[params.name] = params.selected[params.name];
