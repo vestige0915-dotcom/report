@@ -33,7 +33,7 @@
 
         .header { border-left: 6px solid var(--accent); padding-left: 15px; flex: 0 0 300px; display: flex; flex-direction: column; justify-content: center; }
         .header h1 { color: var(--primary); margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -1px; }
-        .header p { color: #94a3b8; margin: 5px 0 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .header p { color: #94a3b8; margin: 5px 0 0; font-size: 15px; font-weight:800; text-transform: uppercase; letter-spacing: 1.5px; }
         
         /* 场景战略卡片：完全复刻图2布局，动态显隐 */
         #scene-info-display {
@@ -89,7 +89,7 @@
     <div class="header-wrapper">
         <div class="header">
             <h1>场景生态产品矩阵</h1>
-            <p>Strategic Scenario Portfolio Map</p>
+            <p>从零散单品到生活方式系统，流量互导</p>
         </div>
         <!-- 固定在右侧空白处的场景卡片容器 -->
         <div id="scene-info-display"></div>
@@ -114,11 +114,11 @@
     const overlay = document.getElementById('algo-overlay');
 
     const sceneInfo = {
-        '品质社交': { desc: '致力于打造“毫不费力的体面社交”。在后院与Patio空间，为用户建立社交货币与Old Money质感。', npi: '1. 必须能显著提升物理环境的逼格；2. 必须能减少多人聚会时的繁琐劳作；3. 具备高客单价属性' },
-        '私享悦己': { desc: '为独立个体打造关上门后的“自我重启仪式”，强调情绪疗愈与极致感官体验。', npi: '1. 追求极高颜值的CMF外观设计；2. 效果立竿见影，适合TikTok视觉化呈现（蜕变感）；3. 增加嗅觉、触觉等多维度感官点' },
-        '智简轻居': { desc: '科技抹平生活毛刺。通过高度自动化接管枯燥家务，让用户把时间还给真正的热爱。', npi: '1. 必须切中生活高频痛点；2. 优先考虑具备高复购耗材逻辑的产品；3. 强调免安装与即插即用' },
-        '活力焕能': { desc: '重塑机能源动力。身体的物理外挂，通过硬核科技干预，对抗岁月衰老、机能退化与工作压力。', npi: '1. 必须具备可量化的物理干预数据；2. 建立极高的核心参数壁垒（OTC、红光波长、自研算法）；3. 严禁开公模智商税产品' },
-        '心流结界': { desc: '一平米效率空间。在喧嚣的世界中为极客和专业人士瞬间降噪，一秒进入深度工作的“心流”状态。', npi: '1. 消除一切物理或认知层面的摩擦（如光污染、整理杂乱）；2. 积极拥抱AI嵌入，提升生产力上限；3. 极致的人体工学' }
+        '品质社交': { desc: '致力于打造“毫不费力的体面社交”。在后院与Patio空间，为用户建立社交货币与Old Money质感', npi: '1. 必须能显著提升物理环境的逼格；2. 必须能减少多人聚会时的繁琐劳作；3. 具备高客单价属性' },
+        '私享悦己': { desc: '为独立个体打造关上门后的“自我重启仪式”，强调情绪疗愈与极致感官体验', npi: '1. 追求极高颜值的CMF外观设计；2. 效果立竿见影，适合TikTok视觉化呈现（蜕变感）；3. 增加嗅觉、触觉等多维度感官点' },
+        '智简轻居': { desc: '科技抹平生活毛刺。通过高度自动化接管枯燥家务，让用户把时间还给真正的热爱', npi: '1. 必须切中生活高频痛点；2. 优先考虑具备高复购耗材逻辑的产品；3. 强调免安装与即插即用' },
+        '活力焕能': { desc: '重塑机能源动力。身体的物理外挂，通过硬核科技干预，对抗岁月衰老、机能退化与工作压力', npi: '1. 必须具备可量化的物理干预数据；2. 建立极高的核心参数壁垒（OTC、红光波长、自研算法）；3. 严禁开公模智商税产品' },
+        '心流结界': { desc: '一平米效率空间。在喧嚣的世界中为极客和专业人士瞬间降噪，一秒进入深度工作的“心流”状态', npi: '1. 消除一切物理或认知层面的摩擦（如光污染、整理杂乱）；2. 积极拥抱AI嵌入，提升生产力上限；3. 极致的人体工学' }
     };
 
     const colors = {
@@ -353,13 +353,13 @@
                         ${seriesName}
                     </div>
                     <div style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px;">
-                        <span style="font-size: 13px; line-height: 1.5;">📜</span>
+                        <span style="font-size: 13px; line-height: 1.5;"></span>
                         <div style="font-size: 13px; color: #000; font-weight: bold; line-height: 1.5;">
                             <span style="color: #334e68; font-weight: 800;">场景描述:</span> ${info.desc}
                         </div>
                     </div>
                     <div style="display: flex; align-items: flex-start; gap: 6px;">
-                        <span style="font-size: 13px; line-height: 1.5;">🚀</span>
+                        <span style="font-size: 13px; line-height: 1.5;"></span>
                         <div style="font-size: 13px; color: #000; font-weight: bold; line-height: 1.5;">
                             <span style="color: #334e68; font-weight: 800;">NPI 原则:</span> ${info.npi}
                         </div>
