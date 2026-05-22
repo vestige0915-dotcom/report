@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香氛精油“去工程师化”汇报方案</title>
+    <style>
+        :root {
+            --primary-color: #0B2545; /* 经典深蓝 (对应图表中 Primary deficit 的深蓝色) */
+            --sidebar-bg: #081D35; /* 侧边栏深底色 (对应图表最深藏青色调) */
+            --secondary-color: #F4F6F9; /* 背景冷灰 */
+            --accent-color: #D9534F; /* 保持警示红 */
+            --success-color: #0091D5; /* 亮蓝色 (对应图表中的 Net interest payments 亮蓝色) */
+            --text-main: #1E293B; /* 麦肯锡常用的深灰文字 */
+            --text-muted: #64748B; /* 辅助文字颜色 */
+            --border-color: #CBDCEB; /* 冷灰蓝边框 (对应图表中 Defense spending 的浅蓝色) */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #E9EFF5; /* 麦肯锡冷灰蓝底色 */
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* 左侧导航栏 */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        /* 优化：标题现在也是可点击的返回封面按钮 */
+        .sidebar-header {
+            padding: 30px 20px;
+            background-color: var(--primary-color);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .sidebar-header:hover {
+            background-color: #051426;
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-header p {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #b0c4de;
+        }
+
+        .nav-list {
+            list-style: none;
+            margin-top: 10px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            padding: 16px 20px;
+            font-size: 15px;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease-in-out;
+            color: #d1d5db;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--success-color);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* 新增：导航栏分组标题样式 */
+        .nav-group-title {
+            padding: 18px 20px 8px 20px;
+            font-size: 15px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* 新增：导航栏子项样式 */
+        .nav-item.sub-item {
+            padding-left: 36px;
+            font-size: 14.5px;
+        }
+
+        .sidebar-footer {
+            padding: 15px;
+            font-size: 12px;
+            color: #7b8a97;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 右侧主体内容区 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* 16:9 幻灯片容器 */
+        .slide-container {
+            width: 100%;
+            max-width: 1300px;
+            aspect-ratio: 16 / 9; /* 强制 16:9 比例 */
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 页面统一样式 */
+        .page {
+            display: none;
+            padding: 40px 60px;
+            height: 100%;
+            overflow-y: auto;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 滚动条美化 */
+        .page::-webkit-scrollbar {
+            width: 6px;
+        }
+        .page::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .page::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .page::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 正文排版样式 */
+        h2 {
+            color: var(--primary-color);
+            font-size: 26px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: var(--primary-color);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--success-color); /* 变为麦肯锡亮蓝 */
+            padding-left: 12px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        ul, ol {
+            padding-left: 22px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .highlight-box {
+            background-color: #EBF1F6; /* 麦肯锡冷灰蓝底色 */
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .card {
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .expert-note {
+            font-size: 14px;
+            color: #856404;
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ffeeba;
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+
+        .risk-box {
+            background-color: #fdf3f2;
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .milestone-box {
+            background-color: #EBF1F6; /* 采用 Defense spending 灰蓝调 */
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--success-color); /* 采用 Net interest 亮蓝边 */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .bold-blue {
+            color: var(--success-color); /* 使用亮蓝色强调 */
+            font-weight: 600;
+        }
+
+        .badge {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 6px;
+        }
+        
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 38px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .title-slide p {
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+
+        /* 针对第1页、第5页排版优化（减少留白） */
+        .optimized-spacing .highlight-box,
+        .optimized-spacing .risk-box {
+            padding: 38px 32px;
+            margin: 35px 0;
+        }
+        .optimized-spacing h3 {
+            font-size: 21px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        .optimized-spacing p {
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        /* 针对第2、3、4页字体放大与排版优化（减少留白） */
+        .large-font li, 
+        .large-font p {
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        .large-font .expert-note {
+            font-size: 15.5px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .large-font .card {
+            padding: 32px 35px;
+            border-color: var(--border-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 左侧导航 -->
+    <div class="sidebar">
+        <!-- 头部嵌入返回封面事件 -->
+        <div class="sidebar-header" onclick="showPage('page-0', null)" title="点击返回封面页">
+            <h1>香氛精油“去工程师”方案</h1>
+            <p>提案人：邓广坚</p>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item" onclick="showPage('page-1', this)" data-page="page-1">一、业务痛点与核心解法</li>
+            
+            <li class="nav-group-title">二、全链路数字化 SOP</li>
+            <li class="nav-item sub-item" onclick="showPage('page-2', this)" data-page="page-2">第一阶段：研发选品</li>
+            <li class="nav-item sub-item" onclick="showPage('page-3', this)" data-page="page-3">第二阶段：性能测试</li>
+            <li class="nav-item sub-item" onclick="showPage('page-4', this)" data-page="page-4">第三阶段：量产验收</li>
+            
+            <li class="nav-item" onclick="showPage('page-5', this)" data-page="page-5">三、风险与规避</li>
+            <li class="nav-item" onclick="showPage('page-6', this)" data-page="page-6">四、工程师招聘触发机制</li>
+        </ul>
+        <div class="sidebar-footer">
+            内部机密文件 · 请勿外传<br>
+        </div>
+    </div>
+
+    <!-- 右侧16:9演示区 -->
+    <div class="main-content">
+        <div class="slide-container">
+            
+            <!-- Page 0: 封面 -->
+            <div id="page-0" class="page active">
+                <div class="title-slide">
+                    <h1>香氛精油“去工程师”策略</h1>
+                    <h2 style="border:none; margin-top:0; color: var(--success-color);">研发与量产交付数字化 SOP 方案</h2>
+              
+                    <p>核心目标：降本增效、风险隔离、数据闭环</p>
+                </div>
+            </div>
+
+            <!-- Page 1: 业务痛点 -->
+            <div id="page-1" class="page optimized-spacing">
+                <h2>一、 业务痛点与核心解法</h2>
+                <div class="highlight-box">
+                    <h3>🔴 业务痛点</h3>
+                    <p>目前精油工程师招聘周期长、主观试错成本高，且极易陷入“嗅觉玄学”，严重威胁我司产品的 GA 计划与推新节奏。</p>
+                </div>
+                <div class="highlight-box" style="background-color: #EBF6FC; border-left-color: var(--success-color);">
+                    <h3>🟢 核心策略：前期不设专职工程师</h3>
+                    <p>通过<strong>“数字化逆向分析”</strong>、<strong>“极致借力供应商”</strong>与<strong>“品控SOP”</strong>，实现从研发到量产全链路的去主观化、数据化、低成本闭环。</p>
+                    <p>依靠仪器标准（GC-MS）、物理硬性测试标准与供应链合约约束，替代对传统单一工程师“主观经验”的依赖。</p>
+                </div>
+            </div>
+
+            <!-- Page 2: 第一阶段 -->
+            <div id="page-2" class="page large-font">
+                <h2>第一阶段：研发选香</h2>
+                <div class="card">
+                    <ol>
+                        <li><strong>测试前置选品：</strong>从北美跑通爆款中反向匹配需求。建立内部测评小组。
+                            <br><span class="bold-blue">关键避坑：</span>不能仅用评香纸选香。必须将标杆爆款样品注入<strong>扩香机实喷</strong>。因扩香机会将精油打碎为气溶胶，气味爆发力是纸上的 10 倍以上。只有<strong>实机喷出气味</strong>也符合定义的，才能进入逆向工程。</li>
+                        <li><strong>GC-MS 逆向破解（数字化底牌）：</strong>选定样品后交由第三方独立机构进行 GC-MS 成分分析。以低成本（约 1500-3000 元）获取精确数字化配方表（BOM）。</li>
+                        <li><strong>极致借力供应链（下发机器底线）：</strong>
+                            将 GC-MS 数据连同物理底线作为 PRD 下发厂家。
+                            <div class="expert-note">
+                                <strong><span class="badge">策略补丁</span>强制锁定关键溶剂：</strong>合同中明确禁用 DPG（二丙二醇）、IPM 等易导致机器堵塞的重质溶剂；强制推荐异构烷烃等。允许代工厂调香师利用经验补齐 GC-MS 无法解析的 5% 微量分子。
+                            </div>
+                        </li>
+                        <li><strong>感官验收升级：“动静态双维”半专业三角盲测</strong>
+                            <ul>
+                                <li><span class="bold-blue">建立测评小组：</span>内部固定挑选 3-5 名无抽烟习惯员工，2 张滴“原选品”，1 张滴“复刻品”，进行盲嗅排异测试。</li>
+                                <li><strong>静态（评香纸）+ 动态（扩香机连续 30 分钟）测试：</strong>若实机运行后出现明显“焦糊感”或“闷味”（热敏与剪切力变质），直接打回。</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Page 3: 第二阶段 -->
+            <div id="page-3" class="page large-font">
+                <h2>第二阶段：内部测试（机油适配与可靠性）</h2>
+                <div class="card">
+                    <ol>
+                        <li><strong>防堵塞与顺畅度测试（核心性能关卡）：</strong>
+                            <p>购入精度 0.01g 的电子秤。将满载样品的机器称重后，开至最大档位<strong>连续喷雾 300 小时</strong>。测试结束后重新称重并拆解喷嘴。</p>
+                            <span class="bold-blue">通过标准：</span>出雾量随时间消耗的曲线保持平滑，喷嘴内部无任何结晶或附着物。
+                        </li>
+                        <li style="margin-top:20px;"><strong>防腐蚀与高温老化测试（极限环境模拟）：</strong>
+                            <p>将整机涉油件置入 60℃ 烘箱连续烘烤 <strong>X天</strong>（车规级极限环境基线）。</p>
+                            <span class="bold-blue">通过标准：</span>塑料部件无融化、无龟裂，密封胶圈无脆化/膨胀，精油本身无酸臭变质。
+                        </li>
+                        <li style="margin-top:20px;"><strong>负压防漏液测试：</strong>
+                            <p>针对成品进行抽负压测试，全面模拟海运环境气压急剧变化，确保 100% 零漏液。</p>
+                        </li>
+                        <li style="margin-top:20px;"><strong>其它扩充：</strong>
+                            <p>根据具体的CTQ和FMEA分析，动态补充测试用例。</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Page 4: 第三阶段 -->
+            <div id="page-4" class="page large-font">
+                <h2>第三阶段：试产与大货验收（数字化质检）</h2>
+                <div class="card">
+                    <ol>
+                        <li><strong>建立“数字+物理”双轨黄金封样（绝对核心）：</strong>
+                            <p>大货发货前，工厂必须出具该批次的 GC-MS 图谱，与初版封样图谱比对，保留时间、波峰高度重合度需达 98% 以上。</p>
+                            <div class="expert-note" style="margin-top:0;">
+                                <strong>不仅存图谱，必须在冷库（4℃避光）中长期封存 1-2 升的“初代大货物理原液”，作为最终嗅觉与测试标尺。</strong>
+                            </div>
+                        </li>
+                        <li style="margin-top:25px;"><strong>查验 COA 核心物理常数：</strong>
+                            <p>强制比对三大关键物理指标：密度、折光率、动力粘度。</p>
+                        </li> <!-- 修复：已补齐上一个条目的闭合标签 -->
+                        <li style="margin-top:25px;"><strong>大货感官查验：</strong>
+                            <p>测评小组再次执行“三角盲测法”</p>
+                        </li>
+                        <li style="margin-top:25px;"><strong>防堵截留防线：48小时挥发残留比对</strong>
+                            <ul>
+                                <li>在一张干净白色滤纸上，左滴 1 滴“冷库原液”，右滴 1 滴“量产大货”，置于无风室内 48 小时。</li>
+                                <li><span class="bold-blue">通过与拒收：</span>油渍必须完全挥发且边缘干净。若大货残留明显的黄色油环或粘稠物（工厂暗中替换劣质重质溶剂），上机必堵，立刻拒收批次。</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Page 5: 风险规避 -->
+            <div id="page-5" class="page optimized-spacing">
+                <h2>三、 商业与技术风险规避</h2>
+                
+                <div class="risk-box">
+                    <h3 style="margin-top:0; border:none; padding:0;">⚠️ 风险 1：合规问题导致欧美下架罚款</h3>
+                    <p><strong>规避策略：严查发证资质。</strong>发货前强制要求供应链提供<strong>具有溯源能力的第三方权威机构</strong>认可的最新版 IFRA 证书和 SDS 安全数据表。<br>坚决拒绝一切工厂“自我开具”的文件，将合规连带风险与举证责任彻底转移给头部大厂。</p>
+                </div>
+
+                <div class="risk-box">
+                    <h3 style="margin-top:0; border:none; padding:0;">⚠️ 风险 2：配方被代工厂绑架</h3>
+                    <p><strong>规避策略：“图谱BOM + 物理原液”双重下发机制。</strong>若现有工厂恶意涨价需跨厂平移产能，我们不仅下发底层 GC-MS 数据，还同步发送 50ml 冷库封存原液。</p>
+                    <p><strong>硬性对齐要求：</strong>新工厂的调香师必须自行抹平图谱解析差距（如天然植物伴生物的微小差异），<strong>机器实喷气味必须与原液 100% 对齐方可交收</strong>，以此底牌彻底打破单点供应链绑架。</p>
+                </div>
+            </div>
+
+            <!-- Page 6: 招聘机制 -->
+            <div id="page-6" class="page">
+                <h2>四、 专职工程师的招聘触发机制</h2>
+                <p>我们并非永远摒弃全职工程师，而是基于商业效益最大化考虑。当且仅当项目达到以下 2 个核心里程碑之一时，立即启动精油工程师的招聘程序：</p>
+
+                <div class="milestone-box">
+                    <h3>🚀 里程碑一：财务拐点（利润保险机制）</h3>
+                    <p><strong>触发条件：</strong>精油单品月销达到 5,000 瓶（具体基线依毛利模型测算确定）。</p>
+                    <p><strong>战略逻辑：</strong>此时精油已成为公司稳定现金流与高利润源。工程师薪资即转换为“利润保险费”，其核心职责是专职驻厂死磕原料溯源与批次一致性，严防任何一次微小品质翻车导致的海量复购流失。</p>
+                </div>
+
+                <div class="milestone-box">
+                    <h3>🛡️ 里程碑二：壁垒拐点（构筑独家配方）</h3>
+                    <p><strong>触发条件：</strong>产品线战略从“大牌平替”切入“高客单价功能性香氛”。</p>
+                    <p><strong>战略逻辑：</strong>需要开发极极具技术壁垒的独家微量天然物复配方案并申请技术专利。建立竞品仅靠常规 GC-MS 逆向破解无法低成本仿制的技术护城河。</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 页面切换与键盘监听 JS -->
+    <script>
+        // 定义所有页面顺序（用于键盘翻页）
+        const pageOrder = ['page-0', 'page-1', 'page-2', 'page-3', 'page-4', 'page-5', 'page-6'];
+        let currentPageIndex = 0; // 默认停留在封面页
+
+        function showPage(pageId, navElement) {
+            // 更新当前页面索引
+            currentPageIndex = pageOrder.indexOf(pageId);
+
+            // 隐藏所有页面
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // 移除导航栏的激活状态
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // 激活当前页面
+            document.getElementById(pageId).classList.add('active');
+            
+            // 激活当前导航栏项（兼容点击左侧与键盘翻页）
+            if(navElement) {
+                navElement.classList.add('active');
+            } else {
+                const targetNav = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+                if (targetNav) {
+                    targetNav.classList.add('active');
+                }
+            }
+            
+            // 滚动到顶部（针对内容过长产生滚动条的情况）
+            document.getElementById(pageId).scrollTop = 0;
+        }
+
+        // 添加键盘方向键监听事件
+        document.addEventListener('keydown', function(event) {
+            // 向下/向右：下一页
+            if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                if (currentPageIndex < pageOrder.length - 1) {
+                    showPage(pageOrder[currentPageIndex + 1], null);
+                }
+            } 
+            // 向上/向左：上一页
+            else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                if (currentPageIndex > 0) {
+                    showPage(pageOrder[currentPageIndex - 1], null);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
