@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邓广坚 - 产品工作汇报</title>
+    <!-- 引入字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 变量定义：商务配色体系 --- */
+        :root {
+            --sidebar-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-secondary: #6b7280;
+            --primary-blue: #052055; /* 麦肯锡深蓝 */
+            --accent-blue: #23a8f2;  /* 亮蓝 */
+            --light-blue: #c8deec;   /* 浅蓝灰 */
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8; 
+            background-image: linear-gradient(135deg, #f4f6f8 0%, #e2e8f0 100%);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 240px; 
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+            height: 100vh;
+            border-right: 1px solid rgba(0,0,0,0.05); 
+            padding: 50px 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.02);
+        }
+
+        .sidebar-header {
+            padding: 0 32px 30px 32px; 
+            margin-bottom: 10px;
+        }
+        .sidebar-header .name {
+            font-size: 24px; 
+            font-weight: 900; 
+            color: var(--text-main); 
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+        .sidebar-header .role {
+            font-size: 14px; 
+            color: var(--text-secondary); 
+            font-weight: 500; 
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav ul { list-style-type: none; padding: 0 16px; margin: 0; }
+        .sidebar-nav ul li { margin-bottom: 8px; }
+
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            font-size: 15px; 
+            font-weight: 600;
+            border-radius: 12px;
+        }
+        .sidebar-nav ul li a:hover {
+            background-color: #f4f6f8;
+            color: var(--text-main);
+        }
+        
+        .sidebar-nav ul li a.active { 
+            background-color: var(--primary-blue); 
+            color: #fff; 
+            box-shadow: 0 4px 12px rgba(5, 32, 85, 0.2);
+        }
+        .sidebar-nav ul li a svg { width: 20px; height: 20px; margin-right: 12px; transition: 0.3s; }
+        .sidebar-nav ul li a.active svg { fill: #fff; }
+        .sidebar-nav ul li a:not(.active) svg { fill: #9ca3af; }
+
+        /* 主内容区 */
+        .main-content {
+            flex-grow: 1;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .section-container {
+            height: 100vh;
+            width: 100%;
+            padding: 40px 60px; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .report-paper {
+            background: #fff;
+            width: 100%;
+            max-width: 1400px;
+            max-height: 90vh; 
+            min-height: 70vh;
+            border-radius: 24px;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            position: relative; 
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255,255,255,0.8);
+            overflow: hidden; 
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 25px;
+            margin-bottom: 20px; 
+            border-bottom: 1px solid #f3f4f6;
+            flex-shrink: 0;
+        }
+        
+        .report-header h1 { 
+            font-size: 28px; 
+            margin: 0; 
+            color: var(--accent-blue); 
+            font-weight: 800; 
+            position: relative;
+        }
+        .report-header h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -27px;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        /* 进度卡片样式 (第一页) */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px; 
+            flex-grow: 1; 
+            align-content: start; 
+        }
+
+        .progress-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px; 
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 480px; 
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+        }
+
+        .progress-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            border-color: var(--accent-blue);
+            z-index: 10;
+        }
+        
+        .progress-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .progress-card:hover::before { opacity: 1; }
+
+        .progress-card h3 { 
+            margin: 0 0 18px 0; 
+            font-size: 19px; 
+            font-weight: 900;
+            color: var(--primary-blue); 
+            display: flex;
+            align-items: center;
+        }
+
+        .index-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px; height: 30px;
+            border-radius: 10px;
+            margin-right: 12px;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+        .index-icon svg { fill: currentColor; width: 18px; height: 18px; }
+        
+        .progress-list { list-style: none; padding: 0; margin: 0; }
+        
+        .product-item {
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 15px; 
+            color: #64748b; 
+            font-weight: 600;
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .product-item::before {
+            content: "•";
+            width: 16px; text-align: center; margin-right: 4px; color: var(--light-blue); flex-shrink: 0; font-size: 18px; line-height: 1.3;
+        }
+        .product-item.no-dot::before { content: none; display: none; }
+        
+        .alert-icon { width: 16px; height: 16px; fill: #ea580c; margin-right: 4px; margin-top: 5px; flex-shrink: 0; }
+        .progress-icon { width: 16px; height: 16px; fill: var(--accent-blue); margin-right: 4px; margin-top: 5px; flex-shrink: 0; }
+        
+        .product-item:hover { background-color: rgba(0, 0, 0, 0.03); transform: translateX(4px); }
+        
+        /* --- 高级卡片布局（适用于第3页和第4页） --- */
+        .feature-grid {
+            display: grid;
+            gap: 30px;
+            flex-grow: 1;
+            align-content: center; /* 确保垂直居中 */
+            padding: 30px 0;
+        }
+
+        /* 第3页：强制3列，实现上3下3排布 */
+        #section-combo .feature-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* 第4页：强制3列，实现一行垂直居中排布 */
+        #section-extension .feature-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .feature-block {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(5, 32, 85, 0.05);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+            justify-content: flex-start;
+            cursor: pointer;
+            padding: 35px 30px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            min-height: 150px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden; 
+        }
+        
+        /* 带有序号数字的背景水印 */
+        .feature-block::before {
+            content: attr(data-index);
+            position: absolute;
+            right: 15px;
+            bottom: -15px;
+            font-size: 90px;
+            font-weight: 900;
+            color: rgba(5, 32, 85, 0.04);
+            line-height: 1;
+            z-index: 0;
+            transition: transform 0.4s ease, color 0.4s ease;
+        }
+
+        .feature-block:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(5, 32, 85, 0.08);
+        }
+
+        .feature-block:hover::before {
+            color: rgba(35, 168, 242, 0.08);
+            transform: scale(1.05) translate(-5px, -5px);
+        }
+        
+        .feature-block h2, .feature-block .relation-badge {
+            position: relative;
+            z-index: 1; 
+        }
+
+        .feature-block h2 {
+            font-size: 22px;
+            color: var(--primary-blue); 
+            margin: 0;
+            text-align: left;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+        
+        /* 星级标签 */
+        .relation-badge {
+            background: #fff7ed;
+            color: #ea580c;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 18px;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(234, 88, 12, 0.1);
+        }
+
+        /* 悬浮提示框 */
+        #hover-card {
+            position: fixed; display: none; z-index: 10000;
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(10px);
+            border: 1px solid #e2e8f0; border-radius: 20px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+            width: 364px; padding: 26px; pointer-events: none; 
+        }
+        #hover-card h4 { margin: 0 0 16px 0; font-size: 22px; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; font-weight: 900; }
+        .hc-row { margin-bottom: 16px; }
+        .hc-label { font-size: 16px; font-weight: 800; color: var(--accent-blue); display: block; margin-bottom: 6px; }
+        .hc-value { font-size: 18px; color: #334155; font-weight: 600; }
+        .hc-blocker-value { color: #b91c1c; background: #fef2f2; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #ef4444; }
+
+        /* 画廊查看器 */
+        #image-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            z-index: 30000; align-items: center; justify-content: center; backdrop-filter: blur(5px);
+        }
+        #fullscreen-img { max-width: 90%; max-height: 90%; border-radius: 12px; object-fit: contain; }
+        .close-img { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 40px; cursor: pointer; }
+        .gallery-nav { position: absolute; top: 50%; transform: translateY(-50%); color: rgba(255, 255, 255, 0.7); font-size: 50px; cursor: pointer; padding: 15px 20px; transition: 0.3s; }
+        .gallery-nav:hover { color: #fff; background: rgba(255, 255, 255, 0.1); border-radius: 12px; }
+        .gallery-prev { left: 30px; }
+        .gallery-next { right: 30px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="name">邓广坚</div>
+            <div class="role">产品工作汇报-26/05/28</div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#section-progress" class="active">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                    项目进度
+                </a></li>
+                <li><a href="#section-structure">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/></svg>
+                    餐炉结构优化
+                </a></li>
+                <li><a href="#section-combo">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    餐炉组合方案
+                </a></li>
+                <li><a href="#section-extension">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    延展新品
+                </a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        
+        <!-- 第1页：项目进度 -->
+        <div id="section-progress" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>项目进度</h1>
+                </div>
+                <div class="progress-grid">
+                    <div class="progress-card">
+                        <h3><div class="index-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>品质社交</h3>
+                        <ul class="progress-list">
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '雪茄柜')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>雪茄柜</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '户外餐具')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>户外餐具</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '仿石音箱')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>仿石音箱</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '火焰灯音箱')" onmouseleave="hideProductHover()"><svg class="alert-icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>火焰灯音箱</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '草坪灯')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>草坪灯</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '伸缩露营灯')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>伸缩露营灯</li>
+                        </ul>
+                    </div>
+                    <div class="progress-card">
+                        <h3><div class="index-icon"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>私享悦己</h3>
+                        <ul class="progress-list">
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '美甲集尘器')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>美甲集尘器</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '高速电吹风')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>高速电吹风</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '无水扩香机')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>无水扩香机</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '香氛精油')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>香氛精油</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '美甲光疗灯')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>美甲光疗灯</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '美甲打磨机')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>美甲打磨机</li>
+                        </ul>
+                    </div>
+                    <div class="progress-card">
+                        <h3><div class="index-icon"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div>智简轻居</h3>
+                        <ul class="progress-list">
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '除螨吸尘器')" onmouseleave="hideProductHover()" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%99%A4%E8%9E%A8%E8%B7%8C%E8%90%BD1.png','https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%99%A4%E8%9E%A8%E8%B7%8C%E8%90%BD2.png'])"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>除螨吸尘器</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '制冰机')" onmouseleave="hideProductHover()" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E5%88%B6%E5%86%B0%E6%9C%BA%E6%B0%B4%E7%94%B5%E6%B2%A1%E5%88%86%E7%A6%BB.png','https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E5%88%B6%E5%86%B0%E6%9C%BA2.png','https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E5%88%B6%E5%86%B0%E6%9C%BA3.png'])"><svg class="alert-icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>制冰机</li>
+                            <li class="product-item" onmouseenter="showProductHover(event, '无线壁灯')" onmouseleave="hideProductHover()">无线壁灯</li>
+                            <li class="product-item" onmouseenter="showProductHover(event, '洗碗机')" onmouseleave="hideProductHover()">洗碗机</li>
+                            <li class="product-item no-dot" onmouseenter="showProductHover(event, '红外电陶炉')" onmouseleave="hideProductHover()"><svg class="progress-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>红外电陶炉</li>
+                        </ul>
+                    </div>
+                    <div class="progress-card">
+                        <h3><div class="index-icon"><svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div>活力焕能</h3>
+                        <ul class="progress-list">
+                            <li class="product-item" onmouseenter="showProductHover(event, '红光理疗穿戴')" onmouseleave="hideProductHover()" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BA%A2%E5%85%891.png', 'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BA%A2%E5%85%892.png'])">红光理疗穿戴</li>
+                        </ul>
+                    </div>
+                    <div class="progress-card">
+                        <h3><div class="index-icon"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9v7c0 1.1.9 2 2 2h4v-8H5v-1c0-3.87 3.13-7 7-7s7 3.13 7 7v1h-4v8h4c1.1 0 2-.9 2-2v-7a9 9 0 0 0-9-9z"/></svg></div>心流结界</h3>
+                        <ul class="progress-list">
+                            <li class="product-item" onmouseenter="showProductHover(event, '屏幕挂灯')" onmouseleave="hideProductHover()">屏幕挂灯</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第2页：餐炉结构优化 -->
+        <div id="section-structure" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>餐炉结构优化</h1>
+                </div>
+                <div style="flex:1; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                    <!-- 预留SVG图片，点击打开2张图片的画廊 -->
+                    <img src="https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%94%AF%E6%9E%B6%E5%8E%9F%E7%BB%93%E6%9E%84.png" alt="餐炉结构优化展示图" 
+                         style="max-width:100%; max-height:100%; object-fit:contain; border-radius:12px; cursor:pointer; transition: transform 0.3s ease; box-shadow: var(--card-shadow);" 
+                         onmouseover="this.style.transform='scale(1.02)'" 
+                         onmouseout="this.style.transform='scale(1)'"
+                         onclick="openGallery(['https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%94%AF%E6%9E%B6%E6%96%B9%E6%A1%88.svg', 'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%94%B9%E8%89%AF%E6%96%B9%E6%A1%88.svg','https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%94%AF%E6%9E%B6%E4%B8%93%E5%88%A9.png'])">
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：餐炉组合方案 -->
+        <div id="section-combo" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>餐炉组合方案</h1>
+                </div>
+                <div class="feature-grid">
+                    <!-- 通过传入打通后的数组 comboGalleryImages 和不同的起始索引 startIndex 来实现连贯画廊 -->
+                    <div class="feature-block" data-index="01" onclick="openGallery(comboGalleryImages, 0)">
+                        <h2>美国餐饮场景文化</h2>
+                    </div>
+                    <div class="feature-block" data-index="02" onclick="openGallery(comboGalleryImages, 2)">
+                        <h2>餐炉需求分析</h2>
+                    </div>
+                    <div class="feature-block" data-index="03" onclick="openGallery(comboGalleryImages, 3)">
+                        <h2>组合设计</h2>
+                    </div>
+                    <div class="feature-block" data-index="04" onclick="openGallery(comboGalleryImages, 4)">
+                        <h2>欧洲场景匹配</h2>
+                    </div>
+                    <div class="feature-block" data-index="05" onclick="openGallery(comboGalleryImages, 7)">
+                        <h2>需求验证</h2>
+                    </div>
+                    <!-- 营销方案 保持独立 -->
+                    <div class="feature-block" data-index="06" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E4%B8%89%E5%A4%A7%E5%B9%B3%E5%8F%B0%E7%89%B9%E7%82%B9.png', 'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%A4%90%E7%82%89%E8%90%A5%E9%94%80%E7%AD%96%E7%95%A5.png'])">
+                        <h2>营销方案</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第4页：延展新品 -->
+        <div id="section-extension" class="section-container">
+            <div class="report-paper">
+                <div class="report-header">
+                    <h1>延展新品</h1>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-block" data-index="01" onclick="openGallery(['https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%96%B0%E5%93%81%E5%BB%B6%E5%B1%95.png','https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%94%B5%E7%83%AD%E6%A1%B6.png', 'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E8%B6%8B%E5%8A%BF.png'])">
+                        <h2>大容量饮品/果酒分发器</h2>
+                        <div class="relation-badge">关联度 ★★★★★</div>
+                    </div>
+                    <div class="feature-block" data-index="02">
+                        <h2>多层冷餐/甜点/海鲜展示架</h2>
+                        <div class="relation-badge">关联度 ★★★★</div>
+                    </div>
+                    <div class="feature-block" data-index="03">
+                        <h2>高级自助取餐具套装与过敏源标识夹</h2>
+                        <div class="relation-badge">关联度 ★★★★</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 悬浮提示框 (Tooltip) -->
+    <div id="hover-card">
+        <h4 id="hc-title">产品名称</h4>
+        <div class="hc-row">
+            <span class="hc-label">🚀 最新进展</span>
+            <div class="hc-value" id="hc-progress">...</div>
+        </div>
+        <div class="hc-row">
+            <span class="hc-label">⚠️ 卡点</span>
+            <div class="hc-value hc-blocker-value" id="hc-blocker">...</div>
+        </div>
+    </div>
+
+    <!-- 全屏画廊查看器 -->
+    <div id="image-overlay" onclick="if(event.target === this) closeGallery()">
+        <span class="close-img" onclick="closeGallery()">&times;</span>
+        <span class="gallery-nav gallery-prev" onclick="changeGalleryImage(-1, event)">&#10094;</span>
+        <img id="fullscreen-img" src="" alt="预览图">
+        <span class="gallery-nav gallery-next" onclick="changeGalleryImage(1, event)">&#10095;</span>
+    </div>
+
+    <script>
+        // 定义打通后的综合画廊数组 (供第3页的前5个版块共享)
+        const comboGalleryImages = [
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BE%8E%E5%9B%BD%E5%9C%BA%E6%99%AF.png',             // index 0: 场景文化
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BE%8E%E5%9B%BD%E5%95%86%E5%8A%A1%E5%9C%BA%E6%99%AF.png', // index 1: 场景文化
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BE%8E%E5%9B%BD%E9%A4%90%E7%82%89%E5%9C%BA%E6%99%AF.png', // index 2: 需求分析
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BB%84%E5%90%88%E7%9F%A9%E9%98%B5.png',                 // index 3: 组合设计
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%94%B6%E6%95%9B%E8%AE%B0%E5%88%86%E6%A8%A1%E5%9E%8B.png', // index 4: 组合设计
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%A2%91%E7%8E%87%E8%AE%B0%E5%88%86%E6%A8%A1%E5%9E%8B.png', // index 5: 组合设计
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E7%BE%8E%E5%9B%BD%E7%BB%84%E5%90%88%E6%94%B6%E6%95%9B.png', // index 6: 组合设计
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2%E7%BB%84%E5%90%88.png',                 // index 7: 欧洲场景匹配
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%A4%90%E7%82%89%E5%B0%BA%E5%AF%B8%E5%B8%82%E5%9C%BA%E5%88%86%E5%B8%83.png', // index 8: 需求验证
+            'https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E9%A4%90%E7%82%89%E5%AD%98%E9%87%8F.png'                  // index 9: 需求验证
+        ];
+
+        // 导航切换逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section-container');
+            const navLinks = document.querySelectorAll('.sidebar-nav ul li a');
+            const mainContent = document.querySelector('.main-content');
+
+            mainContent.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (mainContent.scrollTop >= (sectionTop - section.clientHeight / 3)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href').includes(current)) {
+                        a.classList.add('active');
+                    }
+                });
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+
+        // 键盘翻页逻辑
+        document.addEventListener('keydown', function(event) {
+            const imageOverlay = document.getElementById("image-overlay");
+            if (imageOverlay.style.display === "flex") {
+                if (event.key === "Escape") closeGallery();
+                else if (event.key === "ArrowLeft") changeGalleryImage(-1);
+                else if (event.key === "ArrowRight") changeGalleryImage(1);
+            } else {
+                if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+                    event.preventDefault();
+                    const sections = document.querySelectorAll('.section-container');
+                    let activeIndex = 0;
+                    sections.forEach((section, index) => {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) activeIndex = index;
+                    });
+                    if ((event.key === "ArrowDown" || event.key === "ArrowRight") && activeIndex < sections.length - 1) {
+                        sections[activeIndex + 1].scrollIntoView({ behavior: 'smooth' });
+                    } else if ((event.key === "ArrowUp" || event.key === "ArrowLeft") && activeIndex > 0) {
+                        sections[activeIndex - 1].scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            }
+        });
+
+        // 产品悬浮数据
+        const productsInfo = {
+            '雪茄柜': { progress: 'ECNA预计本周完成PDCP；IRD项目的商业测算中', blocker: '暂无' },
+            '户外餐具': { progress: '黑金款新品周五试产；新品规划', blocker: '暂无' },
+            '仿石音箱': { progress: '试产通过，预计6月GA', blocker: '暂无' },
+            '火焰灯音箱': { progress: '新厂家合作评估中', blocker: '商业测算不通过' },
+            '草坪灯': { progress: '已通过TR3，进入测试阶段', blocker: '暂无' },
+            '伸缩露营灯': { progress: '计划6月TR1', blocker: '暂无' },
+            '美甲集尘器': { progress: '匹配需求的风机打样中', blocker: '暂无' },
+            '高速电吹风': { progress: '精油款准备MR1；IRD手板打样体感一般，优化中', blocker: '暂无' },
+            '无水扩香机': { progress: '通过POC验证，准备TR3', blocker: '暂无' },
+            '香氛精油': { progress: '计划6月TR1', blocker: '暂无' },
+            '除螨吸尘器': { progress: '预计6月第一周完成PDCP', blocker: '暂无' },
+            '制冰机': { progress: '暂无', blocker: '厂家不再配合整改' },
+            '无线壁灯': { progress: '预计7月GA', blocker: '暂无' },
+            '洗碗机': { progress: '软水款寻源中', blocker: '成本太高' },
+            '红光理疗穿戴': { progress: 'charter中', blocker: '暂无' },
+            '屏幕挂灯': { progress: '质量问题正在开发二供', blocker: '暂无' },
+            '美甲光疗灯': { progress: '计划6月TR1', blocker: '暂无' },
+            '美甲打磨机': { progress: '计划6月TR1', blocker: '暂无' },
+            '红外电陶炉': { progress: '计划6月TR1', blocker: '暂无' }
+        };
+
+        function showProductHover(e, name) {
+            const data = productsInfo[name];
+            if(!data) return;
+            document.getElementById('hc-title').innerText = name;
+            document.getElementById('hc-progress').innerText = data.progress;
+            document.getElementById('hc-blocker').innerText = data.blocker;
+            const hc = document.getElementById('hover-card');
+            hc.style.display = 'block';
+            const rect = e.target.getBoundingClientRect();
+            hc.style.left = (rect.right + 15 + hc.offsetWidth > window.innerWidth ? rect.left - hc.offsetWidth - 15 : rect.right + 15) + 'px';
+            hc.style.top = (rect.top + hc.offsetHeight > window.innerHeight ? window.innerHeight - hc.offsetHeight - 20 : rect.top) + 'px';
+        }
+
+        function hideProductHover() { document.getElementById('hover-card').style.display = 'none'; }
+
+        // 画廊功能 (新增 startIndex 支持，实现打通后定位)
+        let currentGallery = [];
+        let currentGalleryIndex = 0;
+        function openGallery(images, startIndex = 0) {
+            currentGallery = images;
+            currentGalleryIndex = startIndex;
+            const hasMany = currentGallery.length > 1;
+            document.querySelector('.gallery-prev').style.display = hasMany ? 'block' : 'none';
+            document.querySelector('.gallery-next').style.display = hasMany ? 'block' : 'none';
+            document.getElementById('fullscreen-img').src = currentGallery[currentGalleryIndex];
+            document.getElementById('image-overlay').style.display = 'flex';
+        }
+        function changeGalleryImage(step, event) {
+            if(event) event.stopPropagation();
+            currentGalleryIndex = (currentGalleryIndex + step + currentGallery.length) % currentGallery.length;
+            document.getElementById('fullscreen-img').src = currentGallery[currentGalleryIndex];
+        }
+        function closeGallery() { document.getElementById('image-overlay').style.display = 'none'; }
+    </script>
+</body>
+</html>
