@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMDMG 欧洲 TikTok 数字化出海战略 (最终共识签署版)</title>
+    <style>
+        /* CSS 变量与全局重置 */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --bg-card: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent-primary: #0ea5e9; 
+            --accent-secondary: #38bdf8;
+            --accent-glow: rgba(14, 165, 233, 0.4);
+            --accent-warning: #ef4444; 
+            --accent-success: #10b981; 
+            --border-color: #475569;
+            --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 侧边导航栏 */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-panel);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .logo-area {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            cursor: pointer; 
+            transition: opacity 0.3s;
+        }
+        .logo-area:hover { opacity: 0.8; }
+        .logo-area h2 { font-size: 1.2rem; color: var(--accent-secondary); letter-spacing: 1px; }
+        .logo-area span { font-size: 0.8rem; color: var(--accent-success); font-weight: bold;}
+
+        .nav-menu { list-style: none; padding: 0 1rem; }
+        .nav-item { margin-bottom: 0.5rem; }
+        .nav-link {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .nav-link:hover { background-color: rgba(14, 165, 233, 0.1); color: var(--text-main); }
+        .nav-link.active {
+            background-color: var(--accent-primary);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-glow);
+            font-weight: bold;
+        }
+        .sub-nav { list-style: none; padding-left: 1.5rem; margin-top: 0.3rem; display: none; }
+        .nav-item.open .sub-nav { display: block; }
+        .sub-nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sub-nav-link:hover, .sub-nav-link.active {
+            color: var(--accent-secondary);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* 主内容区底板 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e2e8f0; 
+            padding: 2rem;
+        }
+
+        /* 16:9 幻灯片容器 */
+        .slide-container {
+            width: 100%;
+            max-width: calc(90vh * 16 / 9); 
+            aspect-ratio: 16 / 9;
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* 单个幻灯片基础样式 */
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 3rem 4rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* 明亮模式 (Light Theme) */
+        .slide.light-slide { background-color: #ffffff; color: #334155; }
+        .slide.light-slide h2.slide-title { color: #0284c7; border-bottom-color: var(--accent-primary); }
+        .slide.light-slide .highlight { color: #0284c7; font-weight: bold; }
+        .slide.light-slide .highlight-red { color: #e11d48; font-weight: bold; }
+        .slide.light-slide .highlight-green { color: #059669; font-weight: bold; }
+        .slide.light-slide .card { background-color: #f8fafc; border-color: #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .slide.light-slide .card h3 { color: #0f172a; }
+        .slide.light-slide .card p { color: #475569; }
+        .slide.light-slide .timeline { border-left-color: #cbd5e1; }
+        .slide.light-slide .timeline-item h3 { color: #0f172a; }
+        .slide.light-slide .timeline-item p { color: #475569; }
+        .slide.light-slide .table-wrapper { box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .slide.light-slide table { background-color: #ffffff; border: 1px solid #e2e8f0; }
+        .slide.light-slide th { background-color: rgba(14, 165, 233, 0.1); color: #0284c7; border-bottom: 2px solid #e2e8f0; }
+        .slide.light-slide td { border-bottom-color: #f1f5f9; color: #334155; }
+        .slide.light-slide tr:hover { background-color: #f8fafc; }
+        .slide.light-slide td:first-child { color: #0f172a; font-weight: bold; }
+
+        /* 公用排版与组件样式 */
+        h1.main-title {
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .slide h2.slide-title {
+            font-size: 2.2rem;
+            color: var(--accent-secondary);
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        
+        .staggered-layout { display: flex; flex-direction: column; gap: 2rem; margin-top: 1rem; }
+        .staggered-layout .card { width: 80%; padding: 2rem 2.5rem; }
+        .staggered-layout .card:nth-child(1) { align-self: flex-start; }
+        .staggered-layout .card:nth-child(2) { align-self: center; }
+        .staggered-layout .card:nth-child(3) { align-self: flex-end; }
+        .staggered-layout .card h3 { font-size: 1.4rem; margin-bottom: 0.8rem; }
+        .staggered-layout .card p { font-size: 1.1rem; }
+
+        .card { background-color: var(--bg-card); border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.3s ease; position: relative;}
+        .card:hover { transform: translateY(-10px) scale(1.03); }
+        .card h3 { margin-bottom: 1rem; font-size: 1.3rem; }
+        .card p { color: var(--text-muted); line-height: 1.6; font-size: 1.05rem;}
+        
+        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; display: inline-block; }
+
+        .cover-slide {
+            justify-content: center; align-items: center; text-align: center; background-color: var(--bg-panel);
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" opacity="0.05"><path d="M0 0 L100 100 M100 0 L0 100" stroke="%2338bdf8" stroke-width="2"/></svg>') center/cover;
+        }
+        .cover-slide h3 { font-size: 1.8rem; color: var(--accent-success); font-weight: 500; margin-top: 1rem; }
+        .cover-slide h4 { font-size: 1.2rem; color: var(--text-muted); font-weight: 300; margin-top: 1rem; }
+
+        .timeline { position: relative; margin-top: 2rem; padding-left: 2rem; border-left: 2px dashed var(--border-color); }
+        .timeline-item { position: relative; margin-bottom: 2.5rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.6rem; top: 0;
+            width: 1.2rem; height: 1.2rem; background: var(--accent-primary);
+            border-radius: 50%; box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .timeline-item h3 { color: #fff; font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .timeline-item p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.5; }
+
+        .table-wrapper { overflow-x: auto; margin-top: 1rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; background-color: var(--bg-card); font-size: 0.95rem; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(14, 165, 233, 0.2); color: var(--accent-secondary); font-weight: bold; }
+        tr:hover { background-color: rgba(255,255,255,0.05); }
+        td:first-child { font-weight: bold; color: #fff; }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 3px; }
+
+        .role-tag {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 15px;
+            background: rgba(14, 165, 233, 0.1); color: #0284c7;
+        }
+        .slide.light-slide .role-card.amdmg { background-color: #f1f5f9; border-left: 4px solid #0284c7; }
+        .slide.light-slide .role-card.team { background-color: #f8fafc; border-left: 4px solid #10b981; }
+        .slide.light-slide .role-card.amdmg .role-tag { background: #e2e8f0; color: #334155; }
+        .slide.light-slide .role-card.team .role-tag { background: rgba(16, 185, 129, 0.1); color: #059669; }
+        
+        .slide.light-slide .highlight-bg { background-color: rgba(14, 165, 233, 0.08); }
+        .slide.light-slide .highlight-bg td { color: #0284c7; font-weight: bold; }
+        .slide.light-slide td.highlight { color: #0284c7; font-weight: 600; }
+        .slide.light-slide td.highlight-red { color: #e11d48; font-weight: 600; background-color: rgba(225, 29, 72, 0.05); }
+        .slide.light-slide td.highlight-green { color: #059669; font-weight: 600; background-color: rgba(16, 185, 129, 0.05); }
+        
+        .notice-box { margin-top:10px; padding:10px 15px; background: rgba(225,29,72,0.05); border-left:4px solid #e11d48; border-radius:4px; font-size:0.85rem; color:#334155; line-height: 1.5;}
+
+        /* 画廊/Lightbox 样式 (包含防溢出与缩放属性) */
+        .gallery-trigger { cursor: pointer; }
+        .gallery-trigger::after {
+            content: '🔍 点击全屏预览';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            background: rgba(14, 165, 233, 0.15);
+            color: var(--accent-primary);
+            padding: 6px 10px;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.3s;
+            font-weight: bold;
+        }
+        .gallery-trigger:hover::after { opacity: 1; background: rgba(14, 165, 233, 0.25); }
+        
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 9999;
+            display: none; justify-content: center; align-items: center; flex-direction: column;
+        }
+        #lightbox.active { display: flex; }
+        
+        .lightbox-content-wrapper { 
+            position: relative; 
+            width: 95vw; 
+            flex: 1; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            margin-top: 50px;
+            overflow: hidden; /* 防止拖拽时溢出屏幕 */
+        }
+        
+        /* 针对图片的缩放与拖拽基础样式 */
+        .lightbox-content-wrapper img {
+            max-width: 100%; 
+            max-height: 100%; 
+            border-radius: 4px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+            object-fit: contain; 
+            cursor: grab;
+            transition: transform 0.15s ease-out; /* 滚轮平滑缩放 */
+            transform-origin: center center;
+        }
+        .lightbox-content-wrapper img:active {
+            cursor: grabbing;
+        }
+        /* 拖拽时取消动画，防止卡顿 */
+        .lightbox-content-wrapper img.dragging {
+            transition: none;
+        }
+
+        .lightbox-content-wrapper video {
+            max-width: 100%; max-height: 100%; border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); object-fit: contain;
+        }
+        .lightbox-file-box {
+            background: #f8fafc; padding: 3rem; border-radius: 8px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .lightbox-file-box a { font-size: 1.2rem; color: #0ea5e9; text-decoration: none; font-weight: bold; display: flex; flex-direction: column; gap: 10px;}
+        .lightbox-file-box a span { font-size: 3rem; }
+        
+        .lightbox-controls { 
+            margin: 1.5rem 0; 
+            display: flex; gap: 1rem; align-items: center; 
+            flex-shrink: 0; 
+        }
+        
+        .lightbox-btn {
+            padding: 0.6rem 1.2rem; background: transparent; color: #38bdf8; border: 1px solid #38bdf8;
+            border-radius: 4px; cursor: pointer; font-size: 1rem; transition: all 0.2s;
+        }
+        .lightbox-btn:hover { background: #38bdf8; color: #fff; }
+        .lightbox-indicator { color: #cbd5e1; font-size: 0.9rem; letter-spacing: 1px;}
+        
+        .lightbox-close { 
+            position: absolute; top: 20px; right: 30px; font-size: 3rem; 
+            color: #cbd5e1; cursor: pointer; line-height: 1; transition: color 0.2s; z-index: 10000;
+        }
+        .lightbox-close:hover { color: #ef4444; }
+    </style>
+</head>
+<body>
+
+    <!-- 侧边导航栏 -->
+    <div class="sidebar">
+        <div class="logo-area" id="logo-btn">
+            <h2>AMDMG X Tiktok</h2>
+            <span>初版-26/06/10</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a class="nav-link" data-target="1">一、战略逻辑</a>
+                <ul class="sub-nav">
+                    <li><a class="sub-nav-link" data-target="1">1.1 市场大势</a></li>
+                    <li><a class="sub-nav-link" data-target="2">1.2 痛点剖析</a></li>
+                    <li><a class="sub-nav-link" data-target="3">1.3 破局之道</a></li>
+                    <li><a class="sub-nav-link" data-target="4">1.4 愿景规划</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="5">二、合作模式</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="6">三、财务模型</a>
+                <ul class="sub-nav">
+                    <li><a class="sub-nav-link" data-target="6">3.1 投入清单</a></li>
+                    <li><a class="sub-nav-link" data-target="7">3.2 收益测算</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="8">四、执行计划</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <div class="slide-container">
+            
+            <!-- 0: Cover -->
+            <div class="slide cover-slide active" id="slide-0">
+                <h1 class="main-title">AMDMG<br>欧洲 TikTok 数字化出海合伙方案</h1>
+                <h3>前后分工 · 数据共享 · 品牌沉淀</h3>
+                <h4>—— 双方初次商讨版 ——</h4>
+            </div>
+
+            <!-- 1: 1.1 市场大势 -->
+            <div class="slide light-slide" id="slide-1">
+                <h2 class="slide-title">1.1  市场大势</h2>
+                <div class="grid-2">
+                    <div class="card gallery-trigger" data-gallery='[{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E7%94%A8%E6%88%B7%E5%88%86%E5%B8%83.png"},{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/DIY%E4%B8%8E%E4%B8%8A%E9%97%A8%E7%BE%8E%E7%94%B2%E5%B8%88.png"}]'>
+                        <div class="card-icon">🌍</div>
+                        <h3>核心洞察：庞大的硬核群体</h3>
+                        <p>欧洲美甲人工极贵。催生了极其庞大的<span class="highlight">“硬核DIY玩家”</span>及<span class="highlight">“独立上门美甲师”</span>群体。他们对工具专业度要求极高</p>
+                    </div>
+                    <div class="card gallery-trigger" data-gallery='[{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/TT%E8%B6%8B%E5%8A%BF.png"},{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E5%A2%9E%E9%95%BF%E8%B6%8B%E5%8A%BF.png"},{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E4%BC%A0%E6%92%AD%E5%8A%9B%E5%88%86%E6%9E%90.png"}]'>
+                        <div class="card-icon">📈</div>
+                        <h3>平台红利：TikTok 本土店爆发</h3>
+                        <p>2026年TikTok欧洲本土店已完全成熟。短视频平台对<span class="highlight">“打磨机静音”、“集尘器大吸力”</span>的性能展示具有极强的转化爆发力</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2: 1.2 痛点剖析 -->
+            <div class="slide light-slide" id="slide-2">
+                <h2 class="slide-title">1.2  痛点剖析</h2>
+                <div class="staggered-layout">
+                    <div class="card">
+                        <h3>视觉拉胯</h3>
+                        <p>直接套用国内“白瘦幼”网图，严重<span class="highlight">缺乏高级科技感</span>，无法支撑美甲专业工具的高溢价</p>
+                    </div>
+                    <div class="card">
+                        <h3>流量昂贵</h3>
+                        <p>依赖传统亚马逊买量，必然陷入<span class="highlight">价格战</span>，且无社媒私域资产沉淀</p>
+                    </div>
+                    <div class="card">
+                        <h3>人力滞后</h3>
+                        <p>传统外语运营人效极低，<span class="highlight">无法实现多语种海量矩阵覆盖</span>，亟需AI破局</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3: 1.3 破局之道 -->
+            <div class="slide light-slide" id="slide-3">
+                <h2 class="slide-title">1.3  破局之道</h2>
+                <p style="font-size: 1.1rem; color: #475569; margin-bottom: 10px;">
+                    运用AI加持出海，打造 <strong class="highlight">“技术驱动的海外增长”</strong> 体系
+                </p>
+                <div class="grid-3">
+                    <div class="card gallery-trigger" data-gallery='[{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E7%94%A8%E6%88%B7%E7%97%9B%E7%82%B9.png"},{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/UPI-1.png"}]'>
+                        <span class="role-tag">数据驱动</span>
+                        <h3>产品思维</h3>
+                        <p>抓取欧洲用户痛点数据，指导供应链实现<span class="highlight">“柔性精准迭代”</span></p>
+                    </div>
+                    <div class="card gallery-trigger" data-gallery='[{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E9%A3%8E%E6%A0%BC1.jpg"},{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E9%A3%8E%E6%A0%BC2.jpg"},{"type":"image","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E9%A3%8E%E6%A0%BC3.jpg"}]'>
+                        <span class="role-tag">视觉升级</span>
+                        <h3>品牌升维</h3>
+                        <p>对标国际个护科技大厂，重塑 AMDMG 的欧洲<span class="highlight">高级专业品牌 VI</span></p>
+                    </div>
+                    <div class="card gallery-trigger" data-gallery='[{"type":"video","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E5%A4%9A%E5%9B%BD%E8%AF%AD%E8%A8%80%E9%85%8D%E9%9F%B3Agent.mp4"},{"type":"video","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E5%AE%9E%E4%BE%8B%E8%A7%86%E9%A2%91.mp4"},{"type":"video","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E6%95%B0%E6%8D%AE%E6%8A%93%E5%8F%96Agent.mp4"},{"type":"file","src":"https://vestige0915-dotcom.github.io/report/%E5%90%88%E4%BD%9C%E6%BC%94%E7%A4%BA/%E6%8A%93%E5%8F%96%E6%88%90%E6%9E%9C%E7%9C%8B%E6%9D%BF.html","name":"抓取成果看板.html"}]'>
+                        <span class="role-tag">自动分发</span>
+                        <h3>AI 矩阵</h3>
+                        <p>独家Agent系统，全自动生成多语种视频及建联KOC，突破语言瓶颈</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4: 1.4 愿景规划 -->
+            <div class="slide light-slide" id="slide-4">
+                <h2 class="slide-title">1.4  愿景规划</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>V1.0 空海联运接力测水与系统跑通 <span style="font-size:1rem; color:#94a3b8; font-weight:normal">(上架后3个月内)</span></h3>
+                        <p>执行<span class="highlight">“X台空运 + Y台海运”</span>机制。尊重算法规律，防止测水期断货。<span class="highlight-red">以上架开售之日起设 90 天考察期，失败即终止合作；达标则自动进入V 2.0放量期</span></p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>V2.0 矩阵全面放量 <span style="font-size:1rem; color:#94a3b8; font-weight:normal">(第 4-12个月)</span></h3>
+                        <p>打通盈利闭环后，基于前端真实支付单量提报 PO 补货计划，横向复制至法国、意大利等国</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>V3.0 品牌资产沉淀 <span style="font-size:1rem; color:#94a3b8; font-weight:normal">(第 2 年)</span></h3>
+                        <p>沉淀欧洲品牌独立站。社媒品牌心智与渠道KOC全面收归 AMDMG，形成科技美妆矩阵</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5: 合作模式 -->
+            <div class="slide light-slide" id="slide-5">
+                <h2 class="slide-title">二、合作模式：前后分工 · 边界清晰</h2>
+                <div class="grid-2">
+                    <div class="card role-card team">
+                        <span class="role-tag">前端大脑：DFX 团队</span>
+                        <h3>核心边界与权责</h3>
+                        <p>利用 AI Agent 接管店铺销售与内容运营，包括售前/售后客服工作。承担超规的运营退货损耗，倒逼精准转化；负责动态 ROAS 投流管控</p>
+                        <h3 style="margin-top:15px;">资产交割原则</h3>
+                        <p>每周向品牌方同步KOC数据和视觉资料；但底层AI代码与Prompt不移交</p>
+                        <h3 style="margin-top:15px;">风险收益</h3>
+                        <p>基于锁死产品交付底价提取 <span class="highlight-green">30% 可分配营业毛利分成</span>。达成连续 7 天，日均真实动销达到 X 单(妥投且过14天退货期) ，兑现8万破局奖金</p>
+                    </div>
+                    <div class="card role-card amdmg">
+                        <span class="role-tag">后端弹药：品牌方 AMDMG</span>
+                        <h3>核心边界与权责</h3>
+                        <p>承担产品备货与本土合规。承担超规的质量缺退货陷损耗及海外仓的静态租金费用。提供测水期无责测款投流金，享有 PO 单终审权</p>
+                        <h3 style="margin-top:15px;">资产归属（渠道沉淀）</h3>
+                        <p><span class="highlight">拥有公司主体、资金账户、TikTok店铺，及所有KOC名录的 100% 绝对所有权</span></p>
+                        <h3 style="margin-top:15px;">获取高溢价</h3>
+                        <p> <span class="highlight">70% 营业毛利分成</span>；收获长效品牌心智与KOC网络资源</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6: 3.1 投入清单 -->
+            <div class="slide light-slide" id="slide-6">
+                <h2 class="slide-title">3.1  前期投入清单</h2>
+                <p style="margin-bottom: 10px; color: #64748b;">DFX 团队出人出技术，AMDMG出钱出货物，保障数字基建健康运转</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>投入模块</th>
+                                <th>具体项目明细</th>
+                                <th>预估成本</th>
+                                <th>承担方</th>
+                                <th>属性备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>重资产合规</td>
+                                <td>公司主体/税务及CE/WEEE认证</td>
+                                <td>约 3-8万元</td>
+                                <td><strong>AMDMG</strong></td>
+                                <td>出海红线，资产绝对归属企业方</td>
+                            </tr>
+                         
+                                <td>隐性存货风险</td>
+                                <td>海外仓静态月租</td>
+                                <td>动态发生</td>
+                                <td>AMDMG</td>
+                                <td>属存货底盘风险，不计入公共 UE 成本</td>
+                            </tr>
+                            <tr>
+                                <td>商业投流(Ads)</td>
+                                <td>官方投流消耗与测款金</td>
+                                <td><strong class="highlight">前3个月N万/月无责测款金 + 无上限扩量</strong></td>
+                                <td>前3月测款厂方兜底/后期公共池扣</td>
+                                <td>测试沉没成本，团队免责；放量期执行全盘毛利止损红线</td>
+                            </tr>
+                            <tr>
+                                <td>数字技术基建</td>
+                                <td>代理IP池、AI接口调用费、服务器</td>
+                                <td><strong class="highlight">上限 8000元/月</strong></td>
+                                <td>团队凭支付截图报销</td>
+                                <td>严格限硬核基建支出，绝不含人员工资/餐补</td>
+                            </tr>
+                            <tr>
+                                <td>营销损耗</td>
+                                <td>KOC寄样耗损 /常规运营退单</td>
+                                <td>动态发生</td>
+                                <td>公共池公摊</td>
+                                <td>15%阈值内计入公共池</td>
+                            </tr>
+                            <tr class="highlight-green">
+                                <td>团队薪资</td>
+                                <td>研发与运营投入</td>
+                                <td><strong>0 元</strong></td>
+                                <td>团队干股投入</td>
+                                <td>以机会成本对赌 30% 营业毛利提成</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 7: 3.2 收益测算 -->
+            <div class="slide light-slide" id="slide-7">
+                <h2 class="slide-title">3.2  单品 UE 营业毛利测算</h2>
+                <p style="margin-bottom: 10px; color: #64748b;">考察达标后执行 T+1 结算滚存机制</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>财务节点</th>
+                                <th>单台金额 (RMB)</th>
+                                <th>占比分析</th>
+                                <th>分配说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>终端零售价 (AOV)</td>
+                                <td>600.00</td>
+                                <td>100%</td>
+                                <td>约 80欧元</td>
+                            </tr>
+                            <tr>
+                                <td>减：欧洲增值税 (VAT)</td>
+                                <td>- 100.00</td>
+                                <td>约 16.6%</td>
+                                <td>阳光化缴税</td>
+                            </tr>
+                            <tr>
+                                <td>实收净额 (Net GMV)</td>
+                                <td>500.00</td>
+                                <td>-</td>
+                                <td>剔除税费的纯营收</td>
+                            </tr>
+                            <tr>
+                                <td>减：平台/达人/单件履约操作费</td>
+                                <td>- 165.00</td>
+                                <td>约 33%</td>
+                                <td><span class="highlight">仅含单件发出的操作与尾程费，不含整体静态月租</span></td>
+                            </tr>
+                            <tr class="highlight-bg">
+                                <td>减：常规电商运营损耗池</td>
+                                <td>- 60.00</td>
+                                <td>10% - 15%</td>
+                                <td><strong class="highlight">仅限【15% 阈值范围内】的14天无理由/拒收等漏斗损耗</strong></td>
+                            </tr>
+                            <tr>
+                                <td>减：固定交付出海底价</td>
+                                <td>- 150.00</td>
+                                <td>30%</td>
+                                <td><strong class="highlight-red">最终状态价（含机身/欧标插头/英文定制彩盒/发至国内指定仓运费）</strong></td>
+                            </tr>
+                            <tr>
+                                <td>减：寄样营销前置公摊</td>
+                                <td>- 20.00</td>
+                                <td>4%</td>
+                                <td>前置公摊营销费用</td>
+                            </tr>
+                            <tr class="highlight-bg">
+                                <td>减：商业化广告投流费(Ads)</td>
+                                <td>- 动态消耗</td>
+                                <td>变量</td>
+                                <td><strong class="highlight-red">按实际支出扣除（引入 Blended ROAS 混合投产比考核自然流溢出）</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>单盘可分配营业毛利</strong></td>
+                                <td><strong style="font-size:1.1rem; color:#0f172a;">105.00</strong></td>
+                                <td><strong>21%</strong></td>
+                                <td><strong>扣除变动履约与广告费后的真实毛利池</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="highlight-green"><strong>► DFX 团队分润 (每月15日 T+1结算)</strong></td>
+                                <td class="highlight-green"><strong>31.5</strong></td>
+                                <td class="highlight-green"><strong>30%</strong></td>
+                                <td class="highlight-green">扣留10%作为滚存风险备用金，每三个月结算释放一次</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">► AMDMG 分润</td>
+                                <td class="highlight">73.5</td>
+                                <td class="highlight">70%</td>
+                                <td class="highlight"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="notice-box">
+                    <strong>⚠️ 微观防扯皮与对赌红线：</strong><br>
+                    1. <strong>退单法则：</strong>退货率 0-15% 算公共损耗；>15%部分，质量问题AMDMG负责，运营问题由DFX团队负责<br>
+                    2. <strong>投流与防误伤红线：</strong>前3个月N万元为无责测试金；放量期考核 Blended ROAS（混合投产），只要单日全盘可分配营业毛利>0 团队即有绝对扩量权；连续3天全盘毛利为负强制关停广告，违规亏损从分润强扣<br>
+                    3. <strong>订单双轨定义：</strong>连续 14 天支付单量达标触发 48H 自动化 PO 补货；但8万元破局奖金严格按净单量【妥投签收且过14天退货期】核算，杜绝虚假繁荣。
+                </div>
+            </div>
+
+            <!-- 8: 执行计划 -->
+            <div class="slide light-slide" id="slide-8">
+                <h2 class="slide-title">四、落地执行与考察计划</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="12%">阶段</th>
+                                <th width="32%">DFX团队动作</th>
+                                <th width="32%">品牌方 AMDMG动作</th>
+                                <th width="24%">强管控里程碑 (KPI)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>第1-2个月</strong><br><span style="font-size:0.85rem;color:#94a3b8">基建备战</span></td>
+                                <td>
+                                    1. 搭建Agent闭门调试，部署AI客服<br>
+                                    2. 确立对标国际大厂的视觉VI<br>
+                                    <strong class="highlight">3. 确立 15% 退货红线、双轨订单对赌与 T+1 滚存</strong>
+                                </td>
+                                <td>
+                                    1. 确认首款机器并备置欧标插头<br>
+                                    2. 办理本地主体注册及合规认证<br>
+                                    3. 开通企业云盘供品牌资产留存
+                                </td>
+                                <td class="highlight">协议落款；合规下证；技术环境部署完毕</td>
+                            </tr>
+                            <tr>
+                                <td><strong>第3-4个月</strong><br><span style="font-size:0.85rem;color:#94a3b8">到货与测水</span></td>
+                                <td>
+                                    1. 欧洲仓上架后，全面启动视频矩阵<br>
+                                    2. 每周同步KOC转化数据至共有云盘
+                                </td>
+                                <td>
+                                    <strong class="highlight">1. 执行【X台空运 + Y台海运】</strong><br>
+                                    2. 绑定第三方分账后台<br>
+                                    <strong class="highlight-red">3. 以实际上架开售日为起点，启动 90 天考察</strong>
+                                </td>
+                                <td class="highlight-red">若 90天内 转化未达标触发熔断，DFX 团队无条件退场，货权/店铺归厂家</td>
+                            </tr>
+                            <tr>
+                                <td><strong>第5个月</strong><br><span style="font-size:0.85rem;color:#94a3b8">放量与补单</span></td>
+                                <td>
+                                    1. 监控 15% 损耗红线，干预售后客诉<br>
+                                    <strong class="highlight">2. 基于日均支付单量触发自动化 PO 扳机</strong>
+                                </td>
+                                <td>
+                                    1. 监控首批 全盘毛利 ROI 及退货率是否健康<br>
+                                    <strong class="highlight">2. 遵循扳机原则 48H 内审批补货，保障不断货</strong>
+                                </td>
+                                <td class="highlight">跑通闭环；补货链路通畅，流量权重稳固</td>
+                            </tr>
+                            <tr>
+                                <td><strong>第6个月起</strong><br><span style="font-size:0.85rem;color:#94a3b8">达标分红</span></td>
+                                <td>
+                                    <strong class="highlight-green">1. 稳定达成日均 N 单（ 净单量）奖金指标</strong><br>
+                                    2. 每月15日执行 T+1 结算，清算 10% 滚存金
+                                </td>
+                                <td>
+                                    1. 承担海外仓租<br>
+                                    <strong class="highlight">2. 兑现净单量达标的 8万元破局奖金</strong>
+                                </td>
+                                <td class="highlight">跨越生死线；双方转入良性无风险分润轨道</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 画廊/Lightbox DOM 结构 -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lb-close">&times;</span>
+        <div class="lightbox-content-wrapper" id="lb-content">
+            <!-- JS 将在此处动态注入 img, video 或 file 链接 -->
+        </div>
+        <div class="lightbox-controls">
+            <button class="lightbox-btn" id="lb-prev">← 上一个</button>
+            <span class="lightbox-indicator" id="lb-indicator">1 / 1</span>
+            <span style="color:#64748b; font-size:0.8rem; margin-left:10px;">(支持鼠标滚轮缩放与拖拽)</span>
+            <button class="lightbox-btn" id="lb-next" style="margin-left: 10px;">下一个 →</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            /* ==================================
+               幻灯片切换逻辑 
+               ================================== */
+            const slides = document.querySelectorAll('.slide');
+            const navLinks = document.querySelectorAll('.nav-link, .sub-nav-link');
+            let currentSlide = 0;
+
+            function updatePresentation(targetIndex) {
+                if (targetIndex < 0 || targetIndex >= slides.length) return;
+                currentSlide = parseInt(targetIndex);
+
+                slides.forEach((slide, index) => {
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const target = parseInt(link.getAttribute('data-target'));
+                    
+                    if (target === currentSlide) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            document.getElementById('logo-btn').addEventListener('click', () => {
+                updatePresentation(0);
+                document.querySelectorAll('.nav-item.open').forEach(item => {
+                    item.classList.remove('open');
+                });
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const target = link.getAttribute('data-target');
+                    if (target !== null) {
+                        updatePresentation(target);
+                    }
+                    
+                    if (link.classList.contains('nav-link')) {
+                        const parentLi = link.closest('.nav-item');
+                        const subNav = parentLi.querySelector('.sub-nav');
+                        
+                        if (subNav) {
+                            parentLi.classList.toggle('open');
+                        } else {
+                            document.querySelectorAll('.nav-item.open').forEach(item => {
+                                if (item !== parentLi) item.classList.remove('open');
+                            });
+                        }
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', (e) => {
+                // 如果画廊打开时，屏蔽键盘给底层幻灯片的翻页，转而支持画廊翻页
+                if(document.getElementById('lightbox').classList.contains('active')) return;
+
+                let nextSlide = currentSlide;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    if (currentSlide < slides.length - 1) nextSlide = currentSlide + 1;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    if (currentSlide > 0) nextSlide = currentSlide - 1;
+                }
+
+                if (nextSlide !== currentSlide) {
+                    updatePresentation(nextSlide);
+                    
+                    navLinks.forEach(link => {
+                        const target = parseInt(link.getAttribute('data-target'));
+                        if (target === nextSlide) {
+                            const parentLi = link.closest('.nav-item');
+                            if (parentLi && parentLi.querySelector('.sub-nav')) {
+                                parentLi.classList.add('open');
+                            }
+                        }
+                    });
+                }
+            });
+
+            updatePresentation(0);
+
+            /* ==================================
+               画廊/Lightbox 弹窗逻辑 (含缩放拖拽)
+               ================================== */
+            const lightbox = document.getElementById('lightbox');
+            const lbContent = document.getElementById('lb-content');
+            const lbPrev = document.getElementById('lb-prev');
+            const lbNext = document.getElementById('lb-next');
+            const lbClose = document.getElementById('lb-close');
+            const lbIndicator = document.getElementById('lb-indicator');
+            let currentGallery = [];
+            let currentIndex = 0;
+
+            // 缩放与拖拽相关变量
+            let currentScale = 1;
+            let isDragging = false;
+            let startX, startY, translateX = 0, translateY = 0;
+
+            // 恢复图片初始状态函数
+            function resetZoom() {
+                currentScale = 1;
+                translateX = 0;
+                translateY = 0;
+                const img = lbContent.querySelector('img');
+                if(img) {
+                    img.style.transform = `translate(0px, 0px) scale(1)`;
+                    img.style.cursor = 'grab';
+                }
+            }
+
+            document.querySelectorAll('.gallery-trigger').forEach(card => {
+                card.addEventListener('click', () => {
+                    currentGallery = JSON.parse(card.getAttribute('data-gallery'));
+                    currentIndex = 0;
+                    renderLightbox();
+                    lightbox.classList.add('active');
+                });
+            });
+
+            function renderLightbox() {
+                lbContent.innerHTML = '';
+                const item = currentGallery[currentIndex];
+                
+                if(item.type === 'image') {
+                    lbContent.innerHTML = `<img src="${item.src}" alt="Gallery Image" draggable="false">`;
+                    resetZoom(); // 每次切换图片强制复位缩放
+                } else if(item.type === 'video') {
+                    lbContent.innerHTML = `<video src="${item.src}" controls autoplay></video>`;
+                } else if(item.type === 'file') {
+                    lbContent.innerHTML = `
+                        <div class="lightbox-file-box">
+                            <a href="${item.src}" target="_blank">
+                                <span>📄</span>
+                                点击下载/查看附件<br><small style="color:#64748b; font-size:0.9rem; margin-top:5px;">${item.name}</small>
+                            </a>
+                        </div>`;
+                }
+
+                lbIndicator.innerText = `${currentIndex + 1} / ${currentGallery.length}`;
+                
+                if (currentGallery.length > 1) {
+                    lbPrev.style.display = 'block';
+                    lbNext.style.display = 'block';
+                } else {
+                    lbPrev.style.display = 'none';
+                    lbNext.style.display = 'none';
+                }
+            }
+
+            // 缩放逻辑 (鼠标滚轮)
+            lbContent.addEventListener('wheel', (e) => {
+                const img = lbContent.querySelector('img');
+                if(!img) return; // 仅对图片缩放
+                e.preventDefault();
+                
+                const zoomSensitivity = 0.15;
+                if (e.deltaY < 0) {
+                    currentScale += zoomSensitivity; // 向上滚放大
+                } else {
+                    currentScale -= zoomSensitivity; // 向下滚缩小
+                }
+                
+                // 限制缩放比例 (0.5倍 到 5倍)
+                currentScale = Math.max(0.5, Math.min(currentScale, 5));
+                img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+            });
+
+            // 拖拽逻辑 (鼠标按下)
+            lbContent.addEventListener('mousedown', (e) => {
+                const img = lbContent.querySelector('img');
+                if(!img) return;
+                
+                // 如果点到了图片外面的空白区域，不要触发拖拽（保留给关闭画廊功能）
+                if(e.target !== img) return; 
+
+                e.preventDefault(); 
+                isDragging = true;
+                // 计算鼠标按下时的初始相对位置
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                
+                img.classList.add('dragging'); // 移除过渡动画，保证拖动流畅
+            });
+
+            // 拖拽逻辑 (鼠标移动)
+            window.addEventListener('mousemove', (e) => {
+                if(!isDragging) return;
+                const img = lbContent.querySelector('img');
+                if(!img) return;
+                
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+            });
+
+            // 拖拽逻辑 (鼠标松开)
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                const img = lbContent.querySelector('img');
+                if(img) {
+                    img.classList.remove('dragging'); // 恢复过渡动画
+                }
+            });
+
+            // 按钮事件
+            lbClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+                lbContent.innerHTML = ''; // 清除内容以停止视频等
+                resetZoom();
+            });
+
+            // 点击背景关闭 (防误触拖拽)
+            lightbox.addEventListener('click', (e) => {
+                const img = lbContent.querySelector('img');
+                // 只有明确点击在黑底背景，或者包裹层空白处时，才关闭画廊
+                if(e.target === lightbox || e.target === lbContent) {
+                    lightbox.classList.remove('active');
+                    lbContent.innerHTML = '';
+                    resetZoom();
+                }
+            });
+
+            lbPrev.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length; 
+                renderLightbox(); 
+            });
+            
+            lbNext.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentIndex = (currentIndex + 1) % currentGallery.length; 
+                renderLightbox(); 
+            });
+
+            // 支持画廊内的键盘左右按键切换
+            document.addEventListener('keydown', (e) => {
+                if(lightbox.classList.contains('active')) {
+                    if (e.key === 'ArrowLeft') {
+                        currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length; 
+                        renderLightbox();
+                    } else if (e.key === 'ArrowRight') {
+                        currentIndex = (currentIndex + 1) % currentGallery.length; 
+                        renderLightbox();
+                    } else if (e.key === 'Escape') {
+                        lightbox.classList.remove('active');
+                        lbContent.innerHTML = '';
+                        resetZoom();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
