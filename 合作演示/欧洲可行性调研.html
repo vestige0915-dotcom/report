@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMDMG 欧洲 TikTok 数字化出海战略与可行性分析</title>
+    <style>
+        /* CSS 变量与全局重置 */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --bg-card: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent-primary: #0ea5e9; /* 科技蓝 */
+            --accent-secondary: #38bdf8;
+            --accent-glow: rgba(14, 165, 233, 0.4);
+            --border-color: #475569;
+            --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 侧边导航栏 */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-panel);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .logo-area {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            cursor: pointer; 
+            transition: opacity 0.3s;
+        }
+        .logo-area:hover { opacity: 0.8; }
+        .logo-area h2 {
+            font-size: 1.2rem;
+            color: var(--accent-secondary);
+            letter-spacing: 1px;
+        }
+        .logo-area span { font-size: 0.8rem; color: var(--text-muted); }
+
+        .nav-menu { list-style: none; padding: 0 1rem; overflow-y: auto;}
+        .nav-menu::-webkit-scrollbar { width: 4px; }
+        .nav-menu::-webkit-scrollbar-thumb { background-color: var(--border-color); }
+        .nav-item { margin-bottom: 0.5rem; }
+        .nav-link {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .nav-link:hover {
+            background-color: rgba(14, 165, 233, 0.1);
+            color: var(--text-main);
+        }
+        .nav-link.active {
+            background-color: var(--accent-primary);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-glow);
+            font-weight: bold;
+        }
+        .sub-nav {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        .nav-item.open .sub-nav { display: block; }
+        .sub-nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sub-nav-link:hover, .sub-nav-link.active {
+            color: var(--accent-secondary);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* 主内容区底板 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e2e8f0; 
+            padding: 2rem;
+        }
+
+        /* 16:9 幻灯片容器 */
+        .slide-container {
+            width: 100%;
+            max-width: calc(90vh * 16 / 9); 
+            aspect-ratio: 16 / 9;
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* 单个幻灯片基础样式 (优化内边距，控制15%下方留白) */
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 2.5rem 4rem 1.5rem 4rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* 明亮模式 (Light Theme) */
+        .slide.light-slide { background-color: #ffffff; color: #334155; }
+        .slide.light-slide h2.slide-title { color: #0284c7; border-bottom-color: var(--accent-primary); }
+        .slide.light-slide .highlight { color: #0284c7; font-weight: bold; }
+        .slide.light-slide .highlight-red { color: #e11d48; font-weight: bold; }
+        .slide.light-slide .danger { color: var(--danger-color); font-weight: bold; }
+        .slide.light-slide .success { color: var(--success-color); font-weight: bold; }
+        
+        /* 卡片白底适配 */
+        .slide.light-slide .card {
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .slide.light-slide .card h3 { color: #0f172a; }
+        .slide.light-slide .card p { color: #475569; }
+
+        /* 卡片大数字与数据标签 */
+        .slide.light-slide .card .data-number { 
+            font-size: 2.2rem; 
+            color: var(--accent-primary); 
+            font-weight: 800; 
+            display: block; 
+            margin: 0.5rem 0; 
+        }
+
+        .data-source-tag {
+            display: inline-block; padding: 3px 10px; border-radius: 4px;
+            font-size: 0.8rem; font-weight: 600; margin-bottom: 10px;
+            background: rgba(14, 165, 233, 0.1); color: #0284c7; border: 1px solid rgba(14,165,233,0.3);
+        }
+
+        .lead {
+            margin-bottom: 1rem;
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 99px;
+            background: rgba(14, 165, 233, 0.1);
+            color: #0284c7;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .tag.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: #059669;
+        }
+
+        .tag.red {
+            background: rgba(225, 29, 72, 0.08);
+            color: #e11d48;
+        }
+
+        /* 表格样式设计 */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.65rem 0.85rem;
+            border-bottom: 1px solid #f1f5f9;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background: rgba(14, 165, 233, 0.1);
+            color: #0284c7;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        td {
+            word-break: normal;
+            color: #475569;
+        }
+
+        td:first-child {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .highlight-green {
+            color: #059669;
+            font-weight: 800;
+        }
+
+        /* 全局字号比例优化 */
+        h1.main-title {
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .slide h2.slide-title {
+            font-size: 2.2rem;
+            color: var(--accent-secondary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; margin-top: 1.2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.2rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; margin-top: 1.2rem; }
+
+        .staggered-layout { display: flex; flex-direction: column; gap: 1.8rem; margin-top: 1.2rem; }
+        .staggered-layout .card { width: 85%; padding: 1.6rem 2.5rem; }
+        .staggered-layout .card:nth-child(1) { align-self: flex-start; }
+        .staggered-layout .card:nth-child(2) { align-self: center; }
+        .staggered-layout .card:nth-child(3) { align-self: flex-end; }
+        
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 1.6rem 1.8rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { margin-bottom: 0.8rem; font-size: 1.35rem; }
+        .card p { color: var(--text-muted); line-height: 1.6; font-size: 1.05rem;}
+        
+        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; display: inline-block; }
+
+        /* 时间轴 */
+        .timeline { position: relative; margin-top: 1.5rem; padding-left: 2rem; border-left: 2px dashed #cbd5e1; }
+        .timeline-item { position: relative; margin-bottom: 3.2rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.6rem; top: 0;
+            width: 1.2rem; height: 1.2rem; background: var(--accent-primary);
+            border-radius: 50%; box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .timeline-item h3 { color: #0f172a; font-size: 1.35rem; margin-bottom: 0.5rem; }
+        .timeline-item p { color: #475569; font-size: 1.05rem; line-height: 1.6; }
+        .timeline-date { font-weight: bold; color: #0ea5e9; font-size: 1rem; margin-bottom: 5px; display: block;}
+
+        /* 隐藏滚动条 */
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 3px; }
+
+        .role-tag {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 15px;
+            background: rgba(14, 165, 233, 0.1); color: #0284c7;
+        }
+
+        .cover-slide {
+            justify-content: center; align-items: center; text-align: center; background-color: var(--bg-panel);
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" opacity="0.05"><path d="M0 0 L100 100 M100 0 L0 100" stroke="%2338bdf8" stroke-width="2"/></svg>') center/cover;
+        }
+        .cover-slide h3 { font-size: 1.5rem; color: var(--text-muted); font-weight: 300; margin-top: 1rem; line-height: 1.6;}
+
+        /* --- 新增：画廊组件全局 CSS 样式 --- */
+        .gallery-trigger {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gallery-trigger:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2) !important;
+            border-color: var(--accent-primary) !important;
+        }
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f8fafc;
+            font-size: 44px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.1s;
+            z-index: 100001;
+        }
+        .lightbox-close:hover {
+            color: var(--accent-secondary);
+            transform: scale(1.1);
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #f8fafc;
+            font-size: 36px;
+            font-weight: bold;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s, transform 0.1s;
+            z-index: 100001;
+        }
+        .lightbox-nav:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: var(--accent-secondary);
+            transform: translateY(-50%) scale(1.05);
+        }
+        .lightbox-prev { left: 40px; }
+        .lightbox-next { right: 40px; }
+        .lightbox-content {
+            width: 75%;
+            height: 75%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .lightbox-zoom-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            width: 100%;
+            height: 100%;
+        }
+        .lightbox-zoom-container:active {
+            cursor: grabbing;
+        }
+        .lightbox-zoom-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            user-select: none;
+            pointer-events: none; /* 由外层容器接管拖拽事件 */
+            border-radius: 6px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            transition: transform 0.1s ease-out;
+        }
+        .lightbox-ui {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            z-index: 100001;
+        }
+        #lightbox-counter {
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 600;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+        .lightbox-zoom-controls {
+            display: flex;
+            gap: 10px;
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 16px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .lightbox-zoom-controls button {
+            background: none;
+            border: none;
+            color: #f8fafc;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 2px 10px;
+            transition: color 0.2s, transform 0.1s;
+        }
+        .lightbox-zoom-controls button:hover {
+            color: var(--accent-secondary);
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 侧边导航栏 -->
+    <div class="sidebar">
+        <div class="logo-area" id="logo-btn">
+            <h2>AMDMG X Tiktok</h2>
+            <span>欧洲出海可行性与战略规划</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a class="nav-link" data-target="1">1、市场全景透视</a>
+                <ul class="sub-nav">
+                    <li><a class="sub-nav-link" data-target="1">1.1 宏观大盘</a></li>
+                    <li><a class="sub-nav-link" data-target="2">1.2 国家阵营</a></li>
+                    <li><a class="sub-nav-link" data-target="3">1.3 品类解剖</a></li>
+                    <li><a class="sub-nav-link" data-target="4">1.4 需求趋势</a></li>
+                    <li><a class="sub-nav-link" data-target="5">1.5 竞争格局分析</a></li>
+                    <li><a class="sub-nav-link" data-target="6">1.6 核心大卖总结</a></li>
+                    <li><a class="sub-nav-link" data-target="7">1.7 黄金周期规律</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="8">2、战略重定向</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="9">3、三大硬件策略</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="10">4、降维落地战术</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-target="11">5、执行时间轴</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <div class="slide-container">
+            
+            <!-- 0: Cover -->
+            <div class="slide cover-slide active" id="slide-0">
+                <h1 class="main-title">AMDMG 欧洲 TikTok<br>数字化出海可行性与战略规划</h1>
+                <h3>避开英区红海 · 降维打击欧陆<br><span style="font-size: 1rem; color: #0ea5e9;">数据源：2025-2026年5月TikTok Shop/FastMoss/Google Trends</span></h3>
+            </div>
+
+            <!-- 1: 1.1 宏观大盘 (增长明显) (替换自 1.html + 注入数据.html表格) -->
+            <div class="slide light-slide" id="slide-1">
+                <h2 class="slide-title">1.1 宏观大盘 (增长明显) </h2>
+                <p style="color: #475569; margin-bottom: 0.8rem; font-size: 1.05rem;">基于欧洲 2026 年 5 月最新数据大盘，赛道正处于绝对的<span class="highlight">结构性扩容期</span>。</p>
+                <div class="grid-3">
+                    <div class="card" style="padding: 1.2rem 1.4rem;">
+                        <span class="data-source-tag">行业增速大盘</span>
+                        <h3 style="font-size: 1.25rem; margin-bottom: 0.2rem;">品类总销量同比</h3>
+                        <span class="data-number" style="font-size: 2rem; margin: 0.3rem 0;">+45.5%</span>
+                        <p style="font-size: 0.95rem; line-height: 1.5;">从 2025年5月的 13.52万件 飙升至 2026年5月的 <span class="highlight">19.68万件</span>。Google Trends 18个月需求曲线证实这是结构性上升，而非短期脉冲。</p>
+                    </div>
+                    <div class="card" style="padding: 1.2rem 1.4rem;">
+                        <span class="data-source-tag">供给端爆发</span>
+                        <h3 style="font-size: 1.25rem; margin-bottom: 0.2rem;">动销商品数 (SKU)</h3>
+                        <span class="data-number" style="font-size: 2rem; margin: 0.3rem 0;">+51.2%</span>
+                        <p style="font-size: 0.95rem; line-height: 1.5;">动销商品数从 1.26万 跃升至 1.91万。单品月均销量+30%，说明在供给激增的同时，<span class="highlight">消费者市场教育已高度成熟</span>，单品转化效率在提升。</p>
+                    </div>
+                    <div class="card" style="padding: 1.2rem 1.4rem;">
+                        <span class="data-source-tag">流量端爆发</span>
+                        <h3 style="font-size: 1.25rem; margin-bottom: 0.2rem;">动销带货达人数</h3>
+                        <span class="data-number" style="font-size: 2rem; margin: 0.3rem 0;">+40.6%</span>
+                        <p style="font-size: 0.95rem; line-height: 1.5;">带货达人从 1.11万 增至 1.57万。KOC生态极其繁荣，<span class="highlight">素人与腰部达人贡献了 89.5% 的销售额</span>，完美契合矩阵铺量打法。</p>
+                    </div>
+                </div>
+                <!-- 数据.html 1.1指标表格注入 -->
+                <div class="table-wrapper" style="margin-top: 1rem;">
+                    <table>
+                      <thead><tr><th>指标</th><th>2025年5月</th><th>2026年5月</th><th>变化</th><th>含义</th></tr></thead>
+                      <tbody>
+                        <tr><td>月度销量</td><td>135,224件</td><td>196,765件</td><td class="highlight-green">+45.5%</td><td>需求端明显扩张，具备市场进入基础。</td></tr>
+                        <tr><td>动销商品数</td><td>12,684</td><td>19,180</td><td class="highlight-green">+51.2%</td><td>供给活跃，类目不是小众孤岛。</td></tr>
+                        <tr><td>动销达人</td><td>11,186</td><td>15,728</td><td class="highlight-green">+40.6%</td><td>内容和达人生态已经形成。</td></tr>
+                        <tr><td>直播场次</td><td>529</td><td>2,525</td><td class="highlight-green">+377.3%</td><td>工具类产品的演示销售机会变强。</td></tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 2: 1.3 市场全景透视：欧洲四国生态分化 (替换自 1.html) -->
+            <div class="slide light-slide" id="slide-2">
+                <h2 class="slide-title">1.2 欧洲四国生态分化</h2>
+                <p style="color: #475569; margin-bottom: 1rem; font-size: 1.1rem;">通过 2026年5月 区域数据对比，欧洲正从“英国单极”走向“四国多极化”。</p>
+                <div class="grid-2" style="gap: 1.8rem;">
+                    <!-- 绑定画廊 g1（英国分布与对比 2张图）并添加指示说明 -->
+                    <div class="card gallery-trigger" data-gallery="g1" style="padding: 1.5rem 1.8rem;" title="点击查看四国分布与对比图">
+                        <div class="card-icon" style="font-size: 2.2rem; margin-bottom: 0.4rem;">🇬🇧</div>
+                        <h3 style="font-size: 1.35rem;">英国 (GB)：深水红海，增长疲软 <span style="font-size: 0.85rem; color: var(--accent-primary); font-weight: normal;">(点击看图 🔍)</span></h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">大盘占比从 80% 降至 <span class="highlight-red">66.7%</span>。5月末单周新增 SKU 达 2858 个，竞争极度内卷。<span class="highlight-red">缺乏本土英文直播能力</span>的团队进场即沦为炮灰。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem 1.8rem;">
+                        <div class="card-icon" style="font-size: 2.2rem; margin-bottom: 0.4rem;">🇫🇷</div>
+                        <h3 style="font-size: 1.35rem;">法国 (FR)：爆发前夜的第二大市场</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">销量跃居欧洲第二（3.7万件），<span class="highlight">动销SKU（3586个）显著高于德国</span>。达人渗透率极低（仅1300+人），是新品测试与 AI 内容矩阵绝佳的降维打击温床。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem 1.8rem;">
+                        <div class="card-icon" style="font-size: 2.2rem; margin-bottom: 0.4rem;">🇪🇸</div>
+                        <h3 style="font-size: 1.35rem;">西班牙 (ES)：本土红利最强者</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">TOP3 全为西班牙本土沙龙集合店（如 Equis pro）。起步虽晚，但达人渗透率追平德国，<span class="highlight">多家跨境新店单月暴涨 3800%+</span>。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem 1.8rem;">
+                        <div class="card-icon" style="font-size: 2.2rem; margin-bottom: 0.4rem;">🇩🇪</div>
+                        <h3 style="font-size: 1.35rem;">德国 (DE)：高客单，重多渠道</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">消费者客单价全欧最高。但因 TikTok 商业化阶段问题，大量搜索流量外溢，必须依赖 <span class="highlight">TikTok种草 + Amazon DE承接</span> 组合拳。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3: 2. 美甲品类项目价值 + 图片1三大硬件 (上下排版设计 - 2x2精美缩微网格版) -->
+            <div class="slide light-slide" id="slide-3">
+                <h2 class="slide-title" style="margin-bottom: 0.5rem;">1.3 美甲品类已具备独立项目价值</h2>
+                <p class="lead" style="font-size: 1rem; margin-bottom: 0.6rem;">美甲品类价值主要体现在成交规模、动销SKU和达人参与度三个维度；这些指标共同反映出该细分赛道已形成独立增长空间。</p>
+                
+                <!-- 上部：恢复为您上传截图的 2x2 经典网格样式（等比例缩小版，预留高度给下方） -->
+                <div class="grid-4" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.1rem; margin-bottom: 0.6rem;">
+                    <div class="card" style="padding: 0.6rem 1rem; border-radius: 8px;">
+                        <span class="tag green" style="background: rgba(16, 185, 129, 0.12); color: #059669; margin-bottom: 6px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">类目规模</span>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.2rem; color: #0f172a; font-weight: 700;">近20万件/月的成交密度</h3>
+                        <p style="font-size: 0.85rem; line-height: 1.45; color: #475569;">英国手足及指甲护理类目已达到近20万件/月、1.9万动销SKU、1.5万动销达人，说明美甲相关产品已具备独立项目规模。</p>
+                    </div>
+                    <div class="card" style="padding: 0.6rem 1rem; border-radius: 8px;">
+                        <span class="tag" style="background: rgba(14, 165, 233, 0.1); color: #0284c7; margin-bottom: 6px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">硬件空间</span>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.2rem; color: #0f172a; font-weight: 700;">美甲灯约占类目8%-15%</h3>
+                        <p style="font-size: 0.85rem; line-height: 1.45; color: #475569;">美甲灯作为硬件子赛道，资料估算约占手足及指甲护理类目销量的8%-15%，对应英国单月约1.6万-3万件。</p>
+                    </div>
+                    <div class="card" style="padding: 0.6rem 1rem; border-radius: 8px;">
+                        <span class="tag green" style="background: rgba(16, 185, 129, 0.12); color: #059669; margin-bottom: 6px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">内容生态</span>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.2rem; color: #0f172a; font-weight: 700;">达人参与度高</h3>
+                        <p style="font-size: 0.85rem; line-height: 1.45; color: #475569;">动销达人超过1.5万，说明美甲内容在TikTok平台上已有成熟传播基础。</p>
+                    </div>
+                    <div class="card" style="padding: 0.6rem 1rem; border-radius: 8px;">
+                        <span class="tag" style="background: rgba(14, 165, 233, 0.1); color: #0284c7; margin-bottom: 6px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">成交生态</span>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.2rem; color: #0f172a; font-weight: 700;">动销SKU接近2万</h3>
+                        <p style="font-size: 0.85rem; line-height: 1.45; color: #475569;">动销SKU增长说明市场不是单一爆品驱动，而是多产品、多店铺、多达人共同参与。</p>
+                    </div>
+                </div>
+
+                <!-- 下部：图片1新增内容，三大硬件并排3方块 (已优化：往下移动，间距增加3倍) -->
+                <h3 style="color: #0284c7; font-size: 1.25rem; border-left: 4px solid var(--accent-primary); padding-left: 0.6rem; margin-bottom: 0.6rem; margin-top: 2.2rem !important;">三大硬件真实战力</h3>
+                <div class="grid-3" style="gap: 1.2rem; margin-top: 0;">
+                    <div class="card" style="padding: 1.2rem; border-top: 3px solid var(--accent-primary); display: flex; flex-direction: column; justify-content: space-between;">
+                        <h4 style="font-size: 1.15rem; margin-bottom: 0.4rem; color: #0ea5e9; font-weight: 700;">💡 美甲灯 (Nail Lamp): 最佳破局尖刀</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.5; color: #475569;">Google Trends 需求热度同比翻 2.5 - 3 倍。在法、德、西起盘极快，是跨境商家破局欧陆、建立早期品牌信任的最佳低门槛硬件。</p>
+                    </div>
+                    <div class="card" style="padding: 1.2rem; border-top: 3px solid var(--success-color); display: flex; flex-direction: column; justify-content: space-between;">
+                        <h4 style="font-size: 1.15rem; margin-bottom: 0.4rem; color: #10b981; font-weight: 700;">🌪️ 美甲集尘器 (Dust Collector): 视觉演示爆款</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.5; color: #475569;">销量 YoY +45.5%。极度适合短视频的前3秒“大吸力、静音”对比测试。但在欧陆依赖 TikTok 种草 ➡️ Amazon 承接 的外溢路径。</p>
+                    </div>
+                    <div class="card" style="padding: 1.2rem; border-top: 3px solid var(--danger-color); display: flex; flex-direction: column; justify-content: space-between;">
+                        <h4 style="font-size: 1.15rem; margin-bottom: 0.4rem; color: #ef4444; font-weight: 700;">⚙️ 美甲打磨机 (Nail Drill): 高利润且高门槛</h4>
+                        <p style="font-size: 0.95rem; line-height: 1.5; color: #475569;">单品竞争加剧 (SKU +51%)，退货率高。头部 1M+ 粉丝顶流人均产出是素人的 11倍，强依赖欧洲本土沙龙的“教学级”专业内容背书。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4: 1.7 需求趋势 (等比放大表格，下方严格留白15%)(已绑定画廊：趋势大图) -->
+            <div class="slide light-slide" id="slide-4">
+                <h2 class="slide-title">1.4 需求趋势：三类工具同步抬升</h2>
+                <p class="lead" style="font-size: 1.15rem; margin-bottom: 1.2rem;">美甲灯、打磨机、集尘器三个关键词在2026年均出现明显峰值，说明这不是单品偶然爆发，而是工具化需求同步抬升。</p>
+                <!-- 绑定画廊 g2（趋势图 3张） -->
+                <div class="table-wrapper gallery-trigger" data-gallery="g2" style="margin-top: 1rem; margin-bottom: 1.2rem;" title="点击表格查看详细 Google Trends 趋势图">
+                    <table style="font-size: 1.02rem;">
+                      <thead>
+                        <tr>
+                          <th style="padding: 0.85rem 1rem; font-size: 1.05rem;">产品关键词 <span style="font-size: 0.85rem; color: var(--accent-secondary); font-weight: normal;">(点击表格看图 🔍)</span></th>
+                          <th style="padding: 0.85rem 1rem; font-size: 1.05rem;">趋势信号</th>
+                          <th style="padding: 0.85rem 1rem; font-size: 1.05rem;">需求含义</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="padding: 0.85rem 1rem;"><strong>Nail lamp</strong></td>
+                          <td style="padding: 0.85rem 1rem;">2026年4月Google Trends峰值达到100，4月均值较2025年同期提升约2.5-3倍。</td>
+                          <td style="padding: 0.85rem 1rem;">家用DIY美甲基础工具需求增强。</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.85rem 1rem;"><strong>Nail drill</strong></td>
+                          <td style="padding: 0.85rem 1rem;">2026年4-5月达到年度峰值，情人节、母亲节、婚礼季形成需求窗口。</td>
+                          <td style="padding: 0.85rem 1rem;">消费者从基础美甲转向更专业的工具体验。</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.85rem 1rem;"><strong>Nail dust collector</strong></td>
+                          <td style="padding: 0.85rem 1rem;">2026年4月达到18个月峰值，较2025年峰值明显提升。</td>
+                          <td style="padding: 0.85rem 1rem;">专业/半专业场景开始被内容电商激活。</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                <div class="grid-3" style="margin-top: 1.2rem; gap: 1.8rem;">
+                    <div class="card" style="padding: 1.5rem;">
+                        <h3 style="font-size: 1.3rem;">内容适配</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">工具类卖点可被直观演示，适合TikTok内容转化。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <h3 style="font-size: 1.3rem;">场景升级</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">消费者从耗材购买，延伸到家用和半专业工具。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <h3 style="font-size: 1.3rem;">季节窗口</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">春夏美甲旺季与礼赠节点共同推动需求峰值。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5: 1.5 竞争格局分析 -->
+            <div class="slide light-slide" id="slide-5">
+                <h2 class="slide-title">1.5 竞争格局：两极分化</h2>
+                <div class="grid-2" style="gap: 2rem; margin-top: 1rem;">
+                    <div class="card" style="padding: 1.5rem 1.8rem;">
+                        <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚔️</div>
+                        <h3 style="font-size: 1.35rem;">低价耗材区（£0 - £15）</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">彻底沦为义乌/广州系铺货大卖的死海。代表店铺如 Delicate thing，单店 SKU 高达 200-1600个，靠广撒网赚微薄利润。我们绝不碰此价格带。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem 1.8rem;">
+                        <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem;">💎</div>
+                        <h3 style="font-size: 1.35rem;">中高端硬件区（£30 - £75+）</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">高壁垒高利润，是打磨机、集尘器的核心阵地。目前正处于从“杂牌混战”向<span class="highlight">“专业心智品牌”</span>集中的过渡期。谁掌握了专业 KOC，谁就能控盘。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem 1.8rem;">
+                        <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏛️</div>
+                        <h3 style="font-size: 1.35rem;">本土 IP 派</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">依靠“线下沙龙背书+美甲师教学”维持高转化与高溢价，店铺评分普遍 ≥4.5。转化率极高，是欧洲本地消费者的首选。</p>
+                    </div>
+                    <div class="card" style="padding: 1.5rem 1.8rem;">
+                        <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌐</div>
+                        <h3 style="font-size: 1.35rem;">纯跨境铺货派</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">覆盖面极广但缺乏心智，转化效率低下。某些铺货店 1500+ 达人的产出，不及本土店 700 达人的五分之一。这印证了 AI 赋能品牌本土化的必要性。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6: 1.6 大卖画像与对标避坑 (已绑定画廊：四国大卖) -->
+            <div class="slide light-slide" id="slide-6">
+                <h2 class="slide-title">1.6 大卖画像与对标避坑</h2>
+                
+                <!-- 恢复为上一版经典的 2x2 网格设计 (等比微缩版，预留空间给表格) -->
+                <div class="grid-4" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.1rem; margin-bottom: 0.6rem;">
+                    <!-- 绑定画廊 g3（四国大卖 4张图） -->
+                    <div class="card gallery-trigger" data-gallery="g3" style="padding: 0.8rem 1.2rem; border-radius: 8px;" title="点击查看四国大卖及竞对数据图">
+                        <span class="role-tag" style="background:#fef2f2; color:#ef4444; margin-bottom: 8px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">🚫 绝对地头蛇 (避坑) <span style="font-size: 0.7rem; color: var(--accent-primary); font-weight: normal;">(点击看图 🔍)</span></span>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 0.3rem; color: #0f172a;">Katie Barnes Tool Range (GB)</h3>
+                        <p style="font-size: 0.88rem; line-height: 1.45; color: #475569;">垄断英国 £60+ 高端硬件，本土美甲学院背景，达人人均产出极高。结论：英国专业线已锁死，坚决避开不当炮灰。</p>
+                    </div>
+                    <div class="card" style="padding: 0.8rem 1.2rem; border-radius: 8px;">
+                        <span class="role-tag" style="background:#f0fdf4; color:#10b981; margin-bottom: 8px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">🎯 跨境出海标杆 (对标)</span>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 0.3rem; color: #0f172a;">Tinovo Uno (深圳锐恒)</h3>
+                        <p style="font-size: 0.88rem; line-height: 1.45; color: #475569;">唯一明确以“美甲硬件”为核心，在法/德/西同步实现月环比 <span class="highlight">+7000%</span> 暴涨的玩家。结论：中国硬件+跨境打法在欧陆完全走得通！</p>
+                    </div>
+                    <div class="card" style="padding: 0.8rem 1.2rem; border-radius: 8px;">
+                        <span class="role-tag" style="background:#f0fdf4; color:#10b981; margin-bottom: 8px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">🔥 极致单品奇迹 (对标)</span>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 0.3rem; color: #0f172a;">Summer Foot Deutschland (DE)</h3>
+                        <p style="font-size: 0.88rem; line-height: 1.45; color: #475569;">仅靠 **1 款 SKU**，撬动 945 位本土达人疯狂带货，单月产出超万欧。结论：欧陆切忌盲目铺货，用极简 SKU 配合 AI 矩阵打透最有效。</p>
+                    </div>
+                    <div class="card" style="padding: 0.8rem 1.2rem; border-radius: 8px;">
+                        <span class="role-tag" style="background: rgba(14, 165, 233, 0.1); color: #0284c7; margin-bottom: 8px; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px;">💅 沙龙渠道霸主 (启示)</span>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 0.3rem; color: #0f172a;">lovenails / Kazinails (FR/ES)</h3>
+                        <p style="font-size: 0.88rem; line-height: 1.45; color: #475569;">深耕欧洲本地沙龙渠道的意/法本土品牌，客单价坚挺。结论：直接启发我们要把 KOC 目标全部瞄准“欧洲本地沙龙老板娘”。</p>
+                    </div>
+                </div>
+
+                <!-- 竞品表格 (等比例缩小适配) -->
+                <div class="table-wrapper" style="margin-top: 0.4rem; box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);">
+                    <table style="font-size: 0.82rem;">
+                      <thead>
+                        <tr>
+                          <th style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">竞品方</th>
+                          <th style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">平台/市场</th>
+                          <th style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">与本项目关系</th>
+                          <th style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">需要重点学习/规避</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="padding: 0.45rem 0.65rem;"><strong>Katie Barnes Tool Range</strong></td>
+                          <td style="padding: 0.45rem 0.65rem;">TikTok Shop UK</td>
+                          <td>美甲硬件最直接对标，专业工具线强，月GMV £62.4k。</td>
+                          <td>学习“美甲师IP/培训背书 + 专业工具内容”；避免白牌低价表达。</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.45rem 0.65rem;"><strong>Delicate thing</strong></td>
+                          <td style="padding: 0.45rem 0.65rem;">TikTok Shop UK/DE</td>
+                          <td>中国义乌跨境背景，综合美甲店，英国月GMV £64.8k。</td>
+                          <td>证明中国供应链具备进入欧洲头部的基础；低价走量竞争强度较高。</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.45rem 0.65rem;"><strong>MEET ACROSS / Xioimy</strong></td>
+                          <td style="padding: 0.45rem 0.65rem;">TikTok Shop多国</td>
+                          <td>跨境综合美甲店，覆盖英国、法国、德国、西班牙。</td>
+                          <td>关注其多国复制能力和达人覆盖，但避免SKU杂货化。</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.45rem 0.65rem;"><strong>Tinovo Uno</strong></td>
+                          <td style="padding: 0.45rem 0.65rem;">FR/DE/ES</td>
+                          <td>美甲灯硬件跨境玩家，欧陆三国同步起量。</td>
+                          <td>作为美甲灯直接竞品监控，观察其选品、内容与区域复制节奏。</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0.45rem 0.65rem;"><strong>SUNUV / Mylee</strong></td>
+                          <td style="padding: 0.45rem 0.65rem;">Amazon UK</td>
+                          <td>家用美甲灯/套装热销代表，证明Amazon端有成熟消费需求。</td>
+                          <td>美甲灯已有平台外消费基础，进入TikTok后需要通过内容完成转化承接。</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 7: 1.4 市场透视：顺势而为的黄金周期 (原slide-4与slide-7对调) -->
+            <div class="slide light-slide" id="slide-7">
+                <h2 class="slide-title">1.7 顺势而为的黄金周期</h2>
+                <p style="margin-bottom: 1.2rem; color: #475569; font-size: 1.1rem;">基于 Google Trends 过去 18 个月的精准波动规律（检索词：nail drill / nail lamp/ nail dust collector）</p>
+                <div class="timeline" style="margin-top: 0.5rem;">
+                    <div class="timeline-item" style="margin-bottom: 3.2rem;">
+                        <span class="timeline-date" style="font-size: 1rem;">📉 6-7月 及 1月（淡季测试期）</span>
+                        <h3>最佳测水与发育低谷</h3>
+                        <p>热度跌至 20-30。竞争最弱、流量成本极低，是技术团队跑通 AI 矩阵模型、测试新品线的最优“低成本试错窗口”。</p>
+                    </div>
+                    <div class="timeline-item" style="margin-bottom: 3.2rem;">
+                        <span class="timeline-date" style="font-size: 1rem;">🥉 8-9月 及 2月（情绪次峰）</span>
+                        <h3>暑期凉鞋季 & 情人节 DIY 波段</h3>
+                        <p>秋季返校派对季（热度 54）与情人节居家 DIY 需求爆发（环比暴涨 117%）。这是下半年的主力出单波段，需提前锁定中腰部达人。</p>
+                    </div>
+                    <div class="timeline-item" style="margin-bottom: 1.5rem;">
+                        <span class="timeline-date" style="font-size: 1rem;">🥇 4-5月（绝对顶峰，指数 100）</span>
+                        <h3>母亲节/婚礼季大决战</h3>
+                        <p>全年需求最高点，热度是淡季的 5 倍！这是年度 GMV 总决战，必须提前 60 天（1月底）完成欧陆海外仓压仓和顶级达人排期。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8: 2. 战略重定向：避开英国，重仓欧陆 (原slide-8) -->
+            <div class="slide light-slide" id="slide-8">
+                <h2 class="slide-title">2. 战略重定向：避开英国，重仓欧陆</h2>
+                <p style="color: #475569; margin-bottom: 1rem; font-size: 1.15rem;">结合团队“懂AI、懂多语种视频，但暂无英语本土直播能力”，先不切入英国市场</p>
+                <div class="grid-2" style="gap: 2rem; margin-top: 1.2rem;">
+                    <div class="card" style="border-top: 4px solid #e11d48; padding: 2.2rem 2.5rem;">
+                        <span class="data-source-tag" style="background:#ffe4e6; color:#e11d48; border-color:#fda4af;">为什么要舍弃英国 (GB)？</span>
+                        <h3 style="margin-top:10px;">地头蛇垄断与流量载体错位</h3>
+                        <p style="margin-bottom:10px; font-size: 1.05rem; line-height: 1.6;">1. <span class="highlight-red">对手降维打击</span>：英国 £60+ 硬件市场被类似 Katie Barnes 这样的“培训学院IP”死死锁住。纯白牌硬件极难建立专业信任感。</p>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">2. <span class="highlight-red">核心战术失效</span>：英国市场转化已 100% 依赖“真人直播演示”（直播暴增377%）。我们团队擅长的“AI短视频矩阵”硬拼优势不明显，后续更新AI直播后可再考虑</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--accent-primary); padding: 2.2rem 2.5rem;">
+                        <span class="data-source-tag">为什么要重仓 德/法/西/意？</span>
+                        <h3 style="margin-top:10px;">语言壁垒带来的超级蓝海红利</h3>
+                        <p style="margin-bottom:10px; font-size: 1.05rem; line-height: 1.6;">1. <span class="highlight">跨越语言护城河</span>：大量跨境卖家被小语种阻挡。而我们的独家武器“AI 大模型生成德法意西四语种视频”，能在竞争真空中实现降维打击。</p>
+                        <p style="font-size: 1.05rem; line-height: 1.6;">2. <span class="highlight">短视频依然是王道</span>：欧陆 TikTok 商业化刚起步，消费者处于“视频种草”红利期，Tinovo Uno 等无直播纯视频跨境卖家暴涨 7000% 即是铁证。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9: 3. 赛道洞察：三大硬件品类切入策略 (替换自 1.html 第五页) -->
+            <div class="slide light-slide" id="slide-9">
+                <h2 class="slide-title">3. 赛道洞察：三大硬件品类切入策略</h2>
+                <div class="grid-3" style="gap: 1.8rem; margin-top: 1rem;">
+                    <div class="card" style="padding: 2.2rem 2rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <div>
+                            <span class="data-source-tag">首发先锋</span>
+                            <h3 style="font-size: 1.35rem; margin-bottom: 0.8rem;">美甲灯 (Nail Lamp)</h3>
+                            <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 0.8rem;"><strong>数据支撑</strong>：Google Trends 同比热度翻倍(16飙升至66)；法国容错率最高。</p>
+                        </div>
+                        <p style="font-size: 1.05rem; line-height: 1.6;"><strong>切入策略</strong>：卡位 <span class="highlight">€20-€30 甜蜜点</span>，主打高颜值便携。由于不需要复杂教学，最适合作为撕开欧陆市场信任缺口的“引流尖刀”。</p>
+                    </div>
+                    <div class="card" style="padding: 2.2rem 2rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <div>
+                            <span class="data-source-tag">算法宠儿</span>
+                            <h3 style="font-size: 1.35rem; margin-bottom: 0.8rem;">集尘器 (Dust Collector)</h3>
+                            <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 0.8rem;"><strong>数据支撑</strong>：演示型刚需，大盘销量 YoY +45.5%。</p>
+                        </div>
+                        <p style="font-size: 1.05rem; line-height: 1.6;"><strong>切入策略</strong>：充分利用 AI 混剪，在视频前3秒直观呈现 <span class="highlight">静音(≤55dB)与大吸力(≥60W)</span> 的极度对比。视觉冲击极易在早期欧陆算法中博取免费爆款流量。</p>
+                    </div>
+                    <div class="card" style="padding: 2.2rem 2rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <div>
+                            <span class="data-source-tag">交叉复购</span>
+                            <h3 style="font-size: 1.35rem; margin-bottom: 0.8rem;">打磨机 (Nail Drill)</h3>
+                            <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 0.8rem;"><strong>数据支撑</strong>：工具类退货率高，强依赖专业售后与达人教学内容。</p>
+                        </div>
+                        <p style="font-size: 1.05rem; line-height: 1.6;"><strong>切入策略</strong>：避开初期强推 €80 顶配。待美甲灯与集尘器在本地沙龙沉淀出精准高粘性 KOC 后，作为 <span class="highlight">后置高毛利利润款</span> 进行定向推介与复购收割。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10: 4. 降维战术：重塑欧陆商业闭环 (原slide-9) -->
+            <div class="slide light-slide" id="slide-10">
+                <h2 class="slide-title">4. 降维战术：重塑欧陆商业闭环</h2>
+                <div class="staggered-layout" style="margin-top: 1.2rem; gap: 2rem;">
+                    <div class="card" style="padding: 1.8rem 2.5rem;">
+                        <h3 style="font-size: 1.35rem;">🛡️ 战术 1：亚马逊兜底承接（渠道协同）</h3>
+                        <p style="font-size: 1.08rem; line-height: 1.6;">TikTok 欧陆直接转化仍在初期，大量用户会被种草后转投搜索。因此 <span class="highlight">亚马逊 (Amazon EU) 必须作为底层履约盘</span>，无缝承接 100% 的搜索外溢，避免单一平台的压货风险。</p>
+                    </div>
+                    <div class="card" style="padding: 1.8rem 2.5rem; align-self: center;">
+                        <h3 style="font-size: 1.35rem;">🎯 战术 2：重定义 KOC（精准猎户）</h3>
+                        <p style="font-size: 1.08rem; line-height: 1.6;">修改 AI 爬虫的 Prompt，彻底放弃无效泛娱乐博主，精准定向抓取<span class="highlight">“欧洲独立上门美甲师”与“社区沙龙老板娘”</span>。给她们寄送样机并返佣，把她们变成推广兼高复购大客。</p>
+                    </div>
+                    <div class="card" style="padding: 1.8rem 2.5rem; align-self: flex-end;">
+                        <h3 style="font-size: 1.35rem;">📦 战术 3：动态补水（柔性供应链）</h3>
+                        <p style="font-size: 1.08rem; line-height: 1.6;">防断货是核心。基于“14天滚动日均销量”制定 30 天安全库存。打破大批量盲目压货，采用<span class="highlight">“首批 200台 空运测水 + 500台 海运承接”</span>的联运节奏，不断粮也不压死库。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11: 5. 落地时间轴：踩准欧洲 3C 节拍 (原slide-10) -->
+            <div class="slide light-slide" id="slide-11">
+                <h2 class="slide-title">5. 落地时间轴：踩准欧洲 3C 节拍</h2>
+                <div class="timeline" style="margin-top: 1.2rem;">
+                    <div class="timeline-item" style="margin-bottom: 3rem;">
+                        <span class="timeline-date" style="font-size: 1.05rem;">当前 - 8月 (利用淡季窗口)</span>
+                        <h3 style="font-size: 1.35rem;">V 1.0 蓄水测款：低成本试错</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.6;">趁 6-7 月欧洲需求低谷、竞争降温，启动空运 200 台入局法/西市场。技术团队跑通多语种 AI 矩阵与本土合规，打磨首发美甲灯/集尘器的视频转化率模型。</p>
+                    </div>
+                    <div class="timeline-item" style="margin-bottom: 3rem;">
+                        <span class="timeline-date" style="font-size: 1.05rem;">9月 - 12月 (迎战次峰与旺季)</span>
+                        <h3 style="font-size: 1.35rem;">V 2.0 承接放量：双核转化</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.6;">迎来秋季开学季与黑五圣诞。全面推广“美甲灯+集尘器”组合套装拉升客单，海运大货跟进。彻底跑通“TikTok 短视频引流 + Amazon EU 承接”的双核闭环。</p>
+                    </div>
+                    <div class="timeline-item" style="margin-bottom: 1.5rem;">
+                        <span class="timeline-date" style="font-size: 1.05rem;">次年 2月 - 5月 (决战热度指数 100)</span>
+                        <h3 style="font-size: 1.35rem;">V 3.0 决战大满贯：全域爆发</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.6;">1 月底前完成核心沙龙达人深度绑定与最高库存压仓。2-5月（情人节/母亲节/婚礼季）全面收割欧洲 3C 美甲年度最高峰，将打磨机切入高端市场，冲刺区域 TOP 20。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- --- 新增：画廊组件全局 HTML 结构 --- -->
+    <div id="lightbox-modal" class="lightbox-overlay">
+        <span class="lightbox-close" id="lightbox-close-btn">&times;</span>
+        <div class="lightbox-nav lightbox-prev" id="lightbox-prev-btn">&#10094;</div>
+        <div class="lightbox-nav lightbox-next" id="lightbox-next-btn">&#10095;</div>
+        <div class="lightbox-content">
+            <div class="lightbox-zoom-container" id="lightbox-zoom-container">
+                <img id="lightbox-img" src="" alt="Gallery Image" draggable="false">
+            </div>
+        </div>
+        <div class="lightbox-ui">
+            <span id="lightbox-counter">1 / 1</span>
+            <div class="lightbox-zoom-controls">
+                <button id="lightbox-zoom-in" title="放大">🔍 +</button>
+                <button id="lightbox-zoom-out" title="缩小">🔍 -</button>
+                <button id="lightbox-zoom-reset" title="重置 1:1">1:1</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const navLinks = document.querySelectorAll('.nav-link, .sub-nav-link');
+            let currentSlide = 0;
+
+            function updatePresentation(targetIndex) {
+                if (targetIndex < 0 || targetIndex >= slides.length) return;
+                currentSlide = parseInt(targetIndex);
+
+                slides.forEach((slide, index) => {
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const target = parseInt(link.getAttribute('data-target'));
+                    
+                    if (target === currentSlide) {
+                        link.classList.add('active');
+                        // 自动展开父级菜单
+                        const parentLi = link.closest('.nav-item');
+                        if (parentLi && parentLi.querySelector('.sub-nav')) {
+                            parentLi.classList.add('open');
+                        }
+                    }
+                });
+            }
+
+            // Logo return to cover
+            document.getElementById('logo-btn').addEventListener('click', () => {
+                updatePresentation(0);
+                document.querySelectorAll('.nav-item.open').forEach(item => {
+                    item.classList.remove('open');
+                });
+            });
+
+            // Nav click
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const target = link.getAttribute('data-target');
+                    if (target !== null) {
+                        updatePresentation(target);
+                    }
+                    
+                    if (link.classList.contains('nav-link')) {
+                        const parentLi = link.closest('.nav-item');
+                        const subNav = parentLi.querySelector('.sub-nav');
+                        
+                        if (subNav) {
+                            parentLi.classList.toggle('open');
+                        } else {
+                            document.querySelectorAll('.nav-item.open').forEach(item => {
+                                if (item !== parentLi) item.classList.remove('open');
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Keyboard Nav
+            document.addEventListener('keydown', (e) => {
+                // 如果画廊打开着，键盘事件让画廊接管，不触发幻灯片切页
+                const modal = document.getElementById('lightbox-modal');
+                if (modal && modal.style.display === 'flex') return;
+
+                let nextSlide = currentSlide;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    if (currentSlide < slides.length - 1) nextSlide = currentSlide + 1;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    if (currentSlide > 0) nextSlide = currentSlide - 1;
+                }
+
+                if (nextSlide !== currentSlide) {
+                    updatePresentation(nextSlide);
+                }
+            });
+
+            updatePresentation(0);
+
+            // --- 新增：画廊组件 JS 逻辑部分 ---
+            const galleries = {
+                g1: [
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E5%9B%9B%E5%9B%BD%E5%88%86%E5%B8%83.png",
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E5%9B%9B%E5%9B%BD%E5%AF%B9%E6%AF%94.png"
+                ],
+                g2: [
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E6%89%93%E7%A3%A8%E6%9C%BAGT.png",
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E9%9B%86%E5%B0%98%E5%99%A8GT.png",
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E7%BE%8E%E7%94%B2%E7%81%AFGT.png"
+                ],
+                g3: [
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E8%8B%B1%E5%9B%BD%E5%A4%A7%E5%8D%96.png",
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E5%BE%B7%E5%9B%BD%E5%A4%A7%E5%8D%96.png",
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E6%B3%95%E5%9B%BD%E5%A4%A7%E5%8D%96.png",
+                    "https://vestige0915-dotcom.github.io/report/%E5%9B%BE%E7%89%87/%E6%AC%A7%E6%B4%B2TT/%E8%A5%BF%E7%8F%AD%E7%89%99%E5%A4%A7%E5%8D%96.png"
+                ]
+            };
+
+            let currentGallery = null;
+            let currentIndex = 0;
+            let zoomScale = 1;
+            let isDragging = false;
+            let startX = 0, startY = 0;
+            let translateX = 0, translateY = 0;
+
+            const modal = document.getElementById('lightbox-modal');
+            const img = document.getElementById('lightbox-img');
+            const prevBtn = document.getElementById('lightbox-prev-btn');
+            const nextBtn = document.getElementById('lightbox-next-btn');
+            const closeBtn = document.getElementById('lightbox-close-btn');
+            const zoomContainer = document.getElementById('lightbox-zoom-container');
+            const counter = document.getElementById('lightbox-counter');
+            const btnIn = document.getElementById('lightbox-zoom-in');
+            const btnOut = document.getElementById('lightbox-zoom-out');
+            const btnReset = document.getElementById('lightbox-zoom-reset');
+
+            function openGallery(gKey) {
+                currentGallery = galleries[gKey];
+                currentIndex = 0;
+                modal.style.display = 'flex';
+                loadImage();
+            }
+
+            function loadImage() {
+                if (!currentGallery) return;
+                img.src = currentGallery[currentIndex];
+                resetZoom();
+                updateUI();
+            }
+
+            function updateUI() {
+                counter.innerText = `${currentIndex + 1} / ${currentGallery.length}`;
+                if (currentGallery.length <= 1) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                } else {
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'flex';
+                }
+            }
+
+            function resetZoom() {
+                zoomScale = 1;
+                translateX = 0;
+                translateY = 0;
+                applyTransform();
+            }
+
+            function applyTransform() {
+                img.style.transform = `scale(${zoomScale}) translate(${translateX / zoomScale}px, ${translateY / zoomScale}px)`;
+            }
+
+            // 翻页
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (currentIndex > 0) currentIndex--;
+                else currentIndex = currentGallery.length - 1;
+                loadImage();
+            });
+
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (currentIndex < currentGallery.length - 1) currentIndex++;
+                else currentIndex = 0;
+                loadImage();
+            });
+
+            // 关闭
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                currentGallery = null;
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target === document.querySelector('.lightbox-content')) {
+                    modal.style.display = 'none';
+                    currentGallery = null;
+                }
+            });
+
+            // 键盘翻页与关闭支持
+            document.addEventListener('keydown', (e) => {
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'Escape') {
+                        modal.style.display = 'none';
+                        currentGallery = null;
+                    } else if (e.key === 'ArrowLeft') {
+                        prevBtn.click();
+                    } else if (e.key === 'ArrowRight') {
+                        nextBtn.click();
+                    }
+                }
+            });
+
+            // 放大缩小重置按钮
+            btnIn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                zoomScale = Math.min(8, zoomScale + 0.25);
+                applyTransform();
+            });
+
+            btnOut.addEventListener('click', (e) => {
+                e.stopPropagation();
+                zoomScale = Math.max(0.5, zoomScale - 0.25);
+                applyTransform();
+            });
+
+            btnReset.addEventListener('click', (e) => {
+                e.stopPropagation();
+                resetZoom();
+            });
+
+            // 滚轮缩放
+            zoomContainer.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY < 0 ? 0.1 : -0.1;
+                zoomScale = Math.min(8, Math.max(0.5, zoomScale + delta));
+                applyTransform();
+            });
+
+            // 拖拽移动
+            zoomContainer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                applyTransform();
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // 移动端手势支持
+            zoomContainer.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    startX = e.touches[0].clientX - translateX;
+                    startY = e.touches[0].clientY - translateY;
+                }
+            });
+
+            zoomContainer.addEventListener('touchmove', (e) => {
+                if (!isDragging || e.touches.length !== 1) return;
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                applyTransform();
+            });
+
+            zoomContainer.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            // 双击快速复位 / 放大到 2 倍
+            zoomContainer.addEventListener('dblclick', () => {
+                if (zoomScale !== 1) {
+                    resetZoom();
+                } else {
+                    zoomScale = 2;
+                    applyTransform();
+                }
+            });
+
+            // 绑定所有 gallery-trigger 元素
+            document.querySelectorAll('[data-gallery]').forEach(trigger => {
+                trigger.classList.add('gallery-trigger');
+                trigger.addEventListener('click', () => {
+                    const gKey = trigger.getAttribute('data-gallery');
+                    openGallery(gKey);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
