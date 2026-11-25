@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>出海硬件产品一号位 · 一页看板</title>
+<style>
+  :root{
+    --navy:#0d2b45;
+    --blue:#1f4e79;
+    --ink:#16202c;
+    --ink-2:#495767;
+    --ink-3:#8494a6;
+    --line:#dde5ee;
+    --bg:#eef2f7;
+    --card:#ffffff;
+    --gold:#b4884a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  .wrap{
+    height:100%;display:flex;flex-direction:column;
+    padding:clamp(14px,2vh,24px) clamp(16px,2.6vw,44px) clamp(12px,1.6vh,20px);
+    gap:clamp(12px,1.6vh,20px);
+  }
+
+  /* ================= TOP ================= */
+  .top{
+    flex:0 0 auto;
+    background:linear-gradient(150deg,#0b2740 0%,#173d5e 58%,#1f4e79 100%);
+    color:#fff;border-radius:4px;
+    padding:clamp(18px,2.4vh,30px) clamp(22px,2.6vw,38px);
+    display:flex;align-items:center;gap:clamp(24px,3vw,54px);
+    position:relative;overflow:hidden;
+  }
+  .top::after{
+    content:"";position:absolute;right:-100px;top:-140px;width:380px;height:380px;
+    border:1px solid rgba(255,255,255,.12);border-radius:50%;pointer-events:none;
+  }
+  .top::before{
+    content:"";position:absolute;left:38%;bottom:-190px;width:300px;height:300px;
+    border:1px solid rgba(255,255,255,.07);border-radius:50%;pointer-events:none;
+  }
+  .top-main{flex:1 1 auto;min-width:0;position:relative;z-index:1;}
+  .eyebrow{font-size:10.5px;letter-spacing:.24em;color:#9fbbd6;margin-bottom:9px;}
+  .top h1{
+    font-size:clamp(19px,2.1vw,27px);font-weight:700;letter-spacing:.01em;line-height:1.35;
+  }
+  .top h1 em{font-style:normal;color:#e8c48d;}
+  .thesis{
+    margin-top:9px;font-size:clamp(11.5px,.95vw,12.8px);color:#cfdded;
+    max-width:760px;line-height:1.7;
+  }
+  .thesis b{color:#fff;font-weight:600;}
+
+  .kpis{
+    flex:0 0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;
+    background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;
+    position:relative;z-index:1;
+  }
+  .kpi{
+    background:rgba(8,29,48,.55);padding:clamp(9px,1.3vh,14px) clamp(9px,.85vw,15px);
+    min-width:74px;
+  }
+  .kpi b{display:block;font-size:clamp(14px,1.35vw,19px);font-weight:700;letter-spacing:.01em;white-space:nowrap;}
+  .kpi b small{font-size:10.5px;font-weight:500;color:#bccfe2;margin:0 1px;}
+  .kpi span{display:block;font-size:9.5px;color:#9fbbd6;margin-top:4px;white-space:nowrap;}
+
+  /* ================= BOARD ================= */
+  .board{
+    flex:1 1 auto;min-height:0;
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(14px,1.7vw,28px);
+    align-content:stretch;
+  }
+  .node{
+    --accent:#1f4e79;
+    position:relative;
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:clamp(14px,2vh,22px) clamp(15px,1.4vw,22px) clamp(13px,1.8vh,18px);
+    display:flex;flex-direction:column;
+    cursor:pointer;overflow:hidden;
+    transition:transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s, border-color .28s;
+    animation:rise .5s cubic-bezier(.2,.7,.3,1) backwards;
+  }
+  .node:nth-child(1){animation-delay:.04s}
+  .node:nth-child(2){animation-delay:.12s}
+  .node:nth-child(3){animation-delay:.20s}
+  .node:nth-child(4){animation-delay:.28s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .node::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);
+    transition:width .3s;
+  }
+  .node:hover{transform:translateY(-3px);box-shadow:0 16px 34px -22px rgba(13,43,69,.55);border-color:#c9d6e4;}
+  .node:hover::before{width:5px;}
+  .node:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .node.active{border-color:var(--accent);box-shadow:0 18px 38px -24px rgba(13,43,69,.6);}
+  .node.active::before{width:5px;}
+
+  .node-top{display:flex;align-items:center;gap:9px;}
+  .no{
+    font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--accent);
+    background:#f2f5f9;
+    background:color-mix(in srgb,var(--accent) 10%,#fff);
+    padding:1px 6px;border-radius:2px;
+  }
+  .phase{font-size:10.5px;letter-spacing:.16em;color:var(--ink-3);}
+  .center{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;padding:10px 0 4px;}
+  .node h2{
+    font-size:clamp(16px,1.38vw,20px);font-weight:700;color:var(--navy);
+    line-height:1.45;margin:0 0 10px;letter-spacing:.01em;
+  }
+  .short{
+    font-size:clamp(12px,.98vw,13.4px);color:var(--ink-2);line-height:1.78;
+    flex:0 0 auto;
+  }
+  .preview{list-style:none;margin-top:4px;}
+  .preview li{
+    display:flex;align-items:baseline;gap:8px;
+    padding:6.5px 0;border-top:1px dashed #e8eef5;
+    font-size:clamp(11.5px,.95vw,12.6px);color:var(--ink-2);line-height:1.5;
+  }
+  .preview li .dot{
+    flex:0 0 auto;width:5px;height:5px;border-radius:50%;
+    background:var(--accent);position:relative;top:-2.5px;
+  }
+  .preview li em{
+    font-style:normal;margin-left:auto;flex:0 0 auto;
+    font-size:9.5px;color:var(--ink-3);letter-spacing:.06em;
+  }
+  .metric{
+    margin-top:11px;padding:8px 10px;border-radius:2px;
+    background:#f7f9fc;
+    background:color-mix(in srgb,var(--accent) 6%,#fff);
+    border-left:2px solid #cfdae7;
+    border-left-color:color-mix(in srgb,var(--accent) 45%,#fff);
+    font-size:11px;color:var(--ink-2);line-height:1.6;
+  }
+  .metric b{color:var(--accent);font-weight:700;}
+  .hint{
+    margin-top:10px;font-size:10.5px;color:var(--ink-3);
+    display:flex;align-items:center;gap:5px;
+  }
+  .hint .arw{transition:transform .3s;display:inline-block;}
+  .node:hover .hint .arw{transform:translateX(3px);}
+
+  /* ================= BOTTOM ================= */
+  .bottom{
+    flex:0 0 auto;
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);
+    border-radius:3px;padding:clamp(10px,1.4vh,15px) clamp(16px,1.6vw,24px);
+    display:flex;align-items:center;gap:clamp(14px,2vw,34px);
+  }
+  .close-line{flex:1 1 auto;font-size:clamp(11px,.92vw,12.6px);color:var(--ink-2);min-width:0;}
+  .close-line b{color:var(--navy);}
+  .close-line .q{color:var(--blue);font-weight:600;}
+  .tip{
+    flex:0 0 auto;display:flex;align-items:center;gap:9px;
+    font-size:10px;color:var(--ink-3);white-space:nowrap;
+  }
+  .tip span.k{
+    border:1px solid var(--line);border-bottom-width:2px;border-radius:3px;
+    padding:0 5px;font-size:10px;color:var(--ink-2);background:#fafcfe;
+  }
+
+  /* ================= DRAWER ================= */
+  .scrim{
+    position:fixed;inset:0;background:rgba(9,26,43,.42);
+    opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+    z-index:40;backdrop-filter:blur(1.5px);
+  }
+  .scrim.show{opacity:1;visibility:visible;}
+
+  .drawer{
+    --accent:#1f4e79;
+    position:fixed;top:0;right:0;height:100%;width:min(660px,94vw);
+    background:#fff;z-index:50;
+    transform:translateX(102%);
+    transition:transform .38s cubic-bezier(.22,.75,.28,1);
+    display:flex;flex-direction:column;
+    box-shadow:-24px 0 60px -30px rgba(9,26,43,.55);
+  }
+  .drawer.open{transform:none;}
+
+  .dhead{
+    flex:0 0 auto;background:linear-gradient(150deg,#0b2740 0%,#173d5e 100%);
+    color:#fff;padding:22px 26px 20px;position:relative;
+  }
+  .dhead::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+    background:linear-gradient(90deg,var(--accent),transparent);
+  }
+  .dnav{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .dnav .dno{
+    font-size:11px;font-weight:700;letter-spacing:.06em;color:#0b2740;
+    background:var(--accent);padding:1px 7px;border-radius:2px;
+  }
+  .dnav .dphase{font-size:10.5px;letter-spacing:.18em;color:#9fbbd6;}
+  .dnav .dcount{margin-left:auto;font-size:10.5px;color:#7f9cb8;letter-spacing:.08em;}
+  .dclose{
+    width:26px;height:26px;border:1px solid rgba(255,255,255,.22);background:transparent;
+    color:#c9d9e8;border-radius:2px;cursor:pointer;font-size:13px;line-height:1;
+    display:flex;align-items:center;justify-content:center;margin-left:10px;
+    transition:background .2s,color .2s,border-color .2s;
+  }
+  .dclose:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4);}
+  .dhead h2{font-size:19px;font-weight:700;line-height:1.4;letter-spacing:.01em;}
+  .dtheme{font-size:12px;color:#b9cde0;margin-top:8px;line-height:1.65;}
+  .dask{
+    margin-top:13px;padding:8px 11px;background:rgba(255,255,255,.07);
+    border-left:2px solid var(--accent);border-radius:2px;
+    font-size:11.5px;color:#d7e4f0;line-height:1.6;
+  }
+  .dask b{color:#e8c48d;font-weight:600;margin-right:6px;font-size:10.5px;letter-spacing:.08em;}
+
+  .dbody{flex:1 1 auto;overflow-y:auto;padding:20px 26px 30px;background:#fbfcfe;}
+  .dbody::-webkit-scrollbar{width:8px;}
+  .dbody::-webkit-scrollbar-thumb{background:#d3dde9;border-radius:4px;}
+
+  .dc{
+    background:#fff;border:1px solid var(--line);border-left:2px solid var(--accent);
+    border-radius:3px;padding:15px 17px;margin-bottom:12px;
+    animation:dcIn .42s cubic-bezier(.2,.7,.3,1) backwards;
+  }
+  @keyframes dcIn{from{opacity:0;transform:translateY(10px)}}
+  .dc-top{display:flex;align-items:baseline;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
+  .dc-label{
+    flex:0 0 auto;font-size:9.5px;letter-spacing:.1em;font-weight:700;
+    padding:1px 6px;border-radius:2px;background:#f1f5fa;color:var(--ink-3);
+  }
+  .dc-label.k{background:#f8f1e6;color:var(--gold);}      /* 骨架 */
+  .dc-label.f{background:#eaf0f8;color:#1f4e79;}          /* 血肉 */
+  .dc-label.a{background:#fbeceb;color:#b3352c;}          /* 王牌 */
+  .dc h3{font-size:13.5px;font-weight:700;color:var(--navy);line-height:1.5;}
+  .dc p{font-size:12.2px;color:var(--ink-2);line-height:1.78;}
+  .dc p + p{margin-top:7px;}
+  .dc-quote{
+    margin-top:10px;font-size:11.5px;color:var(--blue);background:#f4f8fd;
+    border-left:2px solid var(--blue);padding:7px 10px;border-radius:2px;line-height:1.7;
+  }
+  .dc-fact{
+    margin-top:11px;padding-top:9px;border-top:1px dashed #e3eaf2;
+    font-size:11px;color:var(--ink-3);line-height:1.65;
+  }
+  .dc-fact b{color:var(--accent);font-weight:700;}
+
+  .dnote{
+    margin-top:5px;padding:10px 12px;border-radius:2px;
+    background:#f4f7fb;border:1px dashed #d8e2ee;
+    font-size:10.5px;color:var(--ink-3);line-height:1.6;
+  }
+  .dnote b{color:var(--ink-2);font-weight:600;}
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:1080px){
+    body{overflow:auto;}
+    .wrap{height:auto;min-height:100%;}
+    .top{flex-direction:column;align-items:flex-start;gap:16px;}
+    .kpis{width:100%;}
+    .board{grid-template-columns:repeat(2,1fr);}
+    .bottom{flex-direction:column;align-items:flex-start;gap:8px;}
+  }
+  @media (max-width:680px){
+    .board{grid-template-columns:1fr;}
+    .kpis{grid-template-columns:repeat(3,1fr);}
+    .drawer{width:100%;}
+    .dbody{padding:16px 18px 26px;}
+    .dhead{padding:18px 18px 16px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+  }
+  @media print{
+    body{overflow:visible;background:#fff;}
+    .wrap{height:auto;}
+    .scrim,.drawer{display:none !important;}
+    .top{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="top-main">
+      <div class="eyebrow">PORTFOLIO · 出海硬件产品一号位 · 一页看板</div>
+      <h1>从「爆款直觉」到<em>「商业机器」</em></h1>
+      <p class="thesis">存量绞杀期，产品一号位的价值不是“做多少款”，而是用 <b>战略矩阵选位 × 非对称供应链杠杆 × 敏捷组织基建</b>，把有限现金流转化为高周转、高净毛利的确定性资产。</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>2<small>亿</small></b><span>年 GMV</span></div>
+      <div class="kpi"><b>16<small>%</small>→25<small>%</small></b><span>综合毛利率</span></div>
+      <div class="kpi"><b>30<small>%↑</small></b><span>落地提速</span></div>
+      <div class="kpi"><b>8<small>%</small>→5<small>%</small></b><span>退货率</span></div>
+      <div class="kpi"><b>10<small>%↑</small></b><span>团队人效</span></div>
+    </div>
+  </header>
+
+  <main class="board" id="board"></main>
+
+  <footer class="bottom">
+    <p class="close-line">
+      <b>一条主线：</b>先算清该打哪一仗 → 再向市场与供应链各要一层利润 → 用重武器守战果、轻武器随时撤 → 最后把这套变成别人也能跑的系统。
+      <span class="q">骨架负责说服，事例负责证明。</span>
+    </p>
+    <div class="tip">
+      <span>点击板块看事例</span>
+      <span class="k">←</span><span class="k">→</span><span>切换</span>
+      <span class="k">ESC</span><span>关闭</span>
+    </div>
+  </footer>
+
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-modal="true">
+  <header class="dhead" id="dhead"></header>
+  <div class="dbody" id="dbody"></div>
+</aside>
+
+<script>
+const DATA = [
+  {
+    no:'01', phase:'选战场', color:'#b4884a',
+    title:'矩阵定盘：先算生态位，再开模',
+    short:'用场景心智 × 生态位，决定打哪个品类、用什么姿势打、钱往哪投。',
+    tags:['双维矩阵','三种打法','SKU 砍尾','双渠道闭环'],
+    metric:'<b>4</b> 大主战场落位 · <b>尾部 SKU</b> 结构性砍尾',
+    theme:'产品规划不是拍脑袋画饼，而是精密计算后的生态位卡位',
+    ask:'你怎么选赛道、怎么定产品线，保证不打无准备之仗？',
+    note:'建议配图：2×2「场景心智 × 生态位」矩阵，四类目精准落位并标注资金分配规则',
+    cases:[
+      {
+        type:'k', label:'骨架', title:'双维矩阵定盘法', pv:'双维矩阵定盘法',
+        body:[
+          '第一刀切「用户心智象限」，决定切入哪个场景赚钱；第二刀切「产品力 × 内容力生态位」，决定用什么姿势打。',
+          '四象限落位：个护 / 户外 / 庭院 / 智居（扩展口径含汽摩配）。'
+        ],
+        fact:'结论：产品规划是<b>精密计算后的生态位卡位</b>，不是拍脑袋画饼。'
+      },
+      {
+        type:'f', label:'血肉', title:'三种打法对应三种资金规则', pv:'三种打法 × 三种资金规则',
+        body:[
+          '产品力强 + 内容力强 → 品牌旗舰，吃高溢价；内容力极强 + 微创新 → TikTok 流量爆款，做引流收割；产品力强 + 内容弱 → Amazon 参数标杆，贡献稳定现金流。'
+        ],
+        fact:'资金规则：高心智壁垒区<b>重兵投私模</b> · 脉冲场景区<b>快反控占用</b> · 双低区<b>休眠清仓</b>。'
+      },
+      {
+        type:'f', label:'血肉', title:'SKU 三分类，强制砍尾', pv:'SKU 三分类，强制砍尾',
+        body:[
+          '把全线 SKU 归入引流款 / 现金牛款 / 品牌旗舰款，以此为唯一依据砍掉尾部低效 SKU，终结“SKU 臃肿、资源分散、互相内耗”的铺货死局。'
+        ],
+        fact:'动作：<b>一次结构性砍尾</b>，而非逐年微调。'
+      },
+      {
+        type:'f', label:'血肉', title:'顺手闭环双渠道能力', pv:'顺手闭环双渠道能力',
+        body:[
+          '矩阵里「产品力 = Amazon 搜索与功能刚需」，「内容力 = TikTok 兴趣与视觉情绪」——让渠道能力成为战略坐标系的一根轴，而不是简历上的一句技能。'
+        ],
+        fact:'同一套矩阵同时解释<b>选品</b>与<b>渠道投放姿势</b>。'
+      }
+    ]
+  },
+  {
+    no:'02', phase:'锁利润', color:'#1f4e79',
+    title:'利润防守与非对称供应链杠杆',
+    short:'宏观变量写进定价公式；用产品定义力换工厂的免费开模与独家权。',
+    tags:['汇率前置','分层调价','Zero-CapEx','权益切分'],
+    metric:'毛利率 <b>16% → 25%</b> · 开模费 <b>0 占款</b>',
+    theme:'不花冤枉钱，向外部要超额利润',
+    ask:'海运、汇率、开模这么烧钱，你怎么保住我的毛利和现金流？',
+    note:'建议配图：成本结构瀑布图（汇率 / 海运 / ACOS 三因子）+ 开模权益切分示意图',
+    cases:[
+      {
+        type:'k', label:'对外 · 向市场要利润', pl:'对外要利润', title:'汇率前置的动态定价模型', pv:'汇率前置动态定价',
+        body:[
+          '抛弃静态的“成本加成定价”。把人民币升值预期 + 海运档位 + 广告 ACOS 三个外部因子直接嵌进 P&L 测算表，设定触发阈值，提前分批调价或做 BOM 减配，而不是等汇损把净利吃光再救火。',
+          '分层调价的依据是竞品价格带弹性——一刀切涨价会掉排名，局部微调才守得住转化。'
+        ],
+        fact:'结果：<b>综合毛利率 16% → 25%</b>，成为 2 亿盘子的核心财务抓手。'
+      },
+      {
+        type:'k', label:'对内 · 向供应链要杠杆', pl:'对内要杠杆', title:'Zero-CapEx：用产品定义力换免费开模 + 线上独家', pv:'Zero-CapEx 免费开模',
+        body:[
+          '工厂老板比谁都精，凭什么给你免费开模还给独家？答案不是砍加工费，而是给出一套让他相信“必爆”的产品定义包：ID / 结构方案 + BOM + VOC 洞察 + 预期销量测算。',
+          '再切分权益：我们拿欧美线上独家锁仓，工厂保留线下与非欧美区域的变现权——把他的非冲突利益还给他，换我们的零开模费占款。'
+        ],
+        quote:'“我靠的不是和工厂硬砍 1 块钱加工费，而是给出一套确定能卖爆的差异化定义方案。”',
+        fact:'标的<b>美甲集尘器</b>　|　筹码<b>确定性方案 + 产能对赌</b>　|　结果<b>省下数十万开模费 + 锁定排他护城河</b>。'
+      }
+    ]
+  },
+  {
+    no:'03', phase:'建壁垒', color:'#b3352c',
+    title:'重武器建墙，轻武器止损',
+    short:'私模 / 专利 / FTO 建墙，贴牌快反随时止损，不被沉没成本绑架。',
+    tags:['投模喊停','贴牌狙击','专利集群','FTO 排雷'],
+    metric:'止损 <b>0 沉没成本</b> · 守住 <b>25%–50%</b> 毛利',
+    theme:'我对自己的设计没有恋母情结，只对公司的 ROI 和现金流忠诚',
+    ask:'遇到强敌怎么打？发现决策错了怎么救？',
+    note:'建议配图：专利 ROI 防御图（对内降损 / 对外清场两栏）+ 冲突—决策—反哺路径图；证书缩略图进附录',
+    cases:[
+      {
+        type:'a', label:'王牌案例', title:'投模前夜的一票否决：10 万开模费喊停，转贴牌狙击', pv:'投模前夜一票否决 → 贴牌狙击',
+        body:[
+          '私模项目已投入大量前期调研与设计精力，临近开模的最后一刻发现竞品已抢先低价卡位且壁垒更高。按 ROI 红线一票否决 10 万开模，顶着内部压力杀掉自己的立项，切换到轻资产 ODM 贴牌快反。',
+          '结果不止是止损：以 0 沉没成本守住搜索词生态与品类坑位，再用这波现金流与真实客诉数据，反哺下一代差异化私模。'
+        ],
+        fact:'路径：<b>冲突（竞品抢跑）→ 决策（算清沉没 + 机会成本）→ 反哺（现金流与 VOC 回流私模）</b>。'
+      },
+      {
+        type:'f', label:'血肉', title:'VOC → 专利 → FTO 的商业闭环', pv:'VOC → 专利 → FTO 闭环',
+        body:[
+          '从 Amazon 差评里挖痛点，转成结构与功能改良，形成 5 项实用新型专利集群；研发源头就做 FTO 合规排雷，避免“爆了却被下架”。'
+        ],
+        fact:'结果：<b>退货率 8% → 5%</b>，生命周期延长，跟卖被有效阻击。'
+      },
+      {
+        type:'k', label:'骨架', title:'专利只算两笔账，不念专利号', pv:'专利只算两笔 ROI 账',
+        body:[
+          '对内降损：退货物流与销毁费用省下多少；对外清场：哪些核心专利在 Amazon / TikTok 上卡住了跟卖与低价白牌。'
+        ],
+        fact:'守住 <b>25%–50% 的毛利空间</b>；证书缩略图统一进附录，正文不逐条罗列。'
+      }
+    ]
+  },
+  {
+    no:'04', phase:'能复制', color:'#2f6b4f',
+    title:'流程 · 激励 · 工具',
+    short:'先修路、再分钱、最后装发动机——把个人胜率变成组织胜率。',
+    tags:['敏捷 IPD','ROI 熔断 Gate','KPI 重构','AI Agent'],
+    metric:'落地提速 <b>30%</b> · 人效 <b>+10%</b>',
+    theme:'一个人强没用，总监要带出一支能复制胜率的团队',
+    ask:'团队扩编或你离开时，怎么保证下属也能打胜仗？',
+    note:'建议配图：IPD 改造 Before / After 对比图 + AI Agent 工作流架构简图（可放真实交互截图）',
+    cases:[
+      {
+        type:'f', label:'先修路', title:'敏捷 IPD：砍掉免责式评审', pv:'敏捷 IPD：砍免责评审',
+        body:[
+          '传统大厂 IPD 太重、小厂没流程太乱。做法是合并 TR / DCP 等冗余评审节点，把试错前置，同时在立项、开模前、试产前三个节点植入“财务 / ROI 一票熔断 Gate”。'
+        ],
+        fact:'结果：<b>项目落地提速 30%</b>，且风控没有被削弱。'
+      },
+      {
+        type:'f', label:'再分钱', title:'KPI 重构：把三拨人绑上同一条利润船', pv:'KPI 重构：同一条利润船',
+        body:[
+          '过去研发只管开模、运营只管冲 GMV（哪怕亏钱）、供应链只压最低价（不管质量）。考核锚点从“上新数量 / GMV”改为毛利率权重 + 爆品率 + 退款率红线，并落到跨部门协同口径。'
+        ],
+        fact:'结果：<b>连续半年超额拿结果</b>，培养出 <b>2 名储备骨干</b>。'
+      },
+      {
+        type:'f', label:'装发动机', title:'把 10 年方法论封进 AI Agent', pv:'方法论封进 AI Agent',
+        body:[
+          '把 VOC 洞察模型、竞品拆解维度、PRD 框架喂成专属 Agent，形成一条可交付的工作流：VOC 自动抓取清洗 → 痛点聚类 → 卖点生成 → FTO 风险提示。',
+          '别人还在用 ChatGPT 写周报，这边已经把“选品直觉”变成初级 PM 也能调用的标准化工具——新人下限被拉齐，老兵的判断力被复制。'
+        ],
+        fact:'结果：案头调研 <b>3 天 → 2 小时</b>，团队人效 <b>+10%</b>。'
+      }
+    ]
+  }
+];
+
+const board  = document.getElementById('board');
+const drawer = document.getElementById('drawer');
+const dhead  = document.getElementById('dhead');
+const dbody  = document.getElementById('dbody');
+const scrim  = document.getElementById('scrim');
+let current = -1;
+
+/* ---------- 渲染板块卡 ---------- */
+board.innerHTML = DATA.map((b,i) => `
+  <div class="node" role="button" tabindex="0" data-i="${i}" style="--accent:${b.color}" aria-label="展开：${b.title}">
+    <div class="node-top">
+      <span class="no">${b.no}</span>
+      <span class="phase">${b.phase}</span>
+    </div>
+    <div class="center">
+      <h2>${b.title}</h2>
+      <p class="short">${b.short}</p>
+    </div>
+    <ul class="preview">${b.cases.map(c=>`<li><span class="dot"></span>${c.pv}<em>${c.pl||c.label}</em></li>`).join('')}</ul>
+    <div class="metric">${b.metric}</div>
+    <div class="hint">展开 ${b.cases.length} 个事例 <span class="arw">→</span></div>
+  </div>
+`).join('');
+
+const nodes = [...board.querySelectorAll('.node')];
+
+/* ---------- 打开抽屉 ---------- */
+function open(i, pushHash = true){
+  const b = DATA[i];
+  if (!b) return;
+  current = i;
+
+  drawer.style.setProperty('--accent', b.color);
+  dhead.innerHTML = `
+    <div class="dnav">
+      <span class="dno" style="color:#0b2740">${b.no}</span>
+      <span class="dphase">${b.phase}</span>
+      <span class="dcount">${b.cases.length} 个事例</span>
+      <button class="dclose" id="dclose" aria-label="关闭">✕</button>
+    </div>
+    <h2>${b.title}</h2>
+    <p class="dtheme">大主题 —— ${b.theme}</p>
+    <div class="dask"><b>回应老板</b>${b.ask}</div>
+  `;
+  dbody.innerHTML = b.cases.map(c => `
+    <article class="dc">
+      <div class="dc-top">
+        <span class="dc-label ${c.type}">${c.label}</span>
+        <h3>${c.title}</h3>
+      </div>
+      ${c.body.map(p=>`<p>${p}</p>`).join('')}
+      ${c.quote ? `<div class="dc-quote">${c.quote}</div>` : ''}
+      <div class="dc-fact">${c.fact}</div>
+    </article>
+  `).join('') + `<div class="dnote"><b>现场提示：</b>${b.note}</div>`;
+
+  [...dbody.querySelectorAll('.dc')].forEach((el,k)=>{
+    el.style.animationDelay = (k*70 + 60) + 'ms';
+  });
+
+  drawer.classList.add('open');
+  drawer.setAttribute('aria-hidden','false');
+  scrim.classList.add('show');
+  nodes.forEach((n,k)=>n.classList.toggle('active', k===i));
+  dbody.scrollTop = 0;
+  document.getElementById('dclose').addEventListener('click', close);
+
+  if (pushHash) history.replaceState(null,'','#p'+(i+1));
+}
+
+/* ---------- 关闭 ---------- */
+function close(){
+  drawer.classList.remove('open');
+  drawer.setAttribute('aria-hidden','true');
+  scrim.classList.remove('show');
+  current = -1;
+  nodes.forEach(n=>n.classList.remove('active'));
+  history.replaceState(null,'',location.pathname + location.search);
+}
+
+/* ---------- 事件 ---------- */
+nodes.forEach(n=>{
+  n.addEventListener('click', ()=> open(+n.dataset.i));
+  n.addEventListener('keydown', e=>{
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(+n.dataset.i); }
+  });
+});
+
+scrim.addEventListener('click', close);
+
+document.addEventListener('keydown', e=>{
+  if (e.key === 'Escape'){ close(); return; }
+  if (current < 0) return;
+  if (e.key === 'ArrowRight' && current < DATA.length-1) open(current+1);
+  if (e.key === 'ArrowLeft'  && current > 0)             open(current-1);
+});
+
+/* ---------- 直达链接 ---------- */
+const m = location.hash.match(/^#p([1-4])$/);
+if (m) setTimeout(()=>open(+m[1]-1, false), 260);
+</script>
+</body>
+</html>
